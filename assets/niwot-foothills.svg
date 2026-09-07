@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Colorado Front Range field illustration</title><desc id="desc">Layered foothills, cottonwood trees, a rural fence and open fields at warm evening light.</desc>
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#a8c4cf"/><stop offset=".7" stop-color="#e7c8a7"/><stop offset="1" stop-color="#d89a73"/></linearGradient><linearGradient id="field" x2="0" y2="1"><stop stop-color="#7f9683"/><stop offset="1" stop-color="#315747"/></linearGradient><filter id="grain"><feTurbulence baseFrequency=".7" numOctaves="3" seed="4" type="fractalNoise"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .16 0"/></filter></defs>
+  <path fill="url(#sky)" d="M0 0h1800v1000H0z"/><circle cx="1390" cy="225" r="118" fill="#f1d5a8" opacity=".9"/>
+  <path fill="#6f7f7a" d="M0 600 210 478l126 59 222-214 141 174 190-317 197 330 118-136 150 174 175-218 271 278v392H0z"/>
+  <path fill="#486457" d="M0 650 230 517l130 95 191-123 149 128 214-211 178 203 205-120 172 116 144-78 207 145v328H0z"/>
+  <path fill="url(#field)" d="M0 654c333-65 470 56 765 17 377-50 593-4 1035 41v288H0z"/>
+  <g fill="#263e35"><path d="M123 705h20v176h-20z"/><path d="M40 745c42-148 80-204 94-204 27 0 76 75 110 213-77-37-126-22-204-9z"/><path d="M1545 720h17v151h-17z"/><path d="M1473 749c33-127 67-177 83-177 26 0 66 67 103 189-67-30-117-25-186-12z"/></g>
+  <g stroke="#d8c5a3" stroke-width="7" opacity=".8"><path d="M0 818c380-30 733-17 1085 49 257 48 493 55 715 44"/><path d="M0 881c347-31 715-16 1055 41 267 44 515 48 745 26"/></g>
+  <g fill="#3d4d43"><path d="M0 790h1800v13H0z"/><path d="M100 750h15v175h-15zm310 8h15v171h-15zm310 12h15v169h-15zm310 14h15v168h-15zm310 12h15v171h-15zm310 10h15v172h-15z"/></g>
+  <path fill="#fff" opacity=".08" filter="url(#grain)" d="M0 0h1800v1000H0z"/>
+</svg>
