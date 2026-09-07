@@ -1,27 +1,30 @@
-const services = [
-  'Roads and transportation','Planning and land use','Law enforcement','Fire and emergency response','Water','Wastewater and sanitation','Parks, trails, and open space','Schools','Libraries','Elections','Building permits','Public health'
-];
-
-const tbody = document.querySelector('#service-rows');
-function renderServices(query = '') {
-  const matches = services.filter(name => name.toLowerCase().includes(query.toLowerCase()));
-  tbody.innerHTML = matches.map(name => `<tr><td>${name}</td><td class="pending">Verification pending</td><td class="pending">Authoritative source review required</td><td>—</td><td>Pending</td></tr>`).join('');
-}
-renderServices();
-document.querySelector('#service-search').addEventListener('input', e => renderServices(e.target.value));
-
 const menuButton = document.querySelector('.menu-button');
 const nav = document.querySelector('#site-nav');
+
 menuButton.addEventListener('click', () => {
-  const open = menuButton.getAttribute('aria-expanded') === 'true';
-  menuButton.setAttribute('aria-expanded', String(!open));
-  nav.classList.toggle('open', !open);
-});
-nav.addEventListener('click', e => {
-  if (e.target.closest('a')) { nav.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false'); }
+  const willOpen = menuButton.getAttribute('aria-expanded') !== 'true';
+  menuButton.setAttribute('aria-expanded', String(willOpen));
+  menuButton.querySelector('.sr-only').textContent = willOpen ? 'Close menu' : 'Open menu';
+  nav.classList.toggle('open', willOpen);
 });
 
-document.querySelectorAll('[role="tab"]').forEach(tab => tab.addEventListener('click', () => {
-  document.querySelectorAll('[role="tab"]').forEach(item => item.setAttribute('aria-selected', 'false'));
-  tab.setAttribute('aria-selected', 'true');
-}));
+nav.addEventListener('click', event => {
+  if (!event.target.closest('a')) return;
+  nav.classList.remove('open');
+  menuButton.setAttribute('aria-expanded', 'false');
+  menuButton.querySelector('.sr-only').textContent = 'Open menu';
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && nav.classList.contains('open')) {
+    nav.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.focus();
+  }
+});
+
+document.querySelector('#newsletter-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const message = event.currentTarget.querySelector('.form-message');
+  message.textContent = 'Thanks for your interest. Newsletter delivery will be available soon.';
+});
