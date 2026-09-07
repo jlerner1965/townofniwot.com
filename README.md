@@ -8,4 +8,6 @@ python3 -m http.server 4173
 
 The page uses lightweight HTML, CSS, and JavaScript with no build dependencies. External civic links identify their source role, and the community calendar and directories link to their current publishers rather than duplicating unverified listings.
 
-No unverified photography or stock imagery is bundled with the project. The design uses typographic field notes, geographic details, and a locally stored paper-grain texture until authentic, licensed Niwot photography is available.
+## Visual assets
+
+Original editorial illustrations live in `assets/`. They are intentionally identified as illustrations in page captions and are not presented as documentary photography. Authentic Niwot photography can replace these assets later when usage rights and descriptive metadata are available.
