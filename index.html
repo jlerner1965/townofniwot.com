@@ -3,105 +3,317 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Niwot | Independent Community Guide</title>
-  <meta name="description" content="A locally edited, independent guide to the places, resources, stories, and civic life of Niwot, Colorado.">
-  <link rel="stylesheet" href="styles.css">
+  <title>TownofNiwot.com | Independent Niwot Community Guide</title>
+  <meta name="description" content="A practical, independent guide to Niwot events, local businesses, trails, resident resources, history, and the 2026 incorporation election.">
+  <meta name="theme-color" content="#173f3a">
+  <link rel="canonical" href="https://townofniwot.com/">
+  <link rel="stylesheet" href="styles.css?v=20260909">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TownofNiwot.com",
+      "url": "https://townofniwot.com/",
+      "description": "An independent community guide to Niwot, Colorado.",
+      "inLanguage": "en-US"
+    }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="independent-bar">
+    <div class="wrap">
+      <span>Independent community guide</span>
+      <span>Not a government website</span>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="masthead wrap">
-      <a class="brand" href="#top" aria-label="Niwot Independent Community Guide, home">
-        <span class="brand-name">NIWOT</span><span class="brand-tag">Independent<br>Community Guide</span>
+      <a class="brand" href="#top" aria-label="TownofNiwot.com home">
+        <span class="brand-name">NIWOT</span>
+        <span class="brand-tag">Colorado<br>Community Guide</span>
       </a>
-      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open menu</span></button>
+
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Open menu</span>
+      </button>
+
       <nav id="site-nav" aria-label="Primary navigation">
-        <a href="#explore">Explore Niwot</a><a href="#community">Community</a><a href="#living">Living in Niwot</a><a href="#civic">News &amp; Civic Life</a><a href="#story">About Niwot</a>
+        <a href="#events">Events</a>
+        <a href="#explore">Explore</a>
+        <a href="#resources">Resident resources</a>
+        <a href="#civic">Incorporation 2026</a>
+        <a href="#history">History</a>
       </nav>
-      <a class="civic-link" href="#civic"><span aria-hidden="true">●</span> Incorporation 2026</a>
+
+      <a class="election-link" href="#civic">
+        <span aria-hidden="true"></span>
+        Election guide
+      </a>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top">
-      <img class="hero-landscape" src="assets/niwot-foothills.svg" width="1800" height="1000" alt="" fetchpriority="high">
-      <div class="hero-shade" aria-hidden="true"></div>
-      <div class="wrap hero-content">
-        <p class="kicker light">40.10° N &nbsp;·&nbsp; 105.17° W &nbsp;·&nbsp; Boulder County</p>
-        <h1>Know Niwot.<br>Explore it. <em>Take part.</em></h1>
-        <p class="hero-deck">An independent guide to the places, people, resources and civic decisions shaping the Niwot community.</p>
-        <div class="actions"><a class="button paper" href="#explore">Explore Niwot <span>→</span></a><a class="button-link" href="#living">Community resources <span>↘</span></a></div>
-        <a class="hero-civic" href="#civic">Niwot incorporation election information <span>→</span></a>
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="hero-copy-inner">
+          <p class="eyebrow inverse">Niwot, Colorado · 40.10° N, 105.17° W</p>
+          <h1 id="hero-title">Your guide to <em>Niwot.</em></h1>
+          <p class="hero-intro">Find local events, businesses, trails, resident services, community organizations, and clear information about the 2026 incorporation election.</p>
+          <div class="hero-actions">
+            <a class="button button-light" href="#start">Find what you need <span aria-hidden="true">↓</span></a>
+            <a class="text-link inverse-link" href="#events">See upcoming events <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
       </div>
-      <p class="hero-note">Front Range field illustration</p>
-    </section>
 
-    <section class="quick-links" id="community" aria-labelledby="quick-title"><div class="wrap">
-      <div class="section-label"><span>Start here</span><h2 id="quick-title">Around Niwot</h2></div>
-      <nav class="link-index" aria-label="Quick access">
-        <a href="#happening"><b>01</b><span>Upcoming<br>events</span><i>↗</i></a>
-        <a href="#places"><b>02</b><span>Local<br>businesses</span><i>↗</i></a>
-        <a href="#explore"><b>03</b><span>Trails &amp;<br>open space</span><i>↗</i></a>
-        <a href="#community"><b>04</b><span>Community<br>organizations</span><i>↗</i></a>
-        <a href="#living"><b>05</b><span>Resident<br>resources</span><i>↗</i></a>
-        <a href="#civic"><b>06</b><span>Incorporation<br>information</span><i>↗</i></a>
-      </nav>
-    </div></section>
+      <figure class="hero-photo">
+        <img src="assets/niwot-second-avenue.jpg" width="1280" height="861" alt="The former Niwot Tribune building and neighboring storefronts on Second Avenue in Niwot" fetchpriority="high">
+        <figcaption>Second Avenue · Historic Niwot</figcaption>
+      </figure>
 
-    <section class="discover wrap" id="explore">
-      <div class="discover-intro"><p class="kicker">Discover Niwot</p><h2>Small in scale.<br><em>Rich in character.</em></h2><p>Niwot sits where working landscapes, neighborhood streets and the Front Range meet. Its historic center, local gathering places and nearby open space reward a slower look.</p></div>
-      <figure class="postcard"><img src="assets/niwot-main-street.svg" width="1200" height="900" loading="lazy" alt="Editorial illustration of independent storefronts, shade trees, bicycles and the Front Range"><figcaption>Community field study · original illustration</figcaption></figure>
-      <article class="field-note"><p class="issue">Field note No. 01</p><h3>A place best understood on foot</h3><p>Begin around the historic district, follow the paths outward, and notice where Niwot’s rural edges still shape daily life.</p><a href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer">Find Niwot trails on Boulder County’s site <span>↗</span></a></article>
-      <div class="place-list"><p class="kicker">Ways to explore</p><a href="https://niwot.com/" target="_blank" rel="noreferrer"><span>Historic district &amp; local guide</span><b>↗</b></a><a href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer"><span>Trails &amp; open space</span><b>↗</b></a><a href="#story"><span>History &amp; community story</span><b>↓</b></a></div>
-    </section>
-
-    <section class="bulletin" id="happening"><div class="wrap bulletin-grid">
-      <div><p class="kicker light">The community bulletin</p><h2>What’s happening</h2><p class="bulletin-intro">A clear place for timely gatherings, public notices and community updates—without filling the calendar with unverified listings.</p></div>
-      <article class="bulletin-main"><span class="date-block"><b>LOCAL</b><small>CALENDAR</small></span><div><p class="type">Community events</p><h3>See current Niwot events</h3><p>For current dates and organizer details, visit the community calendar maintained by the Niwot Business Association.</p><a href="https://niwot.com/events/" target="_blank" rel="noreferrer">Open the current calendar <span>↗</span></a></div></article>
-      <aside class="notice-board"><h3>Notice board</h3><a href="https://niwot.org/" target="_blank" rel="noreferrer"><span>Community Association updates</span><i>↗</i></a><a href="https://bouldercounty.gov/community/niwot/" target="_blank" rel="noreferrer"><span>Boulder County Niwot resources</span><i>↗</i></a><a href="#civic"><span>2026 civic information</span><i>↓</i></a></aside>
-    </div></section>
-
-    <section class="living wrap" id="living">
-      <header><p class="kicker">Living in Niwot</p><h2>Useful, close at hand.</h2><p>Start with the organization responsible for the information you need.</p></header>
-      <div class="resource-index">
-        <a href="https://www.svvsd.org/" target="_blank" rel="noreferrer"><b>A</b><span><strong>Schools</strong><small>St. Vrain Valley School District</small></span><i>↗</i></a>
-        <a href="https://www.rtd-denver.com/" target="_blank" rel="noreferrer"><b>B</b><span><strong>Transportation</strong><small>Regional transit information</small></span><i>↗</i></a>
-        <a href="https://bouldercounty.gov/community/niwot/" target="_blank" rel="noreferrer"><b>C</b><span><strong>County services</strong><small>Boulder County resources</small></span><i>↗</i></a>
-        <a href="https://niwot.org/" target="_blank" rel="noreferrer"><b>D</b><span><strong>Organizations</strong><small>Niwot Community Association</small></span><i>↗</i></a>
-        <a href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer"><b>E</b><span><strong>Maps &amp; trails</strong><small>Boulder County trail information</small></span><i>↗</i></a>
-        <a href="https://bouldercounty.gov/safety/" target="_blank" rel="noreferrer"><b>F</b><span><strong>Safety &amp; alerts</strong><small>County emergency resources</small></span><i>↗</i></a>
+      <div class="hero-marker" aria-hidden="true">
+        <span>Front Range</span>
+        <strong>NIWOT</strong>
+        <span>Boulder County</span>
       </div>
     </section>
 
-    <section class="places" id="places"><div class="wrap places-grid">
-      <div class="places-title"><p class="kicker light">Local places</p><h2>Made here.<br>Met here.</h2><p>Independent shops, studios, food and services make Niwot’s compact commercial areas part of community life.</p><a href="https://niwot.com/business-directory/" target="_blank" rel="noreferrer">Browse the verified business directory <span>↗</span></a></div>
-      <figure class="shop-sketch"><img src="assets/niwot-main-street.svg" width="1200" height="900" loading="lazy" alt="Editorial street scene representing Niwot’s small independent commercial district"><figcaption>Local places · original editorial illustration</figcaption></figure>
-      <blockquote>“Look locally first.”<small>A guide to places, not a paid ranking</small></blockquote>
-    </div></section>
+    <section class="start" id="start" aria-labelledby="start-title">
+      <div class="wrap">
+        <div class="section-heading compact-heading">
+          <p class="eyebrow">Start here</p>
+          <h2 id="start-title">Find what you need</h2>
+        </div>
 
-    <section class="civic wrap" id="civic">
-      <div class="civic-heading"><p class="kicker">Civic life · Election 2026</p><h2>A community decision,<br>with sources in view.</h2><p>Niwot voters are scheduled to consider incorporation on November 3, 2026. This independent guide separates official election information, source documents and community perspectives.</p><p class="fact-note"><strong>Important:</strong> Official ballot language and election administration information are provided by the court-appointed Niwot Election Commission.</p></div>
-      <nav class="civic-paths" aria-label="Incorporation information">
-        <a href="https://niwotelection.org/" target="_blank" rel="noreferrer"><b>01</b><span><strong>What is being proposed</strong><small>Official election overview</small></span><i>↗</i></a>
-        <a href="https://niwotelection.org/ballot" target="_blank" rel="noreferrer"><b>02</b><span><strong>Ballot information</strong><small>Read the complete language</small></span><i>↗</i></a>
-        <a href="https://niwotelection.org/" target="_blank" rel="noreferrer"><b>03</b><span><strong>Timeline</strong><small>Current election dates</small></span><i>↗</i></a>
-        <a href="https://niwotelection.org/" target="_blank" rel="noreferrer"><b>04</b><span><strong>Source documents</strong><small>Official records and notices</small></span><i>↗</i></a>
-        <a href="#perspectives"><b>05</b><span><strong>Arguments &amp; perspectives</strong><small>Sources identified by role</small></span><i>↓</i></a>
-        <a href="https://niwotelection.org/faq" target="_blank" rel="noreferrer"><b>06</b><span><strong>Frequently asked questions</strong><small>Election Commission FAQ</small></span><i>↗</i></a>
-      </nav>
-      <div class="source-key" id="perspectives"><p><span class="dot official"></span><strong>Official source</strong><small>Election administration and ballot information</small></p><p><span class="dot perspective"></span><strong>Community perspectives</strong><small><a href="https://www.niwot.town/" target="_blank" rel="noreferrer">Incorporation proponent ↗</a> · <a href="https://neighborsforniwot.org/" target="_blank" rel="noreferrer">Incorporation opponent ↗</a></small></p><p><span class="dot independent"></span><strong>This guide</strong><small>Independent, nonofficial context and links</small></p></div>
+        <nav class="quick-grid" aria-label="Quick access">
+          <a href="#events"><span class="quick-number">01</span><strong>Events</strong><small>What’s happening</small><i aria-hidden="true">↓</i></a>
+          <a href="https://niwot.com/business-directory/" target="_blank" rel="noreferrer"><span class="quick-number">02</span><strong>Businesses</strong><small>Shop and dine locally</small><i aria-hidden="true">↗</i></a>
+          <a href="#explore"><span class="quick-number">03</span><strong>Trails</strong><small>Open space and routes</small><i aria-hidden="true">↓</i></a>
+          <a href="#resources"><span class="quick-number">04</span><strong>Resources</strong><small>Schools, services, alerts</small><i aria-hidden="true">↓</i></a>
+          <a href="#community"><span class="quick-number">05</span><strong>Organizations</strong><small>Community groups</small><i aria-hidden="true">↓</i></a>
+          <a class="quick-civic" href="#civic"><span class="quick-number">06</span><strong>Election</strong><small>Incorporation information</small><i aria-hidden="true">↓</i></a>
+        </nav>
+      </div>
     </section>
 
-    <section class="story" id="story"><div class="wrap story-grid">
-      <figure class="story-mark"><img src="assets/niwot-history.svg" width="1200" height="760" loading="lazy" alt="Archival-style illustration of railroad tracks, open fields, a depot and the Front Range"><figcaption>Niwot history · original editorial illustration</figcaption></figure>
-      <div><p class="kicker">Niwot’s story</p><h2>Old roads, new chapters.</h2><p>Niwot’s story is carried in its historic district, agricultural roots, rail-era growth and the people who continue to shape community life. The name honors Chief Niwot, an Arapaho leader whose people lived along Colorado’s Front Range.</p><a href="https://niwot.org/history-of-niwot/" target="_blank" rel="noreferrer">Read the community history <span>↗</span></a></div>
-      <ol class="story-fragments"><li><b>Before 1859</b><span>Arapaho homeland along the Front Range</span></li><li><b>1870s</b><span>Railroad-era settlement and town plat</span></li><li><b>Today</b><span>An unincorporated Boulder County community</span></li></ol>
-    </div></section>
+    <section class="events section" id="events" aria-labelledby="events-title">
+      <div class="wrap events-layout">
+        <header class="section-heading events-heading">
+          <p class="eyebrow inverse">September 2026</p>
+          <h2 id="events-title">Coming up<br>in Niwot</h2>
+          <p>Selected public events from the Niwot Business Association calendar and local organizers.</p>
+          <a class="text-link inverse-link" href="https://niwot.com/events/" target="_blank" rel="noreferrer">View the complete calendar <span aria-hidden="true">↗</span></a>
+        </header>
 
-    <section class="newsletter"><div class="wrap newsletter-inner"><div><p class="kicker light">From the local bulletin</p><h2>Keep up with Niwot.</h2><p>Occasional community updates, useful links and civic information. No marketing noise.</p></div><form id="newsletter-form"><label for="email">Email address</label><div><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required><button type="submit">Join the bulletin <span>→</span></button></div><p class="form-message" role="status"></p></form></div></section>
+        <div class="event-list">
+          <a class="event-card" href="https://niwot.com/events/second-friday-art-walk/?occurrence=2026-09-11&amp;time=1789146000" target="_blank" rel="noreferrer">
+            <time datetime="2026-09-11"><span>SEP</span><strong>11</strong></time>
+            <span class="event-copy"><small>Friday · 5–9 PM</small><strong>Second Friday Art Walk</strong><span>Old Town and Cottonwood Square</span></span>
+            <i aria-hidden="true">↗</i>
+          </a>
+
+          <a class="event-card" href="https://www.theoldoakcoffeehouse.com/summer-concert-series?occurrence=2026-09-12&amp;time=1789236000" target="_blank" rel="noreferrer">
+            <time datetime="2026-09-12"><span>SEP</span><strong>12</strong></time>
+            <span class="event-copy"><small>Saturday · 6–9 PM</small><strong>House Blend Band Concert</strong><span>Second Avenue</span></span>
+            <i aria-hidden="true">↗</i>
+          </a>
+
+          <a class="event-card" href="https://niwothistoricalsociety.org/2026/08/17/the-road-of-remembrance-who-we-remember/?occurrence=2026-09-16" target="_blank" rel="noreferrer">
+            <time datetime="2026-09-16"><span>SEP</span><strong>16</strong></time>
+            <span class="event-copy"><small>Wednesday · 7–8:30 PM</small><strong>The Road of Remembrance</strong><span>Niwot Hall · 195 Second Avenue</span></span>
+            <i aria-hidden="true">↗</i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="explore section" id="explore" aria-labelledby="explore-title">
+      <div class="wrap">
+        <header class="section-heading split-heading">
+          <div>
+            <p class="eyebrow">Explore Niwot</p>
+            <h2 id="explore-title">A small town with room to wander.</h2>
+          </div>
+          <p>Historic storefronts, neighborhood paths, public art, and open space connect Niwot’s compact center to the wider Front Range landscape.</p>
+        </header>
+
+        <div class="explore-grid">
+          <article class="feature-card feature-photo">
+            <figure>
+              <img src="assets/niwot-sign.jpg" width="1280" height="837" loading="lazy" alt="Niwot welcome sign beside the Diagonal Highway with the Front Range in the distance">
+              <figcaption>Niwot at the Diagonal Highway</figcaption>
+            </figure>
+            <div>
+              <p class="eyebrow">Trails &amp; open space</p>
+              <h3>Walk, ride, and connect.</h3>
+              <p>Niwot Trails connect neighborhood routes with the Longmont-to-Boulder Regional Trail. County trailheads close at sunset, while regional commuter connections remain open around the clock.</p>
+              <a class="text-link" href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer">Trail map and current information <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+          <article class="feature-card feature-list">
+            <p class="eyebrow">Old Town &amp; Cottonwood Square</p>
+            <h3>Eat, shop, and meet locally.</h3>
+            <p>Independent restaurants, cafés, galleries, shops, studios, and services anchor Niwot’s two commercial areas.</p>
+            <div class="mini-links">
+              <a href="https://niwot.com/explore/food-drink/" target="_blank" rel="noreferrer"><span>Food &amp; drink</span><i aria-hidden="true">↗</i></a>
+              <a href="https://niwot.com/explore/shopping/" target="_blank" rel="noreferrer"><span>Shopping</span><i aria-hidden="true">↗</i></a>
+              <a href="https://niwot.com/business-directory/" target="_blank" rel="noreferrer"><span>Complete directory</span><i aria-hidden="true">↗</i></a>
+            </div>
+          </article>
+
+          <article class="feature-card feature-list accent-card">
+            <p class="eyebrow inverse">Community places</p>
+            <h3>Where Niwot gathers.</h3>
+            <p>Start with the places that host events, arts, meetings, and everyday community life.</p>
+            <ul>
+              <li>Whistle Stop Park</li>
+              <li>Niwot Hall</li>
+              <li>Niwot Children’s Park</li>
+              <li>Old Town and Second Avenue</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="resources section" id="resources" aria-labelledby="resources-title">
+      <div class="wrap resources-layout">
+        <header class="section-heading resources-heading">
+          <p class="eyebrow">Living in Niwot</p>
+          <h2 id="resources-title">Resident resources</h2>
+          <p>Go directly to the organization responsible for the information or service you need.</p>
+        </header>
+
+        <div class="resource-grid">
+          <a href="https://www.svvsd.org/" target="_blank" rel="noreferrer"><span class="resource-icon" aria-hidden="true">A</span><span><strong>Schools</strong><small>St. Vrain Valley School District</small></span><i aria-hidden="true">↗</i></a>
+          <a href="https://www.rtd-denver.com/" target="_blank" rel="noreferrer"><span class="resource-icon" aria-hidden="true">B</span><span><strong>Transportation</strong><small>Regional transit information</small></span><i aria-hidden="true">↗</i></a>
+          <a href="https://bouldercounty.gov/community/niwot/" target="_blank" rel="noreferrer"><span class="resource-icon" aria-hidden="true">C</span><span><strong>County services</strong><small>Boulder County Niwot resources</small></span><i aria-hidden="true">↗</i></a>
+          <a href="https://bouldercounty.gov/safety/" target="_blank" rel="noreferrer"><span class="resource-icon" aria-hidden="true">D</span><span><strong>Safety &amp; alerts</strong><small>Emergency information and alerts</small></span><i aria-hidden="true">↗</i></a>
+          <a href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer"><span class="resource-icon" aria-hidden="true">E</span><span><strong>Maps &amp; trails</strong><small>Niwot Trails and conditions</small></span><i aria-hidden="true">↗</i></a>
+          <a href="https://bouldercountyvotes.gov/" target="_blank" rel="noreferrer"><span class="resource-icon" aria-hidden="true">F</span><span><strong>Voting</strong><small>Registration, ballots, and drop boxes</small></span><i aria-hidden="true">↗</i></a>
+        </div>
+      </div>
+
+      <div class="wrap organization-strip" id="community" aria-labelledby="organizations-title">
+        <h3 id="organizations-title">Community organizations</h3>
+        <div>
+          <a href="https://niwot.org/" target="_blank" rel="noreferrer">Niwot Community Association <span aria-hidden="true">↗</span></a>
+          <a href="https://niwot.com/" target="_blank" rel="noreferrer">Niwot Business Association <span aria-hidden="true">↗</span></a>
+          <a href="https://niwothistoricalsociety.org/" target="_blank" rel="noreferrer">Niwot Historical Society <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="civic section" id="civic" aria-labelledby="civic-title">
+      <div class="wrap">
+        <header class="civic-header">
+          <div class="election-date" aria-label="Election date November 3, 2026">
+            <span>Election day</span>
+            <strong>NOV 03</strong>
+            <small>2026</small>
+          </div>
+          <div class="section-heading">
+            <p class="eyebrow inverse">Neutral election guide</p>
+            <h2 id="civic-title">Niwot incorporation</h2>
+            <p>Registered electors inside the proposed boundary will vote on incorporation, a home rule charter commission, its members, and five fiscal issues. This guide identifies sources by role and does not take a position.</p>
+          </div>
+        </header>
+
+        <div class="deadline-banner">
+          <span class="deadline-label">Current deadline</span>
+          <strong>Written comments for or against the five fiscal issues are due September 18, 2026 at noon.</strong>
+          <a href="https://niwotelection.org/ballot" target="_blank" rel="noreferrer">How to file <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="ballot-summary">
+          <article>
+            <span class="summary-count">3</span>
+            <div><h3>Ballot questions</h3><p>Incorporation, formation of a nine-member home rule charter commission, and election of its members.</p></div>
+          </article>
+          <article>
+            <span class="summary-count">5</span>
+            <div><h3>Fiscal issues</h3><p>Sales and use tax, property tax, marijuana tax, revenue retention, and transportation-related debt authorization.</p></div>
+          </article>
+        </div>
+
+        <div class="civic-links" aria-label="Election information links">
+          <a href="https://niwotelection.org/" target="_blank" rel="noreferrer"><span><small>Official source</small><strong>Election overview</strong></span><i aria-hidden="true">↗</i></a>
+          <a href="https://niwotelection.org/ballot" target="_blank" rel="noreferrer"><span><small>Official source</small><strong>Complete ballot content</strong></span><i aria-hidden="true">↗</i></a>
+          <a href="https://niwotelection.org/faq" target="_blank" rel="noreferrer"><span><small>Official source</small><strong>Election FAQ</strong></span><i aria-hidden="true">↗</i></a>
+          <a href="https://bouldercountyvotes.gov/" target="_blank" rel="noreferrer"><span><small>County source</small><strong>Registration and ballots</strong></span><i aria-hidden="true">↗</i></a>
+        </div>
+
+        <div class="perspectives" aria-labelledby="perspectives-title">
+          <div>
+            <p class="eyebrow">Perspectives</p>
+            <h3 id="perspectives-title">Campaign viewpoints, clearly labeled</h3>
+          </div>
+          <a href="https://www.niwot.town/" target="_blank" rel="noreferrer"><span class="source-dot pro"></span><span><strong>Pro-incorporation campaign</strong><small>Niwot Incorporation Committee</small></span><i aria-hidden="true">↗</i></a>
+          <a href="https://neighborsforniwot.org/" target="_blank" rel="noreferrer"><span class="source-dot con"></span><span><strong>Anti-incorporation campaign</strong><small>Neighbors for Niwot</small></span><i aria-hidden="true">↗</i></a>
+        </div>
+
+        <p class="civic-disclaimer"><strong>Source note:</strong> The court-appointed Niwot Election Commission administers the election and takes no position on incorporation. Campaign organizations advocate for their respective positions.</p>
+      </div>
+    </section>
+
+    <section class="history section" id="history" aria-labelledby="history-title">
+      <div class="wrap history-layout">
+        <figure>
+          <img src="assets/niwot-fire-house.jpg" width="1280" height="1127" loading="lazy" alt="The Old Fire House Museum on Second Avenue in Niwot">
+          <figcaption>Old Fire House Museum · Second Avenue</figcaption>
+        </figure>
+
+        <div class="history-copy">
+          <p class="eyebrow">Niwot’s story</p>
+          <h2 id="history-title">A place shaped by deeper histories.</h2>
+          <p>Niwot is named for Chief Niwot, an Arapaho leader whose people lived along Colorado’s Front Range. The community later grew around agriculture, the railroad, and the commercial district that remains central to local life.</p>
+          <ol class="timeline">
+            <li><strong>Before 1859</strong><span>Arapaho homeland along the Front Range</span></li>
+            <li><strong>1870s</strong><span>Railroad-era settlement and town plat</span></li>
+            <li><strong>Today</strong><span>An unincorporated Boulder County community</span></li>
+          </ol>
+          <a class="text-link" href="https://niwot.org/history-of-niwot/" target="_blank" rel="noreferrer">Read the community history <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer><div class="wrap footer-top"><a class="footer-brand" href="#top">NIWOT<span>Independent Community Guide</span></a><nav aria-label="Footer navigation"><div><strong>Explore</strong><a href="#explore">Explore Niwot</a><a href="#happening">What’s happening</a><a href="#places">Local places</a></div><div><strong>Community</strong><a href="#living">Resident resources</a><a href="#community">Organizations</a><a href="#story">Niwot’s story</a></div><div><strong>Civic information</strong><a href="#civic">Incorporation 2026</a><a href="https://niwotelection.org/" target="_blank" rel="noreferrer">Official election source ↗</a><a href="#perspectives">Source transparency</a></div></nav></div><div class="wrap disclaimer"><p><strong>Independent, not official.</strong> TownofNiwot.com is an independent community resource and is not an official government website.</p><a href="mailto:hello@townofniwot.com">hello@townofniwot.com</a></div><div class="wrap copyright"><span>© 2026 TownofNiwot.com</span><span>Made for neighbors, newcomers and the Niwot-curious.</span></div></footer>
-  <script src="app.js"></script>
+  <footer>
+    <div class="wrap footer-main">
+      <div>
+        <a class="footer-brand" href="#top">NIWOT</a>
+        <p>An independent guide to community life in Niwot, Colorado.</p>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <a href="#events">Events</a>
+        <a href="#explore">Explore</a>
+        <a href="#resources">Resident resources</a>
+        <a href="#civic">Incorporation 2026</a>
+        <a href="#history">History</a>
+      </nav>
+
+      <div class="footer-contact">
+        <strong>Questions or corrections?</strong>
+        <a href="mailto:hello@townofniwot.com">hello@townofniwot.com</a>
+      </div>
+    </div>
+
+    <div class="wrap footer-notice">
+      <p><strong>Independent, not official.</strong> TownofNiwot.com is not a government website and is not affiliated with Boulder County or the Niwot Election Commission.</p>
+    </div>
+
+    <div class="wrap photo-credits">
+      <p>Photos: <a href="https://commons.wikimedia.org/wiki/File:Niwot,_Colorado.JPG" target="_blank" rel="noreferrer">Second Avenue</a> and <a href="https://commons.wikimedia.org/wiki/File:Old_Fire_House_Museum_(Niwot,_Colorado).JPG" target="_blank" rel="noreferrer">Old Fire House Museum</a>, Jeffrey Beall, CC BY-SA 4.0; <a href="https://commons.wikimedia.org/wiki/File:Niwot,_Colorado_sign.JPG" target="_blank" rel="noreferrer">Niwot sign</a>, Jeffrey Beall, CC BY 4.0. Display crops applied.</p>
+      <span>© 2026 TownofNiwot.com</span>
+    </div>
+  </footer>
+
+  <script src="app.js?v=20260909"></script>
 </body>
 </html>
