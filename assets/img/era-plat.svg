@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="t d"><title id="t">The 1875 town plat</title><desc id="d">A surveyor's plat drawing: numbered blocks and lots straddling a diagonal railroad right-of-way, with 2nd Avenue lettered along the tracks.</desc>
+<defs><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="21"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .12 0"/></filter>
+<pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0H0v60" fill="none" stroke="#9a3b26" stroke-width="1" opacity=".35"/></pattern></defs>
+<rect width="900" height="1100" fill="#ebe3d3"/>
+<rect width="900" height="1100" fill="url(#grid)"/>
+<g fill="none" stroke="#2b2521" stroke-width="2.5">
+<rect x="90" y="150" width="200" height="130"/><rect x="330" y="150" width="200" height="130"/><rect x="570" y="150" width="200" height="130"/>
+<rect x="90" y="320" width="200" height="130"/><rect x="330" y="320" width="200" height="130"/><rect x="570" y="320" width="200" height="130"/>
+<rect x="90" y="650" width="200" height="130"/><rect x="330" y="650" width="200" height="130"/><rect x="570" y="650" width="200" height="130"/>
+<rect x="90" y="820" width="200" height="130"/><rect x="330" y="820" width="200" height="130"/><rect x="570" y="820" width="200" height="130"/>
+</g>
+<g stroke="#2b2521" stroke-width="1" opacity=".6"><path d="M115 150v130M140 150v130M165 150v130M190 150v130M215 150v130M240 150v130M265 150v130M355 150v130M380 150v130M405 150v130M430 150v130M455 150v130M480 150v130M505 150v130M595 150v130M620 150v130M645 150v130M670 150v130M695 150v130M720 150v130M745 150v130M115 820v130M140 820v130M165 820v130M190 820v130M215 820v130M240 820v130M265 820v130M355 820v130M380 820v130M405 820v130M430 820v130M455 820v130M480 820v130M505 820v130M595 820v130M620 820v130M645 820v130M670 820v130M695 820v130M720 820v130M745 820v130"/></g>
+<!-- railroad diagonal -->
+<path d="M-40 620 940 480" stroke="#9a3b26" stroke-width="16"/><path d="M-40 612 940 472M-40 628 940 488" stroke="#ebe3d3" stroke-width="2"/>
+<path d="M0 612l6 18M60 604l6 18M120 596l6 18M180 588l6 18M240 580l6 18M300 572l6 18M360 564l6 18M420 556l6 18M480 548l6 18M540 540l6 18M600 532l6 18M660 524l6 18M720 516l6 18M780 508l6 18M840 500l6 18M900 492l6 18" stroke="#9a3b26" stroke-width="4"/>
+<text x="450" y="600" transform="rotate(-8 450 600)" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#2b2521" letter-spacing="8">COLORADO CENTRAL R.R.</text>
+<text x="450" y="520" transform="rotate(-8 450 520)" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#9a3b26" letter-spacing="6">SECOND AVENUE</text>
+<g font-family="Georgia,serif" font-size="30" font-weight="700" fill="#2b2521" text-anchor="middle"><text x="190" y="225">1</text><text x="430" y="225">2</text><text x="670" y="225">3</text><text x="190" y="395">4</text><text x="430" y="395">5</text><text x="670" y="395">6</text><text x="190" y="725">7</text><text x="430" y="725">8</text><text x="670" y="725">9</text><text x="190" y="895">10</text><text x="430" y="895">11</text><text x="670" y="895">12</text></g>
+<text x="450" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="34" font-weight="700" fill="#2b2521" letter-spacing="10">PLAT OF NIWOT</text>
+<text x="450" y="1040" text-anchor="middle" font-family="Georgia,serif" font-size="18" fill="#5d554d" letter-spacing="6">BOULDER COUNTY · COLORADO TERRITORY · 1875</text>
+<circle cx="810" cy="1000" r="40" fill="none" stroke="#2b2521" stroke-width="2"/><path d="M810 965v70M775 1000h70" stroke="#2b2521" stroke-width="2"/><text x="810" y="958" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#2b2521">N</text>
+<rect width="900" height="1100" filter="url(#g)"/>
+</svg>

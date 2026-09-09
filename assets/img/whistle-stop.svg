@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="t d"><title id="t">Whistle Stop Park</title><desc id="d">Paper-cut illustration of a summer evening concert at Whistle Stop Park: a stage under string lights beside the railroad tracks, a lawn full of blankets and the Front Range behind.</desc>
+<defs><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="5"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .1 0"/></filter>
+<linearGradient id="sky" x2="0" y2="1"><stop stop-color="#1d2836"/><stop offset=".6" stop-color="#6a4a5a"/><stop offset="1" stop-color="#e39a83"/></linearGradient></defs>
+<rect width="1200" height="800" fill="url(#sky)"/>
+<path fill="#2c2230" d="M0 420 130 360 250 400 380 330 500 380 640 310 760 370 900 300 1040 350 1200 320v200H0z"/>
+<path fill="#16130f" d="M0 480 110 450 220 470 340 430 460 460 600 420 720 450 860 410 990 440 1200 420v100H0z"/>
+<rect y="520" width="1200" height="280" fill="#3f5a3a"/>
+<!-- tracks -->
+<path d="M0 530h1200" stroke="#2b2521" stroke-width="22"/><path d="M0 524h1200M0 538h1200" stroke="#b7b0a4" stroke-width="3"/><path d="M20 520v22M60 520v22M100 520v22M140 520v22M180 520v22M220 520v22M260 520v22M300 520v22M340 520v22M380 520v22M420 520v22M460 520v22M500 520v22M540 520v22M580 520v22M620 520v22M660 520v22M700 520v22M740 520v22M780 520v22M820 520v22M860 520v22M900 520v22M940 520v22M980 520v22M1020 520v22M1060 520v22M1100 520v22M1140 520v22M1180 520v22" stroke="#2b2521" stroke-width="10"/>
+<!-- stage -->
+<rect x="380" y="400" width="440" height="180" fill="#2b2521"/><path d="M370 400h460l-30-40H400z" fill="#9a3b26"/><rect x="400" y="420" width="400" height="140" fill="#cfa447" opacity=".25"/>
+<g fill="#16130f"><path d="M470 560c-6-40 10-60 24-60s30 20 24 60z"/><path d="M590 555c-6-40 10-70 24-70s30 30 24 70z"/><path d="M700 560c-6-40 10-60 24-60s30 20 24 60z"/></g>
+<path d="M494 500v-30M614 485v-30M724 500v-30" stroke="#f3c3ad" stroke-width="4"/>
+<!-- string lights -->
+<path d="M100 300q300 120 500 60t500-60" stroke="#f4eee2" stroke-width="2" fill="none" opacity=".7"/>
+<g fill="#cfa447"><circle cx="200" cy="340" r="6"/><circle cx="320" cy="368" r="6"/><circle cx="440" cy="383" r="6"/><circle cx="600" cy="386" r="6"/><circle cx="760" cy="379" r="6"/><circle cx="880" cy="366" r="6"/><circle cx="1000" cy="340" r="6"/></g>
+<g fill="#f4eee2" opacity=".45"><circle cx="200" cy="340" r="14"/><circle cx="320" cy="368" r="14"/><circle cx="440" cy="383" r="14"/><circle cx="600" cy="386" r="14"/><circle cx="760" cy="379" r="14"/><circle cx="880" cy="366" r="14"/><circle cx="1000" cy="340" r="14"/></g>
+<!-- crowd blankets -->
+<g><rect x="120" y="620" width="120" height="50" rx="8" fill="#9a3b26"/><rect x="300" y="660" width="140" height="56" rx="8" fill="#2f6467"/><rect x="520" y="640" width="130" height="50" rx="8" fill="#cfa447"/><rect x="720" y="680" width="150" height="56" rx="8" fill="#e39a83"/><rect x="930" y="630" width="130" height="50" rx="8" fill="#a9c6d6"/><rect x="60" y="720" width="150" height="56" rx="8" fill="#f4eee2"/><rect x="1000" y="720" width="140" height="56" rx="8" fill="#9a3b26"/></g>
+<g fill="#16130f"><circle cx="160" cy="615" r="14"/><circle cx="200" cy="612" r="14"/><circle cx="350" cy="654" r="14"/><circle cx="400" cy="650" r="14"/><circle cx="560" cy="632" r="14"/><circle cx="770" cy="672" r="14"/><circle cx="820" cy="668" r="14"/><circle cx="980" cy="622" r="14"/><circle cx="110" cy="712" r="14"/><circle cx="1060" cy="712" r="14"/><circle cx="1100" cy="708" r="14"/></g>
+<rect width="1200" height="800" filter="url(#g)"/>
+</svg>

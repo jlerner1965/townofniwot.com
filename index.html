@@ -2,106 +2,309 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Niwot | Independent Community Guide</title>
-  <meta name="description" content="A locally edited, independent guide to the places, resources, stories, and civic life of Niwot, Colorado.">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Niwot, Colorado — Come for the view. Stay for the Curse.</title>
+  <meta name="description" content="Niwot is an 1873 railroad town in the shadow of the Flatirons. Historic 2nd Avenue, Cottonwood Square, Left Hand Grange, Whistle Stop Park, Rock &amp; Rails concerts and First Friday art walks. Legend says once you see the valley, you never leave.">
+  <meta name="theme-color" content="#131a24">
+  <meta property="og:title" content="Niwot, Colorado — Come for the view. Stay for the Curse.">
+  <meta property="og:description" content="An 1873 railroad town beneath the Front Range. Historic 2nd Avenue, Rock &amp; Rails, and the legend of the Niwot Curse.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/hero-fallback.svg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2316130f'/%3E%3Cpath d='M8 44 20 26l8 10 10-16 10 14 8-8v18H8z' fill='%23e39a83'/%3E%3C/svg%3E">
+  <link rel="preload" href="assets/fonts/fraunces-latin-wonk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-  <header class="site-header">
-    <div class="masthead wrap">
-      <a class="brand" href="#top" aria-label="Niwot Independent Community Guide, home">
-        <span class="brand-name">NIWOT</span><span class="brand-tag">Independent<br>Community Guide</span>
+
+  <header class="topbar" id="topbar">
+    <div class="topbar__inner wrap">
+      <a class="brand" href="#top" aria-label="Niwot, Colorado — home">
+        <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true" width="34" height="34"><rect width="64" height="64" rx="12" fill="currentColor" opacity=".12"/><path d="M8 44 20 26l8 10 10-16 10 14 8-8v18H8z" fill="currentColor"/></svg>
+        <span class="brand__word">Niwot</span>
+        <span class="brand__est">Est. 1873</span>
       </a>
-      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span><span class="sr-only">Open menu</span></button>
-      <nav id="site-nav" aria-label="Primary navigation">
-        <a href="#explore">Explore Niwot</a><a href="#community">Community</a><a href="#living">Living in Niwot</a><a href="#civic">News &amp; Civic Life</a><a href="#story">About Niwot</a>
+      <nav class="topnav" aria-label="Primary">
+        <a href="#explore">Explore</a>
+        <a href="#history">History</a>
+        <a href="#avenue">2nd Avenue</a>
+        <a href="#events">Rock &amp; Rails</a>
+        <a href="#art">Art</a>
+        <a href="#contact">Contact</a>
       </nav>
-      <a class="civic-link" href="#civic"><span aria-hidden="true">●</span> Incorporation 2026</a>
+      <a class="btn btn--pill topbar__cta" href="#events"><span class="btn__dot" aria-hidden="true"></span>This summer</a>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top">
-      <img class="hero-landscape" src="assets/niwot-foothills.svg" width="1800" height="1000" alt="" fetchpriority="high">
-      <div class="hero-shade" aria-hidden="true"></div>
-      <div class="wrap hero-content">
-        <p class="kicker light">40.10° N &nbsp;·&nbsp; 105.17° W &nbsp;·&nbsp; Boulder County</p>
-        <h1>Know Niwot.<br>Explore it. <em>Take part.</em></h1>
-        <p class="hero-deck">An independent guide to the places, people, resources and civic decisions shaping the Niwot community.</p>
-        <div class="actions"><a class="button paper" href="#explore">Explore Niwot <span>→</span></a><a class="button-link" href="#living">Community resources <span>↘</span></a></div>
-        <a class="hero-civic" href="#civic">Niwot incorporation election information <span>→</span></a>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero on-dark" id="top" aria-labelledby="hero-title">
+      <div class="hero__scene" aria-hidden="true">
+        <canvas class="hero__gl" id="hero-gl"></canvas>
+        <img class="hero__fallback" data-photo="hero" src="assets/img/hero-fallback.svg" width="1920" height="1080" alt="" fetchpriority="high" decoding="async">
+        <div class="hero__haze"></div>
       </div>
-      <p class="hero-note">Front Range field illustration</p>
+      <div class="hero__content wrap">
+        <p class="kicker hero__kicker">Boulder County, Colorado &nbsp;·&nbsp; Elev. 5,095 ft</p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__line"><span class="hero__inner">Come for</span></span>
+          <span class="hero__line"><span class="hero__inner">the view.</span></span>
+          <span class="hero__line"><span class="hero__inner">Stay for</span></span>
+          <span class="hero__line"><span class="hero__inner"><em>the Curse.</em></span></span>
+        </h1>
+        <p class="hero__lede lede">Niwot is a railroad town from 1873, laid out along the tracks between Boulder and Longmont, in full view of the Flatirons. Legend says the valley is so beautiful that people who see it never leave.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#explore">Explore the valley <span class="btn__arrow" aria-hidden="true">↓</span></a>
+          <a class="btn btn--ghost" href="#events">Rock &amp; Rails schedule</a>
+        </div>
+      </div>
+      <dl class="hero__meta wrap">
+        <div style="--i:0"><dt>Coordinates</dt><dd>40.10° N · 105.17° W</dd></div>
+        <div style="--i:1"><dt>Founded</dt><dd>1873, Colorado Central Railroad</dd></div>
+        <div style="--i:2"><dt>Named for</dt><dd>Chief Niwot (Left Hand), Southern Arapaho</dd></div>
+        <div style="--i:3"><dt>Water</dt><dd>Left Hand Creek</dd></div>
+      </dl>
+      <a class="hero__scrollcue" href="#curse" aria-label="Scroll to the legend of the Niwot Curse"><span></span></a>
     </section>
 
-    <section class="quick-links" id="community" aria-labelledby="quick-title"><div class="wrap">
-      <div class="section-label"><span>Start here</span><h2 id="quick-title">Around Niwot</h2></div>
-      <nav class="link-index" aria-label="Quick access">
-        <a href="#happening"><b>01</b><span>Upcoming<br>events</span><i>↗</i></a>
-        <a href="#places"><b>02</b><span>Local<br>businesses</span><i>↗</i></a>
-        <a href="#explore"><b>03</b><span>Trails &amp;<br>open space</span><i>↗</i></a>
-        <a href="#community"><b>04</b><span>Community<br>organizations</span><i>↗</i></a>
-        <a href="#living"><b>05</b><span>Resident<br>resources</span><i>↗</i></a>
-        <a href="#civic"><b>06</b><span>Incorporation<br>information</span><i>↗</i></a>
-      </nav>
-    </div></section>
-
-    <section class="discover wrap" id="explore">
-      <div class="discover-intro"><p class="kicker">Discover Niwot</p><h2>Small in scale.<br><em>Rich in character.</em></h2><p>Niwot sits where working landscapes, neighborhood streets and the Front Range meet. Its historic center, local gathering places and nearby open space reward a slower look.</p></div>
-      <figure class="postcard"><img src="assets/niwot-main-street.svg" width="1200" height="900" loading="lazy" alt="Editorial illustration of independent storefronts, shade trees, bicycles and the Front Range"><figcaption>Community field study · original illustration</figcaption></figure>
-      <article class="field-note"><p class="issue">Field note No. 01</p><h3>A place best understood on foot</h3><p>Begin around the historic district, follow the paths outward, and notice where Niwot’s rural edges still shape daily life.</p><a href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer">Find Niwot trails on Boulder County’s site <span>↗</span></a></article>
-      <div class="place-list"><p class="kicker">Ways to explore</p><a href="https://niwot.com/" target="_blank" rel="noreferrer"><span>Historic district &amp; local guide</span><b>↗</b></a><a href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer"><span>Trails &amp; open space</span><b>↗</b></a><a href="#story"><span>History &amp; community story</span><b>↓</b></a></div>
-    </section>
-
-    <section class="bulletin" id="happening"><div class="wrap bulletin-grid">
-      <div><p class="kicker light">The community bulletin</p><h2>What’s happening</h2><p class="bulletin-intro">A clear place for timely gatherings, public notices and community updates—without filling the calendar with unverified listings.</p></div>
-      <article class="bulletin-main"><span class="date-block"><b>LOCAL</b><small>CALENDAR</small></span><div><p class="type">Community events</p><h3>See current Niwot events</h3><p>For current dates and organizer details, visit the community calendar maintained by the Niwot Business Association.</p><a href="https://niwot.com/events/" target="_blank" rel="noreferrer">Open the current calendar <span>↗</span></a></div></article>
-      <aside class="notice-board"><h3>Notice board</h3><a href="https://niwot.org/" target="_blank" rel="noreferrer"><span>Community Association updates</span><i>↗</i></a><a href="https://bouldercounty.gov/community/niwot/" target="_blank" rel="noreferrer"><span>Boulder County Niwot resources</span><i>↗</i></a><a href="#civic"><span>2026 civic information</span><i>↓</i></a></aside>
-    </div></section>
-
-    <section class="living wrap" id="living">
-      <header><p class="kicker">Living in Niwot</p><h2>Useful, close at hand.</h2><p>Start with the organization responsible for the information you need.</p></header>
-      <div class="resource-index">
-        <a href="https://www.svvsd.org/" target="_blank" rel="noreferrer"><b>A</b><span><strong>Schools</strong><small>St. Vrain Valley School District</small></span><i>↗</i></a>
-        <a href="https://www.rtd-denver.com/" target="_blank" rel="noreferrer"><b>B</b><span><strong>Transportation</strong><small>Regional transit information</small></span><i>↗</i></a>
-        <a href="https://bouldercounty.gov/community/niwot/" target="_blank" rel="noreferrer"><b>C</b><span><strong>County services</strong><small>Boulder County resources</small></span><i>↗</i></a>
-        <a href="https://niwot.org/" target="_blank" rel="noreferrer"><b>D</b><span><strong>Organizations</strong><small>Niwot Community Association</small></span><i>↗</i></a>
-        <a href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noreferrer"><b>E</b><span><strong>Maps &amp; trails</strong><small>Boulder County trail information</small></span><i>↗</i></a>
-        <a href="https://bouldercounty.gov/safety/" target="_blank" rel="noreferrer"><b>F</b><span><strong>Safety &amp; alerts</strong><small>County emergency resources</small></span><i>↗</i></a>
+    <!-- ================= THE CURSE ================= -->
+    <section class="curse on-dark grain" id="curse" aria-labelledby="curse-title">
+      <div class="wrap curse__inner">
+        <p class="kicker" data-reveal>The legend</p>
+        <h2 class="curse__title" id="curse-title">
+          <span class="sr-only">The Niwot Curse.</span>
+          <span class="curse__words" aria-hidden="true" data-words>“People seeing the beauty of this valley will want to stay, and their staying will be the undoing of the beauty.”</span>
+        </h2>
+        <div class="curse__body" data-reveal>
+          <p class="curse__attrib">Words attributed to Chief Niwot, spoken to the gold-seekers of 1858.</p>
+          <p>Locals just call it the Niwot Curse. Every generation since has tested it and every generation has lost. The farmers stayed. The railroad crews stayed. The antique dealers, the potters, the brewers and the Thursday-night concert crowds all stayed. Consider yourself warned.</p>
+        </div>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>Stay awhile</span><i>◆</i><span>Niwot, Colorado</span><i>◆</i><span>Est. 1873</span><i>◆</i><span>Left Hand Creek</span><i>◆</i><span>Historic 2nd Avenue</span><i>◆</i><span>Rock &amp; Rails</span><i>◆</i>
+          <span>Stay awhile</span><i>◆</i><span>Niwot, Colorado</span><i>◆</i><span>Est. 1873</span><i>◆</i><span>Left Hand Creek</span><i>◆</i><span>Historic 2nd Avenue</span><i>◆</i><span>Rock &amp; Rails</span><i>◆</i>
+        </div>
       </div>
     </section>
 
-    <section class="places" id="places"><div class="wrap places-grid">
-      <div class="places-title"><p class="kicker light">Local places</p><h2>Made here.<br>Met here.</h2><p>Independent shops, studios, food and services make Niwot’s compact commercial areas part of community life.</p><a href="https://niwot.com/business-directory/" target="_blank" rel="noreferrer">Browse the verified business directory <span>↗</span></a></div>
-      <figure class="shop-sketch"><img src="assets/niwot-main-street.svg" width="1200" height="900" loading="lazy" alt="Editorial street scene representing Niwot’s small independent commercial district"><figcaption>Local places · original editorial illustration</figcaption></figure>
-      <blockquote>“Look locally first.”<small>A guide to places, not a paid ranking</small></blockquote>
-    </div></section>
-
-    <section class="civic wrap" id="civic">
-      <div class="civic-heading"><p class="kicker">Civic life · Election 2026</p><h2>A community decision,<br>with sources in view.</h2><p>Niwot voters are scheduled to consider incorporation on November 3, 2026. This independent guide separates official election information, source documents and community perspectives.</p><p class="fact-note"><strong>Important:</strong> Official ballot language and election administration information are provided by the court-appointed Niwot Election Commission.</p></div>
-      <nav class="civic-paths" aria-label="Incorporation information">
-        <a href="https://niwotelection.org/" target="_blank" rel="noreferrer"><b>01</b><span><strong>What is being proposed</strong><small>Official election overview</small></span><i>↗</i></a>
-        <a href="https://niwotelection.org/ballot" target="_blank" rel="noreferrer"><b>02</b><span><strong>Ballot information</strong><small>Read the complete language</small></span><i>↗</i></a>
-        <a href="https://niwotelection.org/" target="_blank" rel="noreferrer"><b>03</b><span><strong>Timeline</strong><small>Current election dates</small></span><i>↗</i></a>
-        <a href="https://niwotelection.org/" target="_blank" rel="noreferrer"><b>04</b><span><strong>Source documents</strong><small>Official records and notices</small></span><i>↗</i></a>
-        <a href="#perspectives"><b>05</b><span><strong>Arguments &amp; perspectives</strong><small>Sources identified by role</small></span><i>↓</i></a>
-        <a href="https://niwotelection.org/faq" target="_blank" rel="noreferrer"><b>06</b><span><strong>Frequently asked questions</strong><small>Election Commission FAQ</small></span><i>↗</i></a>
-      </nav>
-      <div class="source-key" id="perspectives"><p><span class="dot official"></span><strong>Official source</strong><small>Election administration and ballot information</small></p><p><span class="dot perspective"></span><strong>Community perspectives</strong><small><a href="https://www.niwot.town/" target="_blank" rel="noreferrer">Incorporation proponent ↗</a> · <a href="https://neighborsforniwot.org/" target="_blank" rel="noreferrer">Incorporation opponent ↗</a></small></p><p><span class="dot independent"></span><strong>This guide</strong><small>Independent, nonofficial context and links</small></p></div>
+    <!-- ================= COMMUNITY PILLARS (BENTO) ================= -->
+    <section class="pillars" id="explore" aria-labelledby="pillars-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker" data-reveal>Four corners of town</p>
+          <h2 id="pillars-title" data-reveal>Small in scale. <em>Enormous</em> in character.</h2>
+          <p class="lede" data-reveal>Everything in Niwot is a short walk from the tracks. Start at any of these four and the rest of town will find you.</p>
+        </header>
+        <div class="bento">
+          <a class="tile tile--hero" href="#avenue" data-reveal data-tilt>
+            <img class="tile__media" data-photo="second-avenue" src="assets/img/second-avenue.svg" width="1200" height="900" alt="Brick storefronts along historic 2nd Avenue" loading="lazy" decoding="async">
+            <div class="tile__body">
+              <p class="tile__eyebrow">01 · Old Town</p>
+              <h3>Historic 2nd Avenue</h3>
+              <p>Brick, false fronts and iron cornices from the 1870s to the 1910s, still full of antique dealers, galleries, a tavern and a bakery. A Boulder County historic district since 1993.</p>
+              <span class="tile__cta">Walk the avenue <i aria-hidden="true">→</i></span>
+            </div>
+          </a>
+          <a class="tile tile--tall" href="#events" data-reveal data-tilt>
+            <img class="tile__media" data-photo="whistle-stop" src="assets/img/whistle-stop.svg" width="1200" height="800" alt="Summer evening concert at Whistle Stop Park beside the tracks" loading="lazy" decoding="async">
+            <div class="tile__body">
+              <p class="tile__eyebrow">02 · Trackside</p>
+              <h3>Whistle Stop Park</h3>
+              <p>A pocket of lawn where the depot used to stand. Home of Rock &amp; Rails on summer Thursday nights, when the whole town shows up with a blanket.</p>
+              <span class="tile__cta">See the lineup <i aria-hidden="true">→</i></span>
+            </div>
+          </a>
+          <a class="tile tile--wide" href="#avenue" data-reveal data-tilt>
+            <img class="tile__media" data-photo="cottonwood-square" src="assets/img/cottonwood-square.svg" width="1200" height="800" alt="Cottonwood Square plaza with modern storefronts and cottonwood trees" loading="lazy" decoding="async">
+            <div class="tile__body">
+              <p class="tile__eyebrow">03 · New Town</p>
+              <h3>Cottonwood Square</h3>
+              <p>Niwot's modern side, landscaped and low-slung: the market, coffee, restaurants and everyday services, a few minutes from the tracks.</p>
+              <span class="tile__cta">Old town vs. new town <i aria-hidden="true">→</i></span>
+            </div>
+          </a>
+          <a class="tile tile--square" href="#contact" data-reveal data-tilt>
+            <img class="tile__media" data-photo="grange" src="assets/img/grange.svg" width="900" height="900" alt="The white Left Hand Grange hall lit at dusk" loading="lazy" decoding="async">
+            <div class="tile__body">
+              <p class="tile__eyebrow">04 · Gathering place</p>
+              <h3>Left Hand Grange</h3>
+              <p>Grange No. 9 has anchored community life on 2nd Avenue for more than a century: dances, meetings, markets and the occasional wedding.</p>
+              <span class="tile__cta">Get involved <i aria-hidden="true">→</i></span>
+            </div>
+          </a>
+          <div class="tile tile--stat" data-reveal>
+            <p class="stat__num"><span data-count="5095">5,095</span><small>ft</small></p>
+            <p class="stat__label">Elevation. High enough for alpenglow, low enough for peaches.</p>
+          </div>
+          <div class="tile tile--stat tile--stat-accent" data-reveal>
+            <p class="stat__num"><span data-count="1873">1873</span></p>
+            <p class="stat__label">The year the Colorado Central laid rail between Boulder and Longmont and a town appeared beside it.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="story" id="story"><div class="wrap story-grid">
-      <figure class="story-mark"><img src="assets/niwot-history.svg" width="1200" height="760" loading="lazy" alt="Archival-style illustration of railroad tracks, open fields, a depot and the Front Range"><figcaption>Niwot history · original editorial illustration</figcaption></figure>
-      <div><p class="kicker">Niwot’s story</p><h2>Old roads, new chapters.</h2><p>Niwot’s story is carried in its historic district, agricultural roots, rail-era growth and the people who continue to shape community life. The name honors Chief Niwot, an Arapaho leader whose people lived along Colorado’s Front Range.</p><a href="https://niwot.org/history-of-niwot/" target="_blank" rel="noreferrer">Read the community history <span>↗</span></a></div>
-      <ol class="story-fragments"><li><b>Before 1859</b><span>Arapaho homeland along the Front Range</span></li><li><b>1870s</b><span>Railroad-era settlement and town plat</span></li><li><b>Today</b><span>An unincorporated Boulder County community</span></li></ol>
-    </div></section>
+    <!-- ================= HISTORY (PINNED HORIZONTAL TIMELINE) ================= -->
+    <section class="history on-dark grain" id="history" aria-labelledby="history-title">
+      <div class="history__pin">
+        <header class="history__head wrap">
+          <p class="kicker" data-reveal>Chief Niwot's valley</p>
+          <h2 id="history-title" data-reveal>One creek. <em>Four</em> chapters.</h2>
+          <p class="history__hint" data-reveal aria-hidden="true">Keep scrolling <span>→</span></p>
+        </header>
+        <div class="history__rail" aria-hidden="true"><div class="history__rail-progress" id="rail-progress"></div></div>
+        <ol class="timeline" id="timeline" role="list"></ol>
+      </div>
+    </section>
 
-    <section class="newsletter"><div class="wrap newsletter-inner"><div><p class="kicker light">From the local bulletin</p><h2>Keep up with Niwot.</h2><p>Occasional community updates, useful links and civic information. No marketing noise.</p></div><form id="newsletter-form"><label for="email">Email address</label><div><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required><button type="submit">Join the bulletin <span>→</span></button></div><p class="form-message" role="status"></p></form></div></section>
+    <!-- ================= 2ND AVENUE COMMERCE ================= -->
+    <section class="avenue" id="avenue" aria-labelledby="avenue-title">
+      <div class="wrap">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="kicker" data-reveal>Two towns, one street</p>
+            <h2 id="avenue-title" data-reveal>Old Town brick. <em>New Town</em> cottonwoods.</h2>
+          </div>
+          <p class="lede" data-reveal>Second Avenue keeps the 1875 plat and the storefronts that came with it. A few blocks away, Cottonwood Square handles the modern errands. Both close early. Neither is in a hurry.</p>
+        </header>
+
+        <div class="compare" data-reveal>
+          <figure class="compare__pane compare__pane--old">
+            <img data-photo="second-avenue" src="assets/img/second-avenue.svg" width="1200" height="900" alt="Historic brick storefronts on 2nd Avenue" loading="lazy" decoding="async">
+            <figcaption><span>Old Town</span>Historic 2nd Avenue, platted 1875</figcaption>
+          </figure>
+          <figure class="compare__pane compare__pane--new">
+            <img data-photo="cottonwood-square" src="assets/img/cottonwood-square.svg" width="1200" height="800" alt="Cottonwood Square modern commercial plaza" loading="lazy" decoding="async">
+            <figcaption><span>New Town</span>Cottonwood Square, landscaped and low-slung</figcaption>
+          </figure>
+          <div class="compare__divider" aria-hidden="true"><span>vs.</span></div>
+        </div>
+
+        <div class="directory">
+          <div class="directory__intro" data-reveal>
+            <h3>Along the avenue</h3>
+            <p>Independent, owner-run and mostly one of a kind. Hover a category to see where it lives. The Niwot Business Association keeps the current directory.</p>
+            <a class="btn btn--outline" href="https://niwot.com/business-directory/" target="_blank" rel="noopener">Full business directory <span class="btn__arrow" aria-hidden="true">↗</span></a>
+          </div>
+          <ul class="directory__list" id="directory" role="list"></ul>
+          <div class="directory__preview" id="directory-preview" aria-hidden="true">
+            <img src="assets/img/second-avenue.svg" width="600" height="450" alt="" loading="lazy" decoding="async">
+            <span class="directory__preview-label"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ROCK & RAILS ================= -->
+    <section class="events on-dark grain" id="events" aria-labelledby="events-title">
+      <div class="wrap events__inner">
+        <header class="section-head">
+          <p class="kicker" data-reveal>Thursday nights at Whistle Stop Park</p>
+          <h2 id="events-title" data-reveal>Rock <em>&amp;</em> Rails</h2>
+          <p class="lede" data-reveal>Free concerts on the lawn beside the tracks, June through August. Bring a chair, buy a beer from the nonprofit tent, and wave when the train comes through. It always does.</p>
+        </header>
+        <div class="events__layout">
+          <ol class="schedule" id="schedule" role="list" aria-label="Summer concert schedule"></ol>
+          <aside class="events__aside" data-reveal>
+            <div class="events__card">
+              <h3>Know before you go</h3>
+              <ul role="list">
+                <li><b>Where</b> Whistle Stop Park, 2nd Ave &amp; Murray St</li>
+                <li><b>When</b> Gates 5:30 pm · Music 6:00 to 8:30 pm</li>
+                <li><b>Cost</b> Free. Food and drink sales support local nonprofits.</li>
+                <li><b>Parking</b> Tight. Walk, bike or park at Cottonwood Square.</li>
+              </ul>
+              <a class="btn btn--primary" href="https://niwot.com/events/" target="_blank" rel="noopener">Official calendar <span class="btn__arrow" aria-hidden="true">↗</span></a>
+              <p class="events__note">Dates shown are placeholders until the season is announced. The official calendar is the source of truth.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ART WALKS ================= -->
+    <section class="art" id="art" aria-labelledby="art-title">
+      <div class="wrap">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="kicker" data-reveal>First Fridays &amp; the Sculpture Park</p>
+            <h2 id="art-title" data-reveal>Art, <em>trackside.</em></h2>
+          </div>
+          <p class="lede" data-reveal>Galleries on 2nd Avenue stay open late on the first Friday of the month. Between them, a rotating sculpture park runs along the railroad right-of-way, so the walk itself is the exhibit.</p>
+        </header>
+        <div class="art__grid">
+          <figure class="art__figure" data-reveal>
+            <img data-photo="art-walk" src="assets/img/art-walk.svg" width="1200" height="800" alt="Sculptures on the lawn beside the railroad tracks at golden hour" loading="lazy" decoding="async">
+            <figcaption>Niwot Sculpture Park, along the tracks between 2nd Avenue and Whistle Stop Park</figcaption>
+          </figure>
+          <ol class="stops" role="list" aria-label="Suggested art walk route">
+            <li data-reveal><span class="stops__num">1</span><div><h3>Galleries &amp; studios</h3><p>Start on the west end of 2nd Avenue. Painters, potters and jewelers keep studios above and behind the storefronts.</p></div></li>
+            <li data-reveal><span class="stops__num">2</span><div><h3>Sculpture Park</h3><p>Cross to the tracks. Large-scale work on loan from Colorado artists, rotated every year or two.</p></div></li>
+            <li data-reveal><span class="stops__num">3</span><div><h3>Whistle Stop Park</h3><p>End on the lawn. On concert nights, this is where the walk turns into a party.</p></div></li>
+            <li data-reveal><span class="stops__num">4</span><div><h3>Left Hand Grange</h3><p>Check the Grange board for shows, markets and the occasional community dance.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT / GET INVOLVED ================= -->
+    <section class="contact on-dark grain" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker" data-reveal>Stay in touch</p>
+          <h2 id="contact-title" data-reveal>Already <em>cursed?</em> Get involved.</h2>
+          <p class="lede" data-reveal>Niwot is unincorporated, so the town runs on its associations, its Grange and its volunteers. These are the people to talk to.</p>
+        </header>
+        <ul class="orgs" role="list">
+          <li data-reveal><a class="org" href="https://niwot.com/" target="_blank" rel="noopener"><span class="org__k">Business &amp; events</span><span class="org__n">Niwot Business Association</span><span class="org__d">Directory, calendar, Rock &amp; Rails, First Fridays.</span><span class="org__a" aria-hidden="true">↗</span></a></li>
+          <li data-reveal><a class="org" href="https://niwot.org/" target="_blank" rel="noopener"><span class="org__k">Neighbors</span><span class="org__n">Niwot Community Association</span><span class="org__d">Community updates, local history and civic life.</span><span class="org__a" aria-hidden="true">↗</span></a></li>
+          <li data-reveal><a class="org" href="https://niwot.org/history-of-niwot/" target="_blank" rel="noopener"><span class="org__k">Gathering place</span><span class="org__n">Left Hand Grange No. 9</span><span class="org__d">Hall rentals, meetings, markets and dances on 2nd Avenue.</span><span class="org__a" aria-hidden="true">↗</span></a></li>
+          <li data-reveal><a class="org" href="https://bouldercounty.gov/community/niwot/" target="_blank" rel="noopener"><span class="org__k">County services</span><span class="org__n">Boulder County</span><span class="org__d">Roads, permits, open space and trails.</span><span class="org__a" aria-hidden="true">↗</span></a></li>
+          <li data-reveal><a class="org" href="https://bouldercounty.gov/open-space/parks-and-trails/niwot-trails/" target="_blank" rel="noopener"><span class="org__k">Outside</span><span class="org__n">Niwot Trails</span><span class="org__d">Loops through the fields and along Left Hand Creek.</span><span class="org__a" aria-hidden="true">↗</span></a></li>
+          <li data-reveal><a class="org org--civic" href="https://niwotelection.org/" target="_blank" rel="noopener"><span class="org__k">Election 2026</span><span class="org__n">Niwot Incorporation</span><span class="org__d">Official ballot language and dates from the Niwot Election Commission.</span><span class="org__a" aria-hidden="true">↗</span></a></li>
+        </ul>
+        <form class="signup" id="signup" data-reveal novalidate>
+          <div class="signup__text">
+            <h3>The occasional postcard</h3>
+            <p>Concert dates, art walks and the odd bit of town news. No noise.</p>
+          </div>
+          <div class="signup__row">
+            <label class="sr-only" for="email">Email address</label>
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+            <button class="btn btn--primary" type="submit">Send me one</button>
+          </div>
+          <p class="signup__msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <footer><div class="wrap footer-top"><a class="footer-brand" href="#top">NIWOT<span>Independent Community Guide</span></a><nav aria-label="Footer navigation"><div><strong>Explore</strong><a href="#explore">Explore Niwot</a><a href="#happening">What’s happening</a><a href="#places">Local places</a></div><div><strong>Community</strong><a href="#living">Resident resources</a><a href="#community">Organizations</a><a href="#story">Niwot’s story</a></div><div><strong>Civic information</strong><a href="#civic">Incorporation 2026</a><a href="https://niwotelection.org/" target="_blank" rel="noreferrer">Official election source ↗</a><a href="#perspectives">Source transparency</a></div></nav></div><div class="wrap disclaimer"><p><strong>Independent, not official.</strong> TownofNiwot.com is an independent community resource and is not an official government website.</p><a href="mailto:hello@townofniwot.com">hello@townofniwot.com</a></div><div class="wrap copyright"><span>© 2026 TownofNiwot.com</span><span>Made for neighbors, newcomers and the Niwot-curious.</span></div></footer>
-  <script src="app.js"></script>
+  <footer class="footer on-dark">
+    <div class="wrap footer__inner">
+      <p class="footer__brand display">Niwot</p>
+      <div class="footer__cols">
+        <div><b>Independent, not official.</b> TownofNiwot.com is a community-made guide and is not a government website. Niwot is an unincorporated community in Boulder County, Colorado.</div>
+        <div>Illustrations are original artwork made for this site. Replace them with photography by adding files to <code>assets/img/photos/</code> as described in the README.</div>
+        <div><a href="mailto:hello@townofniwot.com">hello@townofniwot.com</a><br>© <span id="year">2026</span> TownofNiwot.com</div>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="bottombar" id="bottombar" aria-label="Sections">
+    <a href="#top" data-section="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20 9 9l4 6 3-4 5 9z"/></svg><span>Home</span></a>
+    <a href="#explore" data-section="explore"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg><span>Explore</span></a>
+    <a href="#events" data-section="events"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12.5a3.5 3.5 0 1 1-2-3.16V7l8-2v7.5a3.5 3.5 0 1 1-2-3.16V3z"/></svg><span>Music</span></a>
+    <a href="#history" data-section="history"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16v2H4zM6 8h12v8H6zM8 4h8v3H8z"/></svg><span>History</span></a>
+    <a href="#contact" data-section="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zm2 2v.5l7 4.5 7-4.5V7z"/></svg><span>Contact</span></a>
+    <span class="bottombar__pill" aria-hidden="true"></span>
+  </nav>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
