@@ -1,0 +1,105 @@
+/* ==========================================================================
+   NIWOT — Base: fonts, reset, typography, accessibility, utilities
+   ========================================================================== */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  /* Fraunces instanced with SOFT=30 and WONK=1 baked in (see README); opsz + wght stay variable */
+  src: url("../assets/fonts/fraunces-latin-wonk.woff2") format("woff2-variations"),
+       url("../assets/fonts/fraunces-latin-wonk.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 1rem);
+  background: var(--night);
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 var(--step-0)/1.6 var(--font-body);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+img { color: var(--ink-soft); font-size: var(--step--1); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, h4, p, figure, blockquote { margin: 0; }
+:where(h1, h2, h3, h4) { font-weight: inherit; }
+
+/* Display type — Fraunces with the WONK axis on for the 1870s wood-type feel */
+.display, h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+h1 { font-size: var(--step-7); }
+h2 { font-size: var(--step-5); }
+h3 { font-size: var(--step-2); font-variation-settings: "opsz" 48; letter-spacing: -0.01em; line-height: 1.05; }
+.display-italic, em { font-style: italic; font-synthesis: style; }
+h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; font-synthesis: style; color: var(--accent); padding-right: .06em; }
+p { max-width: var(--measure); text-wrap: pretty; }
+.lede { font-size: var(--step-1); line-height: 1.45; color: var(--ink-2); }
+.kicker {
+  display: inline-flex; align-items: center; gap: .6em;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.kicker::before { content: ""; width: 2.2em; height: 1px; background: currentColor; opacity: .8; }
+.kicker--plain::before { display: none; }
+
+/* Focus */
+:focus-visible { outline: 3px solid var(--cottonwood); outline-offset: 4px; border-radius: 2px; }
+.on-dark :focus-visible, .on-dark:focus-visible { outline-color: var(--alpenglow-2); }
+
+/* Utilities */
+.wrap { width: min(var(--max), 100% - 2 * var(--gutter)); margin-inline: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; top: -100px; left: var(--s2); z-index: 1000; padding: .8em 1.2em; background: var(--ink); color: var(--paper); text-decoration: none; border-radius: var(--radius); transition: top var(--t-fast); }
+.skip-link:focus { top: var(--s2); }
+.on-dark { --bg: var(--night); --fg: var(--paper); --ink-soft: #b7b0a4; --ink-2: #e7dfd0; --line: rgba(244,238,226,.14); --line-strong: rgba(244,238,226,.34); --accent: var(--alpenglow); --accent-fg: var(--night); background: var(--bg); color: var(--fg); }
+.on-paper { --bg: var(--paper); --fg: var(--ink); background: var(--bg); color: var(--fg); }
+
+/* Grain overlay for a printed feel */
+.grain { position: relative; isolation: isolate; }
+.grain::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: var(--grain); background-size: 240px; opacity: .55; mix-blend-mode: multiply; }
+.on-dark.grain::after { mix-blend-mode: screen; opacity: .18; }
+.grain > * { position: relative; z-index: 1; }
+
+/* Reveal-on-scroll: JS adds .is-ready to <html>; items start hidden only then,
+   so the page is fully visible without JS or when motion is reduced. */
+.is-ready [data-reveal] { opacity: 0; transform: translate3d(0, 28px, 0); will-change: transform, opacity; }
+.is-ready [data-reveal].revealed { opacity: 1; transform: none; transition: opacity var(--t-slow) var(--ease-out), transform var(--t-slow) var(--ease-out); }
+@media (prefers-reduced-motion: reduce) {
+  .is-ready [data-reveal] { opacity: 1; transform: none; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 760px) { body { padding-bottom: calc(var(--bottombar-h) + env(safe-area-inset-bottom)); } }

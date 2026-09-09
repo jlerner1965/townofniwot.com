@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="t d"><title id="t">Left Hand Grange</title><desc id="d">Paper-cut illustration of the white clapboard Left Hand Grange hall with a tall gable, lantern-lit windows and a wheat motif.</desc>
+<defs><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="3"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .1 0"/></filter></defs>
+<rect width="900" height="900" fill="#1d2836"/>
+<circle cx="700" cy="180" r="70" fill="#f3c3ad"/>
+<g fill="#f4eee2" opacity=".8"><circle cx="120" cy="120" r="2"/><circle cx="260" cy="60" r="1.6"/><circle cx="420" cy="140" r="1.8"/><circle cx="560" cy="80" r="1.4"/><circle cx="820" cy="300" r="1.6"/></g>
+<rect y="640" width="900" height="260" fill="#131a24"/>
+<path d="M150 400 450 220l300 180v300H150z" fill="#f4eee2"/>
+<path d="M130 410 450 200l320 210-24 18L450 236 154 428z" fill="#ddd2bd"/>
+<g stroke="#ddd2bd" stroke-width="3"><path d="M150 440h600M150 480h600M150 520h600M150 560h600M150 600h600M150 640h600"/></g>
+<g fill="#cfa447"><rect x="200" y="450" width="70" height="120"/><rect x="630" y="450" width="70" height="120"/><rect x="300" y="450" width="70" height="120" opacity=".8"/><rect x="530" y="450" width="70" height="120" opacity=".8"/></g>
+<g stroke="#2b2521" stroke-width="4" fill="none"><rect x="200" y="450" width="70" height="120"/><rect x="630" y="450" width="70" height="120"/><rect x="300" y="450" width="70" height="120"/><rect x="530" y="450" width="70" height="120"/><path d="M235 450v120M665 450v120M335 450v120M565 450v120M200 510h70M630 510h70M300 510h70M530 510h70"/></g>
+<rect x="410" y="520" width="80" height="180" fill="#9a3b26"/><rect x="410" y="520" width="80" height="12" fill="#6e2716"/><circle cx="480" cy="612" r="4" fill="#cfa447"/>
+<path d="M395 505h110l-10-22h-90z" fill="#2b2521"/>
+<rect x="430" y="330" width="40" height="60" rx="20" fill="#cfa447"/><rect x="430" y="330" width="40" height="60" rx="20" fill="none" stroke="#2b2521" stroke-width="4"/>
+<text x="450" y="290" text-anchor="middle" font-family="Georgia,serif" font-size="26" font-weight="700" fill="#2b2521" letter-spacing="3">GRANGE Nº 9</text>
+<g stroke="#cfa447" stroke-width="5" fill="none" stroke-linecap="round"><path d="M60 700c10-60 30-80 30-80s-10 50 0 80M60 700c-10-50-40-70-40-70s10 40 20 70M60 700v130"/><path d="M840 700c10-60 30-80 30-80s-10 50 0 80M840 700c-10-50-40-70-40-70s10 40 20 70M840 700v130"/></g>
+<rect width="900" height="900" filter="url(#g)"/>
+</svg>

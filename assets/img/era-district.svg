@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="t d"><title id="t">Niwot Historic District, 1993</title><desc id="d">Close-up illustration of a preserved brick storefront facade with a cast-iron cornice, arched windows, a hanging shop sign and a historic district plaque.</desc>
+<defs><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="17"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .1 0"/></filter>
+<pattern id="brick" width="44" height="22" patternUnits="userSpaceOnUse"><rect width="44" height="22" fill="#9a3b26"/><path d="M0 11h44M22 0v11M0 11v11M44 11v11" stroke="#7a2d1b" stroke-width="1.6"/></pattern></defs>
+<rect width="900" height="1100" fill="url(#brick)"/>
+<rect y="0" width="900" height="120" fill="#16130f"/><rect y="120" width="900" height="24" fill="#f4eee2"/><rect y="144" width="900" height="12" fill="#6e2716"/>
+<g fill="#16130f"><circle cx="150" cy="60" r="22"/><circle cx="450" cy="60" r="22"/><circle cx="750" cy="60" r="22"/></g><g fill="#cfa447"><circle cx="150" cy="60" r="10"/><circle cx="450" cy="60" r="10"/><circle cx="750" cy="60" r="10"/></g>
+<g><path d="M110 460V300a90 90 0 0 1 180 0v160z" fill="#1d2836"/><path d="M110 460V300a90 90 0 0 1 180 0v160" fill="none" stroke="#f4eee2" stroke-width="12"/><path d="M200 220v240M110 340h180" stroke="#f4eee2" stroke-width="6"/>
+<path d="M360 460V300a90 90 0 0 1 180 0v160z" fill="#1d2836"/><path d="M360 460V300a90 90 0 0 1 180 0v160" fill="none" stroke="#f4eee2" stroke-width="12"/><path d="M450 220v240M360 340h180" stroke="#f4eee2" stroke-width="6"/>
+<path d="M610 460V300a90 90 0 0 1 180 0v160z" fill="#1d2836"/><path d="M610 460V300a90 90 0 0 1 180 0v160" fill="none" stroke="#f4eee2" stroke-width="12"/><path d="M700 220v240M610 340h180" stroke="#f4eee2" stroke-width="6"/></g>
+<g fill="#f3c3ad" opacity=".35"><path d="M120 450V300a80 80 0 0 1 60-78v228z"/><path d="M370 450V300a80 80 0 0 1 60-78v228z"/><path d="M620 450V300a80 80 0 0 1 60-78v228z"/></g>
+<rect x="80" y="470" width="740" height="16" fill="#f4eee2"/>
+<rect x="80" y="486" width="740" height="60" fill="#2f6467"/><path d="M80 546h740l24 40H56z" fill="#2f6467"/><path d="M56 586h788v12H56z" fill="#1d3f42"/>
+<text x="450" y="528" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#f4eee2" letter-spacing="10">EST. 1875</text>
+<!-- hanging sign -->
+<path d="M700 620h120M760 620v40" stroke="#16130f" stroke-width="8"/><rect x="690" y="660" width="140" height="90" rx="6" fill="#f4eee2" stroke="#16130f" stroke-width="6"/><text x="760" y="716" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#9a3b26">OPEN</text>
+<!-- storefront window -->
+<rect x="100" y="620" width="520" height="380" fill="#16130f"/><rect x="116" y="636" width="488" height="348" fill="#a9c6d6" opacity=".85"/>
+<path d="M116 636l488 348M116 984l488-348" stroke="#f4eee2" stroke-width="2" opacity=".35"/>
+<text x="360" y="830" text-anchor="middle" font-family="Georgia,serif" font-size="46" font-weight="700" fill="#16130f" letter-spacing="6" opacity=".85">ANTIQUES</text>
+<!-- plaque -->
+<rect x="660" y="820" width="180" height="120" rx="8" fill="#cfa447" stroke="#6e2716" stroke-width="6"/><text x="750" y="866" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#16130f" letter-spacing="2">NIWOT HISTORIC</text><text x="750" y="892" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-weight="700" fill="#16130f" letter-spacing="2">DISTRICT</text><text x="750" y="918" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#16130f" letter-spacing="3">1993</text>
+<rect y="1000" width="900" height="100" fill="#c9bfa8"/>
+<rect width="900" height="1100" filter="url(#g)"/>
+</svg>
