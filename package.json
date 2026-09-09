@@ -1,0 +1,26 @@
+{
+  "name": "townofniwot",
+  "version": "1.0.0",
+  "description": "TownofNiwot.com — an independent community guide to Niwot, Colorado",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "dev": "eleventy --serve",
+    "clean": "rm -rf _site",
+    "test": "node --test \"test/**/*.test.js\"",
+    "verify": "node verify.mjs",
+    "widths": "node widths.mjs",
+    "check": "npm run build && npm test && npm run verify",
+    "links": "node linkcheck.mjs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^7.0.0",
+    "axe-core": "^4.13.0",
+    "lighthouse": "^12.8.2",
+    "playwright": "^1.63.0"
+  }
+}
