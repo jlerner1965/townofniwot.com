@@ -9,7 +9,7 @@
   <meta property="og:title" content="Niwot, Colorado — Come for the view. Stay for the Curse.">
   <meta property="og:description" content="An 1873 railroad town beneath the Front Range. Historic 2nd Avenue, Rock &amp; Rails, and the legend of the Niwot Curse.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/img/hero-fallback.svg">
+  <meta property="og:image" content="assets/img/photos/hero-800.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2316130f'/%3E%3Cpath d='M8 44 20 26l8 10 10-16 10 14 8-8v18H8z' fill='%23e39a83'/%3E%3C/svg%3E">
   <link rel="preload" href="assets/fonts/fraunces-latin-wonk.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -74,6 +74,9 @@
 
     <!-- ================= THE CURSE ================= -->
     <section class="curse on-dark grain" id="curse" aria-labelledby="curse-title">
+      <div class="curse__bg" aria-hidden="true">
+        <img data-photo="curse" src="assets/img/hero-fallback.svg" width="1200" height="514" alt="" loading="lazy" decoding="async">
+      </div>
       <div class="wrap curse__inner">
         <p class="kicker" data-reveal>The legend</p>
         <h2 class="curse__title" id="curse-title">
@@ -103,7 +106,7 @@
         </header>
         <div class="bento">
           <a class="tile tile--hero" href="#avenue" data-reveal data-tilt>
-            <img class="tile__media" data-photo="second-avenue" src="assets/img/second-avenue.svg" width="1200" height="900" alt="Brick storefronts along historic 2nd Avenue" loading="lazy" decoding="async">
+            <img class="tile__media" data-photo="second-avenue" src="assets/img/second-avenue.svg" width="1200" height="900" alt="The Niwot Tribune building, a false-front storefront on 2nd Avenue" loading="lazy" decoding="async">
             <div class="tile__body">
               <p class="tile__eyebrow">01 · Old Town</p>
               <h3>Historic 2nd Avenue</h3>
@@ -112,7 +115,7 @@
             </div>
           </a>
           <a class="tile tile--tall" href="#events" data-reveal data-tilt>
-            <img class="tile__media" data-photo="whistle-stop" src="assets/img/whistle-stop.svg" width="1200" height="800" alt="Summer evening concert at Whistle Stop Park beside the tracks" loading="lazy" decoding="async">
+            <img class="tile__media" data-photo="whistle-stop" src="assets/img/whistle-stop.svg" width="1200" height="800" alt="The red CB&amp;Q caboose at Whistle Stop Park, strung with festoon lights" loading="lazy" decoding="async">
             <div class="tile__body">
               <p class="tile__eyebrow">02 · Trackside</p>
               <h3>Whistle Stop Park</h3>
@@ -121,7 +124,7 @@
             </div>
           </a>
           <a class="tile tile--wide" href="#avenue" data-reveal data-tilt>
-            <img class="tile__media" data-photo="cottonwood-square" src="assets/img/cottonwood-square.svg" width="1200" height="800" alt="Cottonwood Square plaza with modern storefronts and cottonwood trees" loading="lazy" decoding="async">
+            <img class="tile__media" data-photo="cottonwood-square" src="assets/img/cottonwood-square.svg" width="1200" height="800" alt="Patio umbrellas and the Niwot Tavern at Cottonwood Square" loading="lazy" decoding="async">
             <div class="tile__body">
               <p class="tile__eyebrow">03 · New Town</p>
               <h3>Cottonwood Square</h3>
@@ -176,11 +179,11 @@
 
         <div class="compare" data-reveal>
           <figure class="compare__pane compare__pane--old">
-            <img data-photo="second-avenue" src="assets/img/second-avenue.svg" width="1200" height="900" alt="Historic brick storefronts on 2nd Avenue" loading="lazy" decoding="async">
+            <img data-photo="second-avenue-street" src="assets/img/second-avenue.svg" width="1200" height="900" alt="Storefronts and patios on the 300 block of 2nd Avenue" loading="lazy" decoding="async">
             <figcaption><span>Old Town</span>Historic 2nd Avenue, platted 1875</figcaption>
           </figure>
           <figure class="compare__pane compare__pane--new">
-            <img data-photo="cottonwood-square" src="assets/img/cottonwood-square.svg" width="1200" height="800" alt="Cottonwood Square modern commercial plaza" loading="lazy" decoding="async">
+            <img data-photo="cottonwood-square" src="assets/img/cottonwood-square.svg" width="1200" height="800" alt="Niwot Tavern and patios at Cottonwood Square" loading="lazy" decoding="async">
             <figcaption><span>New Town</span>Cottonwood Square, landscaped and low-slung</figcaption>
           </figure>
           <div class="compare__divider" aria-hidden="true"><span>vs.</span></div>
@@ -194,7 +197,7 @@
           </div>
           <ul class="directory__list" id="directory" role="list"></ul>
           <div class="directory__preview" id="directory-preview" aria-hidden="true">
-            <img src="assets/img/second-avenue.svg" width="600" height="450" alt="" loading="lazy" decoding="async">
+            <img src="assets/img/photos/second-avenue-800.webp" width="600" height="450" alt="" loading="lazy" decoding="async">
             <span class="directory__preview-label"></span>
           </div>
         </div>
@@ -240,8 +243,8 @@
         </header>
         <div class="art__grid">
           <figure class="art__figure" data-reveal>
-            <img data-photo="art-walk" src="assets/img/art-walk.svg" width="1200" height="800" alt="Sculptures on the lawn beside the railroad tracks at golden hour" loading="lazy" decoding="async">
-            <figcaption>Niwot Sculpture Park, along the tracks between 2nd Avenue and Whistle Stop Park</figcaption>
+            <img data-photo="art-walk" src="assets/img/art-walk.svg" width="1200" height="800" alt="The Vintage Colorado Niwot gateway sculpture with the Flatirons behind it" loading="lazy" decoding="async">
+            <figcaption>The Niwot gateway sculpture at the highway edge, Flatirons behind</figcaption>
           </figure>
           <ol class="stops" role="list" aria-label="Suggested art walk route">
             <li data-reveal><span class="stops__num">1</span><div><h3>Galleries &amp; studios</h3><p>Start on the west end of 2nd Avenue. Painters, potters and jewelers keep studios above and behind the storefronts.</p></div></li>
@@ -290,7 +293,7 @@
       <p class="footer__brand display">Niwot</p>
       <div class="footer__cols">
         <div><b>Independent, not official.</b> TownofNiwot.com is a community-made guide and is not a government website. Niwot is an unincorporated community in Boulder County, Colorado.</div>
-        <div>Illustrations are original artwork made for this site. Replace them with photography by adding files to <code>assets/img/photos/</code> as described in the README.</div>
+        <div>Photography licensed for use on this site. Remaining illustrations are original artwork; see the README to add more photos.</div>
         <div><a href="mailto:hello@townofniwot.com">hello@townofniwot.com</a><br>© <span id="year">2026</span> TownofNiwot.com</div>
       </div>
     </div>

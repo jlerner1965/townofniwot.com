@@ -93,6 +93,7 @@ p { max-width: var(--measure); text-wrap: pretty; }
 .grain::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: var(--grain); background-size: 240px; opacity: .55; mix-blend-mode: multiply; }
 .on-dark.grain::after { mix-blend-mode: screen; opacity: .18; }
 .grain > * { position: relative; z-index: 1; }
+.grain > .curse__bg { position: absolute; z-index: 0; }
 
 /* Reveal-on-scroll: JS adds .is-ready to <html>; items start hidden only then,
    so the page is fully visible without JS or when motion is reduced. */

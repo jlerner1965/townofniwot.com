@@ -32,7 +32,8 @@ vendor/               gsap.min.js + ScrollTrigger.min.js, copied from npm
 assets/fonts/         Fraunces (display) and Atkinson Hyperlegible (body), self-hosted
 assets/img/           original SVG illustrations, one per slot
 assets/img/photos/    generated photo sets (see below)
-scripts/photos.mjs    turns source JPGs into AVIF/WebP/JPEG responsive sets
+photos-src/           licensed source photographs, one per slot
+scripts/photos.mjs    turns source JPGs into cropped AVIF/WebP/JPEG responsive sets
 ```
 
 ## Design notes
@@ -52,27 +53,37 @@ scripts/photos.mjs    turns source JPGs into AVIF/WebP/JPEG responsive sets
 - **Accessibility.** Landmarks, skip link, visible focus rings, `aria-current` on nav, decorative art
   hidden from assistive tech, and full `prefers-reduced-motion` support.
 
-## Adding real photography
+## Photography
 
-Every image slot renders an original illustration until a photo is listed in `js/data/photos.js`.
-Slots: `hero`, `second-avenue`, `cottonwood-square`, `grange`, `whistle-stop`, `art-walk`,
-`era-arapaho`, `era-railroad`, `era-plat`, `era-district`.
+Eight photographs in `photos-src/` were supplied by the client and are licensed for use on this
+site. Do not substitute stock photography. They map to slots like this:
 
-1. Put source images in `photos-src/`, named by slot (`photos-src/second-avenue.jpg`).
-2. Run `npm run photos`. It writes `assets/img/photos/<slot>-{800,1400,2200}.{avif,webp,jpg}`.
+| Slot | Source | Where it appears |
+|---|---|---|
+| `hero` | Front Range sunset from the trail | Hero fallback (reduced motion / no WebGL) |
+| `curse` | Front Range sunset from the trail | Behind the Curse quote |
+| `second-avenue` | Niwot Tribune storefront | Bento tile 01 |
+| `second-avenue-street` | 300 block patios | Old Town comparison pane |
+| `cottonwood-square` | Niwot Tavern patios | Bento tile 03 and New Town pane |
+| `whistle-stop` | CB&Q caboose | Bento tile 02 |
+| `art-walk` | Gateway sculpture | Art walk figure |
+| `era-arapaho` | Haystack Mountain and the foothills | History, first era |
+| `old-town-aerial` | Aerial of Old Town (547 px wide, never shown large) | Directory hover preview |
+
+`grange`, `era-railroad`, `era-plat` and `era-district` still use the original illustrations.
+
+To add or replace a photo:
+
+1. Put the source in `photos-src/`, named by slot (`photos-src/grange.jpg`).
+2. Run `npm run photos`. It writes `assets/img/photos/<slot>-{800,1400,2200}.{avif,webp,jpg}`,
+   cropping slots with a fixed aspect ratio (hero 16:9, curse 21:9, eras 9:11, grange 1:1).
 3. Add the slot to `js/data/photos.js`:
 
 ```js
-export const photos = {
-  'second-avenue': { widths: [800, 1400, 2200], sizes: '(min-width: 1100px) 60vw, 100vw', fallback: 'assets/img/photos/second-avenue-1400.jpg' },
-  'hero': { widths: [800, 1400, 2200], sizes: '100vw', fallback: 'assets/img/photos/hero-2200.jpg' }
-};
+'grange': { widths: [800, 1400], sizes: '(min-width: 1100px) 42vw, 100vw', fallback: 'assets/img/photos/grange-1400.jpg' }
 ```
 
 The site wraps that slot in a responsive `<picture>` with AVIF and WebP sources. Nothing else changes.
-Keep the crops close to the illustration aspect ratios: 4:3 for 2nd Avenue, 3:2 for Cottonwood Square,
-Whistle Stop and the art walk, 1:1 for the Grange, 9:11 portrait for the four history eras, and 16:9 for
-the hero.
 
 ## Updating content
 
@@ -93,4 +104,5 @@ Lighthouse report. For production hosting, enable gzip or brotli and long cache 
 ## Independent, not official
 
 TownofNiwot.com is a community-made guide and is not a government website. Niwot is an unincorporated
-community in Boulder County, Colorado. Illustrations are original artwork made for this site.
+community in Boulder County, Colorado. Photography is licensed for use on this site; illustrations are
+original artwork.
