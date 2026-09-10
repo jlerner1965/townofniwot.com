@@ -32,12 +32,28 @@
    editor should confirm each of the four on the cited page before the
    launch announcement — the description of each says where its time
    comes from. Where two organizer pages disagree, the record carries the
-   organizer's own page and says that they disagree. */
+   organizer's own page and says that they disagree.
+
+   Third pass, 2026-09-10: the launch audit compared this file against the
+   Business Association's calendar and found eight dated events missing,
+   plus a date for the Holiday Parade (November 28). Those dates are added
+   below with the Association's calendar as the source. The audit reported
+   the dates and names only, so where a venue or a start time is not in a
+   record it is because it was not read, not because there is none; each
+   such record says so and points at the listing. The sandbox this was
+   done in could not open niwot.com, so the editor should open each listing
+   once before promotion and fill in the venue and time. */
 import { assertValidEvents, buildNow } from '../../lib/events.js';
 import { zonedParts } from '../assets/js/calendar-core.js';
 
 const TZ = 'America/Denver';
 const CHECKED = '2026-09-09';
+const SWEEP = '2026-09-10';
+const CALENDAR = 'https://niwot.com/upcoming-events/';
+
+/* For a record read from the Association's calendar listing alone: the
+   venue was not in what the audit reported, so the record does not guess. */
+const onListing = { name: 'Niwot — venue on the organizer’s listing' };
 
 const nba = { name: 'Niwot Business Association', url: 'https://niwot.com/' };
 const ncaa = { name: 'Niwot Cultural Arts Association', url: 'https://niwotarts.org/' };
@@ -148,6 +164,90 @@ const records = [
       'Opening reception for an exhibition of work by Diane Pike, 5 to 9pm during the Second Friday Art Walk. The show runs at the gallery through the end of November.',
   },
   {
+    id: 'house-blend-band-2026-09-12',
+    name: 'House Blend Band',
+    status: 'confirmed',
+    startDate: '2026-09-12',
+    timezone: TZ,
+    location: onListing,
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Music',
+    description:
+      'Live music listed on the Niwot Business Association calendar for Saturday, September 12. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+  },
+  {
+    id: 'tree-carving-fundraiser-trivia-2026-09-15',
+    name: 'Tree Carving Fundraiser and Trivia Night',
+    status: 'confirmed',
+    startDate: '2026-09-15',
+    timezone: TZ,
+    location: onListing,
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Fundraiser',
+    description:
+      'A trivia night raising funds for a tree carving, listed on the Niwot Business Association calendar for Tuesday, September 15. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+  },
+  {
+    id: 'road-of-remembrance-2026-09-16',
+    name: 'The Road of Remembrance',
+    status: 'confirmed',
+    startDate: '2026-09-16',
+    timezone: TZ,
+    location: onListing,
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Community',
+    description:
+      'Listed on the Niwot Business Association calendar for Wednesday, September 16. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+  },
+  {
+    id: 'basin-design-open-house-2026-09-19',
+    name: 'Basin Design Open House',
+    status: 'confirmed',
+    startDate: '2026-09-19',
+    timezone: TZ,
+    location: onListing,
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Open house',
+    description:
+      'An open house listed on the Niwot Business Association calendar for Saturday, September 19. The venue and hours are on the listing; they were not read for this record, so check it before setting out.',
+  },
+  {
+    id: 'blessing-of-the-animals-2026-10-04',
+    name: 'Blessing of the Animals',
+    status: 'confirmed',
+    startDate: '2026-10-04',
+    timezone: TZ,
+    location: onListing,
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Community',
+    description:
+      'Listed on the Niwot Business Association calendar for Sunday, October 4. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+  },
+  {
+    id: 'niwot-wellness-lecture-2026-10-07',
+    name: 'Niwot Wellness Lecture Series',
+    status: 'confirmed',
+    startDate: '2026-10-07',
+    timezone: TZ,
+    location: onListing,
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Talk',
+    description:
+      'A talk in the wellness lecture series, listed on the Niwot Business Association calendar for Wednesday, October 7. The venue, speaker and start time are on the listing; they were not read for this record, so check it before setting out.',
+  },
+  {
     id: 'enchanted-evening-2026',
     name: 'Enchanted Evening',
     status: 'confirmed',
@@ -165,6 +265,36 @@ const records = [
       'The community tree lighting, Santa’s arrival by horse-drawn sleigh, carols and live music through Old Town and Cottonwood Square, on the evening after Thanksgiving. The date and 6 to 9pm hours are from the organizer’s dated 2026 listing; the same page’s general description says the evening starts at 5pm, so check it before setting out.',
   },
 
+  {
+    id: 'holiday-parade-2026',
+    name: 'Niwot Holiday Parade',
+    status: 'confirmed',
+    startDate: '2026-11-28',
+    timezone: TZ,
+    location: { name: 'Second Avenue, Murray Street to Niwot Road' },
+    organizer: nba,
+    sourceUrl: 'https://niwot.com/upcoming-events/holidays-and-parades/',
+    verifiedAt: SWEEP,
+    cost: 'Free',
+    tag: 'Holiday',
+    description:
+      'A morning parade down Second Avenue from Murray Street to Niwot Road, with Santa, on the Saturday after Thanksgiving. The date is from the Business Association’s calendar as read on September 10, 2026; the start time is on the organizer’s page.',
+  },
+  {
+    id: 'holiday-magic-market-fayre-2026-12-05',
+    name: 'Holiday Magic Market Fayre',
+    status: 'confirmed',
+    startDate: '2026-12-05',
+    timezone: TZ,
+    location: onListing,
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Market',
+    description:
+      'A holiday market listed on the Niwot Business Association calendar for Saturday, December 5. The venue and hours are on the listing; they were not read for this record, so check it before setting out.',
+  },
+
   /* ---- Expected: annual events the organizer has not yet dated ---- */
   {
     id: 'great-pumpkin-party-2026',
@@ -179,20 +309,6 @@ const records = [
     tag: 'Family',
     description:
       'Costume parade, trick-or-treating along Second Avenue, hay rides, magic shows and a petting zoo, co-hosted with The Niwot Group at Compass. Held the Saturday before Halloween in past years; the 2026 date is not yet published.',
-  },
-  {
-    id: 'holiday-parade-2026',
-    name: 'Niwot Holiday Parade',
-    status: 'tentative',
-    expected: 'Late November — usually the Saturday morning after Thanksgiving',
-    timezone: TZ,
-    location: { name: 'Second Avenue, Murray Street to Niwot Road' },
-    organizer: nba,
-    sourceUrl: 'https://niwot.com/upcoming-events/holidays-and-parades/',
-    verifiedAt: CHECKED,
-    tag: 'Holiday',
-    description:
-      'A morning parade down Second Avenue from Murray Street to Niwot Road, with Santa. The 2026 date is not yet published.',
   },
   {
     id: 'rock-rails-2027',

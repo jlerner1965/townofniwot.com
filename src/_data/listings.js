@@ -12,7 +12,13 @@
    - `verifiedAt` is the day that particular row was last checked, and the
      page shows it row by row. The rows dated 2026-09-08 were compiled on the
      first pass; the rows dated 2026-09-09 were re-checked or added in the
-     September 2026 audit.
+     September 2026 audit; the rows dated 2026-09-10 were changed after the
+     launch audit's sweep of every external link (two rows held back, two
+     rerouted to the Association directory — each says why in its note).
+     Three destinations the sweep could not settle by machine are left as
+     they were and need a person: sliferfrontrange.com timed out, and
+     niwotlaw.com and thegardengatecafe.com answered 403 to the automated
+     client, which is usually bot-blocking rather than a dead site.
    - `status` decides what is published. Only `active` and
      `temporarily_closed` rows render. `closed` and `unverified` rows stay
      here as the record of what was checked and why, with an `editorialNote`
@@ -47,6 +53,8 @@ const association = 'https://niwot.com/';
 
 const FIRST_PASS = '2026-09-08';
 const AUDIT = '2026-09-09';
+/* The September 10, 2026 launch audit's sweep of every external link. */
+const LINK_SWEEP = '2026-09-10';
 
 const records = [
   /* ---- Restaurants & Bars ---- */
@@ -560,10 +568,11 @@ const records = [
     category: 'health-wellness',
     address: '8940 Morton Road',
     description: 'Neuromuscular massage therapy — deep tissue work aimed at pain patterns.',
-    website: 'https://butterfieldwellness.com/',
-    sourceUrl: 'https://butterfieldwellness.com/',
+    sourceUrl: association,
+    editorialNote:
+      'The practice’s own site (butterfieldwellness.com) answered HTTP 502 in the 2026-09-10 link sweep, so the row no longer links to it and points at the Association directory instead. Check the site by hand; if it answers, restore `website` and `sourceUrl`; if it stays down on the next pass, set the row to unverified.',
     schemaType: 'HealthAndBeautyBusiness',
-    verifiedAt: FIRST_PASS,
+    verifiedAt: LINK_SWEEP,
     status: 'active',
   },
   {
@@ -572,10 +581,11 @@ const records = [
     category: 'health-wellness',
     area: 'Old Town, Second Avenue',
     address: '361 Second Avenue, Unit 201',
-    website: 'https://www.thehiddenyogastudio.com/',
-    sourceUrl: 'https://www.thehiddenyogastudio.com/',
+    sourceUrl: association,
+    editorialNote:
+      'The studio’s own site (thehiddenyogastudio.com) answered HTTP 502 in the 2026-09-10 link sweep, so the row no longer links to it and points at the Association directory instead. Check the site by hand; if it answers, restore `website` and `sourceUrl`; if it stays down on the next pass, set the row to unverified.',
     schemaType: 'HealthAndBeautyBusiness',
-    verifiedAt: FIRST_PASS,
+    verifiedAt: LINK_SWEEP,
     status: 'active',
   },
   {
@@ -761,8 +771,10 @@ const records = [
     description: 'Electrical contractor: full house wiring, remodels, basement finishes and service calls.',
     sourceUrl: 'https://niwot.com/listing/strohl-electric/',
     schemaType: 'Electrician',
-    verifiedAt: FIRST_PASS,
-    status: 'active',
+    verifiedAt: LINK_SWEEP,
+    status: 'unverified',
+    editorialNote:
+      'Held back after the 2026-09-10 link sweep: the Association listing this row rested on answers HTTP 404, and no other source was found. Restore it when the business can be traced to a current listing or a site of its own.',
   },
   {
     slug: 'sew-fresh-studio',
@@ -856,8 +868,10 @@ const records = [
     description: 'Twenty years of consulting with small businesses across Boulder County.',
     sourceUrl: 'https://niwot.com/listing/robinson-consulting/',
     schemaType: 'ProfessionalService',
-    verifiedAt: FIRST_PASS,
-    status: 'active',
+    verifiedAt: LINK_SWEEP,
+    status: 'unverified',
+    editorialNote:
+      'Held back after the 2026-09-10 link sweep: the Association listing this row rested on now redirects to an unrelated site (iTrade Colorado), so the destination could not be stood behind. Restore it when the business can be traced to a current listing or a site of its own.',
   },
   {
     slug: 'noblestar-technologies',

@@ -12,7 +12,23 @@ needsEvents: true
 scripts:
   - /assets/js/page-events.js
 pageStyles: |
-  .n-cal{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(24px,3vw,56px);align-items:start}
+  .n-evrow{display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:start}
+  /* The upcoming list: one row per occurrence — date and time, then the
+     event, then its action. The cards the homepage uses are the same markup. */
+  .n-uplist{display:grid;gap:0;margin-top:clamp(18px,2vw,28px)}
+  .n-uplist .n-up{display:grid;grid-template-columns:minmax(150px,.3fr) minmax(0,1fr) auto;gap:8px 24px;align-items:start;padding:16px 0;border-top:1px solid var(--n-rule)}
+  .n-uplist .n-up:first-child{border-top:3px solid var(--n-red)}
+  .n-uplist .n-up .n-h3{font-size:1.25rem !important}
+  .n-uplist .n-up .n-jump{grid-column:3;grid-row:1 / span 3;align-self:center}
+  .n-uplist .n-up > .n-label{grid-column:1;grid-row:1 / span 3}
+  .n-uplist .n-up > .n-h3,.n-uplist .n-up > .n-body,.n-uplist .n-up > .n-small{grid-column:2}
+  .n-fold{margin-top:clamp(22px,2.6vw,36px);border-top:2px solid var(--n-evergreen)}
+  .n-fold > summary{display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;padding:14px 0;list-style:none;cursor:pointer;color:var(--n-evergreen)}
+  .n-fold > summary::-webkit-details-marker{display:none}
+  .n-fold > summary:hover{color:var(--n-red-ink)}
+  .n-fold > summary .n-gmark{display:inline-block;width:12px;height:12px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .18s ease;flex:none;margin-right:4px}
+  .n-fold[open] > summary .n-gmark{transform:rotate(-135deg)}
+  .n-cal{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(24px,3vw,56px);align-items:start;padding-top:8px}
   .n-grid7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-left:1px solid var(--n-rule);border-top:1px solid var(--n-rule)}
   .n-dow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
   [data-day]{display:block;width:100%;min-height:clamp(56px,7vw,92px);padding:8px;background:var(--n-white);border:0;border-right:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule);color:var(--n-ink);font:inherit;text-align:left;cursor:default}
@@ -27,7 +43,7 @@ pageStyles: |
   .n-detail{position:sticky;top:88px}
   /* A sticky rail is only sticky against something scrolling beside it. Once
      the calendar stacks, it would just pin itself over the page. */
-  @media (max-width:900px){.n-cal{grid-template-columns:minmax(0,1fr)}.n-detail{position:static}}
+  @media (max-width:900px){.n-evrow,.n-cal{grid-template-columns:minmax(0,1fr)}.n-detail{position:static}}
   /* "View details" is a bare button, so it misses the touch padding guide.css
      gives .n-link. 22px is not a tap target. The padding lives here rather
      than in the inline style calendar-core.js writes, because an inline style
@@ -39,6 +55,9 @@ pageStyles: |
      accessible name of the day button and a square marker carries it
      visually, matched by the shaded ground and explained under the grid. */
   @media (max-width:620px){
+  .n-uplist .n-up{grid-template-columns:minmax(0,1fr)}
+  .n-uplist .n-up > .n-label,.n-uplist .n-up > .n-h3,.n-uplist .n-up > .n-body,.n-uplist .n-up > .n-small,.n-uplist .n-up .n-jump{grid-column:1;grid-row:auto}
+  .n-uplist .n-up .n-jump{align-self:start}
   button[data-day]{position:relative;padding:6px 4px}
   .n-daytag{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   button[data-day][data-has="yes"]::after{content:"";display:block;width:9px;height:9px;margin-top:6px;background:var(--n-red)}
@@ -50,7 +69,7 @@ pageStyles: |
   button.n-daypick{cursor:pointer}
   button.n-daypick:hover{color:var(--n-red-ink)}
   .n-daypick[aria-pressed="true"],.n-daypick[aria-current="true"]{border-left-color:var(--n-red);color:var(--n-evergreen)}
-  .n-expected{list-style:none;margin:clamp(18px,2vw,28px) 0 0;padding:0}
+  .n-expected{list-style:none;margin:0;padding:0}
   @media (max-width:620px){.n-expected li{grid-template-columns:minmax(0,1fr) !important}}
 ---
 <section class="n-bg-white" aria-labelledby="title-h">
@@ -65,27 +84,37 @@ pageStyles: |
 </div>
 </section>
 
+{#- The upcoming list beside the one photograph. Rendered at build time,
+    recomputed from the real date on load. -#}
 <section class="n-bg-paper n-pad-sm" aria-labelledby="next-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
 <div class="n-wrap">
+<div class="n-evrow">
+<div>
+<figure style="margin:0">
+{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 36vw, 500px", "display:block;width:100%;height:clamp(200px,24vw,340px);object-fit:cover;object-position:center 52%", true %}
+<figcaption class="n-cap">Whistle Stop Park &#8212; the lawn beside the caboose, where most of it happens</figcaption>
+</figure>
+<p class="n-small" style="margin:18px 0 0;max-width:46ch">This is a curated list, not the whole calendar: the Niwot Business Association&#8217;s calendar carries everything the organizers publish. An entry is added here only after its date has been read on the organizer&#8217;s page; past events leave the list on their own.</p>
+<div class="n-btns" style="margin-top:16px">
+<a class="n-btn" href="https://niwot.com/upcoming-events/" rel="noopener">Full community calendar <span aria-hidden="true">&#8599;</span></a>
+<a class="n-btn n-btn--ghost" href="/contact/">Submit an event</a>
+</div>
+</div>
+<div>
 <div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
-<h2 class="n-h2" id="next-h" style="font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);color:var(--n-evergreen)">Coming up</h2>
-<a class="n-link" href="https://niwot.com/upcoming-events/" rel="noopener">Organizer&#8217;s full calendar <span aria-hidden="true">&#8599;</span></a>
+<h2 class="n-h2" id="next-h" style="font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);color:var(--n-evergreen)">Upcoming events</h2>
+<span class="n-label n-label--quiet">Mountain Time</span>
 </div>
-{#- Rendered at build time, recomputed from the real date on load. -#}
-<div class="n-g3" style="margin-top:clamp(22px,2.6vw,36px)" data-upcoming="select">{{ eventsBuild.upcomingEventsHtml | safe }}</div>
-</div>
-</section>
+<div class="n-uplist" data-upcoming="select">{{ eventsBuild.upcomingEventsHtml | safe }}</div>
 
-<section class="n-bg-white n-pad" aria-labelledby="cal-h">
-<div class="n-wrap">
-<h2 class="n-label n-label--quiet" id="cal-h" style="margin:0 0 18px">Month view</h2>
+{#- The month grid and its detail rail, folded. "View details" above and
+    the homepage cards open it on the chosen day and event. -#}
+<details class="n-fold" id="calendar" data-cal-fold>
+<summary><span class="n-h3" id="cal-h" style="font-size:clamp(1.25rem,1.1rem + .6vw,1.5rem)">Month view</span><span style="display:flex;align-items:center;gap:12px"><span class="n-label n-label--quiet" data-cal-label aria-live="polite">{{ eventsBuild.monthLabel }}</span><span class="n-gmark" aria-hidden="true"></span></span></summary>
 <div class="n-cal">
 <div>
 <div style="display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:2px solid var(--n-evergreen)">
-<div style="display:flex;align-items:baseline;gap:14px">
-<h3 aria-live="polite" data-cal-label class="n-h3" style="font-size:clamp(1.375rem,1.15rem + 1vw,2rem);color:var(--n-evergreen)">{{ eventsBuild.monthLabel }}</h3>
 <button type="button" data-cal-today hidden style="padding:0;background:none;border:0;border-bottom:1px solid currentColor;color:var(--n-sky-ink);font:inherit;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">This month</button>
-</div>
 <div style="display:flex;gap:10px">
 <button type="button" data-nav data-cal-prev aria-label="Previous month">&#8592; Prev</button>
 <button type="button" data-nav data-cal-next aria-label="Next month">Next <span aria-hidden="true">&#8594;</span></button>
@@ -97,7 +126,7 @@ pageStyles: |
 {%- endfor %}
 </div>
 <div class="n-grid7" data-cal-grid role="group" aria-label="Month">{{ eventsBuild.cellsHtml | safe }}</div>
-<p class="n-small" style="margin:16px 0 0">Shaded days &#8212; marked with a square on a narrow screen &#8212; carry a confirmed event. Select one for the detail, or use the list above. The detail beside the grid always belongs to the month shown.</p>
+<p class="n-small" style="margin:16px 0 0">Shaded days &#8212; marked with a square on a narrow screen &#8212; carry a confirmed event. Select one for the detail. The detail beside the grid always belongs to the month shown.</p>
 </div>
 <aside class="n-detail" aria-labelledby="detail-h">
 <h3 class="n-label n-label--quiet" id="detail-h" style="margin:0;padding-bottom:14px;border-bottom:2px solid var(--n-evergreen)">Event detail</h3>
@@ -105,69 +134,17 @@ pageStyles: |
 <div data-cal-detail style="padding-top:20px">{{ eventsBuild.detailHtml | safe }}</div>
 </aside>
 </div>
-</div>
-</section>
+</details>
 
-<section class="n-bg-paper n-pad-sm" id="expected" aria-labelledby="exp-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
-<div class="n-wrap">
-<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
-<div>
-<div class="n-label">Expected &#8212; date not confirmed</div>
-<h2 class="n-h2" id="exp-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);color:var(--n-evergreen)">Annual events still waiting on a date</h2>
-</div>
-<span class="n-small" style="max-width:44ch;color:var(--n-ink)">These recur every year but the organizer has not yet published this season&#8217;s dates. Nothing here is a scheduled date.</span>
-</div>
+{#- Annual events the organizer has not yet dated, folded. Nothing in it is
+    a scheduled date, and none of it enters the list above or the
+    structured data. -#}
+<details class="n-fold" id="expected">
+<summary><span class="n-h3" id="exp-h" style="font-size:clamp(1.25rem,1.1rem + .6vw,1.5rem)">Annual events still waiting on a date</span><span style="display:flex;align-items:center;gap:12px"><span class="n-label n-label--quiet">{{ eventsBuild.expectedCount }}</span><span class="n-gmark" aria-hidden="true"></span></span></summary>
+<p class="n-small" style="margin:0;max-width:60ch">Expected &#8212; date not confirmed. These recur every year but the organizer has not yet published this season&#8217;s dates.</p>
 <ul class="n-expected" data-expected>{{ eventsBuild.expectedHtml | safe }}</ul>
+</details>
+</div>
+</div>
 </div>
 </section>
-
-<section class="n-bg-white" aria-labelledby="feat-h" style="padding-bottom:clamp(44px,6vw,104px)">
-<div class="n-wrap">
-<div class="n-rail" style="margin-top:clamp(28px,4vw,64px)"></div>
-<div class="n-g2" style="margin-top:clamp(24px,3vw,44px);align-items:center">
-<figure style="margin:0">
-{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 45vw, 630px", "display:block;width:100%;height:clamp(220px,26vw,380px);object-fit:cover;object-position:center 52%" %}
-<figcaption class="n-cap">CB&amp;Q 14649, built 1907 &#8212; Whistle Stop Park</figcaption>
-</figure>
-<div>
-<div class="n-label">The venue</div>
-<h2 class="n-h2" id="feat-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.375rem);max-width:22ch;color:var(--n-evergreen)">Most of it happens beside the caboose.</h2>
-<p class="n-body" style="margin:16px 0 0;max-width:56ch">Whistle Stop Park sits at the edge of Old Town and keeps a restored Burlington Route caboose. The open lawn beside it is where the summer concerts and most seasonal gatherings are held.</p>
-<p class="n-small" style="margin:14px 0 0;max-width:56ch">How this calendar is kept: an entry is added only after its date has been read on the organizer&#8217;s page, and its detail shows the day it was checked. Past events leave the list on their own. To add or correct one, <a href="/plan-a-visit/#contact">send it with a link to the organizer&#8217;s page</a>.</p>
-<div class="n-btns" style="margin-top:22px">
-<a class="n-btn n-btn--ghost" href="/plan-a-visit/#map">Find the park</a>
-<a class="n-btn n-btn--ghost" href="/plan-a-visit/#contact">Submit an event</a>
-</div>
-</div>
-</div>
-{%- if pageCorrections.length %}
-<div data-corrections-block style="margin-top:clamp(28px,3.5vw,48px);max-width:72ch">
-<div class="n-label n-label--quiet">Changes to this page</div>
-<dl data-corrections style="margin:8px 0 0">
-{%- for c in pageCorrections %}
-<div style="padding:12px 0;border-top:1px solid var(--n-rule)">
-<dt class="n-label n-label--quiet" style="font-size:12px">{{ c.date | humanDate }}</dt>
-<dd class="n-body" style="margin:6px 0 0;font-size:.9375rem">{{ c.summary }}</dd>
-</div>
-{%- endfor %}
-</dl>
-</div>
-{%- endif %}
-</div>
-</section>
-
-{%- if eventsBuild.hasArchive %}
-<section class="n-bg-paper n-pad-sm" aria-labelledby="arch-h" style="border-top:1px solid var(--n-rule)">
-<div class="n-wrap">
-<h2 class="n-h2" id="arch-h" style="font-size:clamp(1.375rem,1.15rem + 1vw,1.875rem);color:var(--n-evergreen)">Recently held</h2>
-<ul data-archive style="list-style:none;margin:20px 0 0;padding:0">
-{%- for a in eventsBuild.archive %}
-<li style="display:grid;grid-template-columns:minmax(120px,.3fr) minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid rgba(36,72,58,.2)">
-<span class="n-label n-label--quiet">{{ a.when }}</span>
-<span class="n-body" style="font-size:.9375rem">{{ a.name }} &#8212; {{ a.place }}</span>
-</li>
-{%- endfor %}
-</ul>
-</div>
-</section>
-{%- endif %}

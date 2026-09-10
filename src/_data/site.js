@@ -16,7 +16,7 @@ export default {
   /* Editorial stamps. `reviewed` is the sitewide content review; `verified` is
      the stricter, dated check applied to the election page only. */
   reviewed: 'September 2026',
-  verified: 'September 8, 2026',
+  verified: 'September 10, 2026',
 
   /* The responsible editor and a monitored address. As soon as both are
      set here they are published on the privacy page, beside the submission

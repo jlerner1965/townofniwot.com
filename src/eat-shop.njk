@@ -28,6 +28,11 @@ pageStyles: |
   /* The ring sits inside the chip, so on the checked chip's evergreen ground
      it has to be the light gold, as on the site's other dark grounds. */
   .n-chip input:checked:focus-visible + .n-chip-l{outline-color:var(--n-gold-lt)}
+  /* The category selector for a phone: one control instead of ten tiles. It
+     is script-driven and sits outside the form, so a submit without a
+     script never sends a second category value. */
+  .n-dir-select{display:none;margin-top:22px}
+  .n-dir-select select{display:block;width:100%;min-height:50px;margin-top:8px;padding:12px 14px;background:var(--n-white);border:2px solid var(--n-evergreen);font:inherit;font-size:1rem;color:var(--n-ink)}
   /* The strip that names the filter in force, with its reset. */
   .n-active{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-top:14px;padding:10px 14px;background:var(--n-paper);border-left:3px solid var(--n-red)}
   .n-dir-clear{padding:0;background:none;border:0;border-bottom:1px solid currentColor;color:var(--n-sky-ink);font:inherit;font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
@@ -35,32 +40,51 @@ pageStyles: |
   .n-how{margin-top:12px;max-width:74ch}
   .n-how summary{cursor:pointer;color:var(--n-sky-ink);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
   .n-how summary:hover{color:var(--n-red-ink)}
+  /* One folded group per category. The summary is the category's own row:
+     name, count, a marker. Every listing is in the HTML either way. */
+  .n-group{border-top:2px solid var(--n-evergreen)}
+  .n-group summary{display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;padding:14px 0;list-style:none;cursor:pointer;color:var(--n-evergreen)}
+  .n-group summary::-webkit-details-marker{display:none}
+  .n-group summary:hover{color:var(--n-red-ink)}
+  .n-group summary .n-h3{font-size:clamp(1.25rem,1.1rem + .6vw,1.5rem)}
+  .n-group summary .n-gmark{display:inline-block;width:12px;height:12px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .18s ease;flex:none;margin-right:4px}
+  .n-group[open] summary .n-gmark{transform:rotate(-135deg)}
+  .n-group ul{list-style:none;margin:0;padding:0 0 8px}
   @media (max-width:1080px){.n-dir-clear,.n-how summary{padding-top:12px;padding-bottom:12px}}
   @media (max-width:900px){
-  .n-dir,.n-pair{grid-template-columns:minmax(0,1fr)}
+  .n-dir{grid-template-columns:minmax(0,1fr)}
   .n-row{grid-template-columns:minmax(0,1fr)}
   /* A sticky rail in a one-column stack pins itself on top of the listings it
      is meant to filter. Below the breakpoint it is an ordinary block. */
   .n-filters{position:static}
-  /* Ten categories in one column is a screenful of scrolling before the first
-     business. Two columns of square tiles, one column on the narrowest
-     phones, and every tile a 48px tap target. */
-  .n-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;border-bottom:0}
-  .n-cats legend{grid-column:1/-1}
-  .n-chip-l{align-items:center;min-height:48px;padding:10px 12px;font-size:.9375rem;border:1px solid var(--n-rule)}
+  /* On a phone the ten category tiles give way to one selector. Without a
+     script the selector could do nothing, so the tiles stay. */
+  .n-dir-select{display:block}
+  .n-cats{display:none}
   }
+  @media (max-width:900px) and (scripting: none){.n-dir-select{display:none}.n-cats{display:block}}
+  @media (max-width:620px){.n-pair{grid-template-columns:minmax(0,1fr)}}
 ---
-{#- The title, then the search and the categories straight under it: the
-    function people came for opens the page. The photographs sit below the
-    listings. -#}
+{#- The title, the two photographs straight under it, then the search and the
+    categories, then the listings folded by category. -#}
 <section class="n-bg-white" aria-labelledby="title-h">
 <div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(16px,2vw,28px)">
 <div class="n-g2-wide" style="align-items:end">
 <div>
-<div class="n-label">Eat &amp; shop</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.5rem,1.8rem + 3.4vw,5rem);line-height:.96;max-width:16ch;color:var(--n-evergreen)">Two blocks, and most of it independent</h1>
+<div class="n-label">Two blocks, and most of it independent</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.25rem,1.6rem + 3vw,4.5rem);line-height:.98;max-width:16ch;color:var(--n-evergreen)">Niwot Restaurants, Shops &amp; Local Services</h1>
 </div>
 <p class="n-lead" style="margin:0;max-width:50ch">Kitchens, coffee, groceries and shops within a short walk of Second Avenue, plus the practices, trades and offices on the roads around the two blocks.</p>
+</div>
+<div class="n-pair" style="margin-top:clamp(20px,2.5vw,36px)">
+<figure style="margin:0">
+{% photo "second-avenue-patios.jpg", "Brick and clapboard buildings on the 300 block of Second Avenue with hanging baskets and patio tables out front", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;height:clamp(160px,18vw,240px);object-fit:cover;object-position:center 56%", true %}
+<figcaption class="n-cap">Old Town &#8212; Second Avenue, the 300 block</figcaption>
+</figure>
+<figure style="margin:0">
+{% photo "niwot-tavern-patios.jpg", "Umbrella-shaded patios outside the Niwot Tavern and Raza Fresa Mexican Kitchen with two bronze bear sculptures on the corner", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;height:clamp(160px,18vw,240px);object-fit:cover;object-position:center 52%", true %}
+<figcaption class="n-cap">Cottonwood Square &#8212; bear sculptures on the corner</figcaption>
+</figure>
 </div>
 </div>
 </section>
@@ -83,6 +107,14 @@ pageStyles: |
 {%- endfor %}
 </fieldset>
 </form>
+<div class="n-dir-select">
+<label class="n-label n-label--quiet" for="dir-cat" style="display:block">Category</label>
+<select id="dir-cat" data-dir-select>
+{%- for c in listings.categories %}
+<option value="{{ c.slug }}"{% if c.slug == 'all' %} selected{% endif %}>{{ c.label }} ({{ c.count }})</option>
+{%- endfor %}
+</select>
+</div>
 <a class="n-btn n-btn--ghost" href="https://niwot.com/" rel="noopener" style="margin-top:22px;width:100%">Association directory <span aria-hidden="true">&#8599;</span></a>
 </div>
 <div>
@@ -94,17 +126,22 @@ pageStyles: |
 <span class="n-small" style="color:var(--n-ink)">Showing <strong data-dir-active-label style="font-weight:600"></strong></span>
 <button type="button" class="n-dir-clear" data-dir-clear>Clear filters</button>
 </div>
-<p class="n-small" style="margin:14px 0 0;max-width:74ch">Each row is checked against the business&#8217;s own site, the Niwot Business Association directory or the Left Hand Valley Courier, and shows the date it was checked. <span data-dir-verified>{{ listings.verified.summary }}</span></p>
+<p class="n-small" style="margin:14px 0 0;max-width:74ch">Grouped by category; open a group to see its listings, or search across all of them. Each row is checked against the business&#8217;s own site, the Niwot Business Association directory or the Left Hand Valley Courier, and shows the date it was checked. <span data-dir-verified>{{ listings.verified.summary }}</span></p>
 <details class="n-how">
 <summary>How this directory is compiled</summary>
-<p class="n-small" style="margin:10px 0 0">A curated directory of Niwot businesses, checked against business-owned and community sources: each business&#8217;s own site, the Niwot Business Association directory and the Left Hand Valley Courier. Phone numbers are not reproduced here because they change faster than anything else &#8212; each row links out for current hours and contact details, and says where the link goes. A business that keeps no public listing will not appear; <a href="/plan-a-visit/#contact">send yours</a> and it goes in.</p>
+<p class="n-small" style="margin:10px 0 0">A curated directory of Niwot businesses, checked against business-owned and community sources: each business&#8217;s own site, the Niwot Business Association directory and the Left Hand Valley Courier. Phone numbers are not reproduced here because they change faster than anything else &#8212; each row links out for current hours and contact details, and says where the link goes. A business that keeps no public listing will not appear; <a href="/contact/">send yours</a> and it goes in.</p>
 </details>
-{#- Every published listing ships in the HTML; filtering only hides rows. -#}
-<ul data-dir-list style="list-style:none;margin:clamp(18px,2vw,28px) 0 0;padding:0">
-{%- for r in listings.entries %}
+{#- Every published listing ships in the HTML, folded by category;
+    filtering only hides rows and opens groups. -#}
+<div data-dir-list style="margin-top:clamp(18px,2vw,28px)">
+{%- for c in listings.categories %}{% if c.slug != 'all' %}
+<details class="n-group" id="cat-{{ c.slug }}" data-group="{{ c.slug }}">
+<summary><span class="n-h3" data-group-label>{{ c.label }}</span><span style="display:flex;align-items:center;gap:12px"><span class="n-label n-label--quiet" data-group-count>{{ c.count }}</span><span class="n-gmark" aria-hidden="true"></span></span></summary>
+<ul>
+{%- for r in listings.entries %}{% if r.category == c.slug %}
 <li class="n-row" id="{{ r.slug }}" data-listing data-cat="{{ r.category }}" data-name="{{ r.name }}" data-category="{{ r.categoryLabel }}" data-note="{{ r.description }}" data-area="{{ r.area }}" data-address="{{ r.address }}">
 <div>
-<h3 class="n-h3" style="font-size:1.5rem;color:var(--n-evergreen)">{{ r.name }}</h3>
+<h3 class="n-h3" style="font-size:1.375rem;color:var(--n-evergreen)">{{ r.name }}</h3>
 <div class="n-label" style="margin-top:8px">{{ r.categoryLabel }}{% if r.status == 'temporarily_closed' %} &#183; Temporarily closed{% endif %}</div>
 {%- if r.description %}
 <p class="n-body" style="margin:10px 0 0;max-width:58ch;font-size:.9375rem">{{ r.description }}</p>
@@ -124,8 +161,11 @@ pageStyles: |
 <div class="n-small" style="font-size:.8125rem" data-verified="{{ r.verifiedAt }}">Checked {{ r.verifiedLabel }}</div>
 </div>
 </li>
-{%- endfor %}
+{%- endif %}{% endfor %}
 </ul>
+</details>
+{%- endif %}{% endfor %}
+</div>
 <div data-dir-empty hidden style="padding:clamp(24px,3vw,44px) 0">
 <p class="n-h3" style="max-width:52ch;color:var(--n-evergreen)">No matching businesses.</p>
 <p class="n-body" style="margin:16px 0 0;max-width:58ch">Try a different word, choose another category, or browse the full members&#8217; directory.</p>
@@ -138,7 +178,7 @@ pageStyles: |
 <div class="n-callout n-callout--paper">
 <div class="n-label">Own a business here?</div>
 <p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Send your name, category, address, website and hours and it goes into the directory with the date it was checked.</p>
-<a class="n-link" href="/plan-a-visit/#contact" style="display:inline-block;margin-top:14px">Add a listing <span aria-hidden="true">&#8594;</span></a>
+<a class="n-link" href="/contact/" style="display:inline-block;margin-top:14px">Add a listing <span aria-hidden="true">&#8594;</span></a>
 </div>
 <div class="n-callout n-callout--sky">
 <div class="n-label" style="color:var(--n-sky-ink)">Planning a trip</div>
@@ -146,35 +186,7 @@ pageStyles: |
 <a class="n-link" href="/plan-a-visit/" style="display:inline-block;margin-top:14px">Plan a visit <span aria-hidden="true">&#8594;</span></a>
 </div>
 </div>
-{%- if pageCorrections.length %}
-<div data-corrections-block style="margin-top:clamp(28px,3.5vw,48px);max-width:72ch">
-<div class="n-label n-label--quiet">Changes to this page</div>
-<dl data-corrections style="margin:8px 0 0">
-{%- for c in pageCorrections %}
-<div style="padding:12px 0;border-top:1px solid var(--n-rule)">
-<dt class="n-label n-label--quiet" style="font-size:12px">{{ c.date | humanDate }}</dt>
-<dd class="n-body" style="margin:6px 0 0;font-size:.9375rem">{{ c.summary }}</dd>
 </div>
-{%- endfor %}
-</dl>
-</div>
-{%- endif %}
-</div>
-</div>
-</div>
-</section>
-
-<section class="n-bg-paper" aria-label="Photographs of the commercial blocks" style="padding-block:clamp(28px,3.5vw,52px);border-top:1px solid var(--n-rule)">
-<div class="n-wrap">
-<div class="n-pair">
-<figure style="margin:0">
-{% photo "second-avenue-patios.jpg", "Brick and clapboard buildings on the 300 block of Second Avenue with hanging baskets and patio tables out front", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 46vw, 636px", "display:block;width:100%;height:clamp(180px,20vw,280px);object-fit:cover;object-position:center 56%" %}
-<figcaption class="n-cap">Second Avenue, the 300 block</figcaption>
-</figure>
-<figure style="margin:0">
-{% photo "niwot-tavern-patios.jpg", "Umbrella-shaded patios outside the Niwot Tavern and Raza Fresa Mexican Kitchen with two bronze bear sculptures on the corner", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 46vw, 636px", "display:block;width:100%;height:clamp(180px,20vw,280px);object-fit:cover;object-position:center 52%" %}
-<figcaption class="n-cap">Cottonwood Square, bear sculptures on the corner</figcaption>
-</figure>
 </div>
 </div>
 </section>

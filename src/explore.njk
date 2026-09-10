@@ -2,7 +2,7 @@
 layout: layouts/base.njk
 title: Explore
 seoTitle: Things to Do in Niwot, Colorado | TownofNiwot.com
-description: A field guide to four places in Niwot, Colorado, in walking order — Old Town, Cottonwood Square, the public art, and the parks and trails.
+description: Explore Niwot, Colorado in walking order — Old Town, Cottonwood Square, the public art, and the parks and trails — with the town’s story and the visitor page a link away.
 navKey: explore
 permalink: /explore/
 ogImage: niwot-tribune-storefront.jpg
@@ -22,7 +22,7 @@ pageStyles: |
 <div class="n-g2-wide" style="align-items:end">
 <div>
 <div class="n-label">Field guide</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.5rem,1.8rem + 3.4vw,5rem);line-height:.96;max-width:16ch;color:var(--n-evergreen)">Four places, in walking order</h1>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.25rem,1.6rem + 3vw,4.5rem);line-height:.98;max-width:16ch;color:var(--n-evergreen)">Explore Niwot: Four Places in Walking Order</h1>
 </div>
 <div>
 <p class="n-lead" style="margin:0;max-width:48ch">Old Town first, then Cottonwood Square, then whatever the weather allows. The whole loop is under two miles.</p>
@@ -109,11 +109,7 @@ pageStyles: |
 <dd class="n-body" style="margin:0;font-size:.9375rem"><a class="n-link" href="https://niwotarts.org/" rel="noopener">Niwot Cultural Arts Association <span aria-hidden="true">&#8599;</span></a></dd>
 </div>
 </dl>
-<div class="n-callout n-callout--sky" style="margin-top:22px;padding:20px 22px;max-width:60ch">
-<div class="n-label" style="color:var(--n-sky-ink)">Inventory in progress</div>
-<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Individual works are listed here only with a verified title, artist and location, and that list is still being compiled. Send a verified entry and it goes in with artist credit.</p>
-<a class="n-link" href="/plan-a-visit/#contact" style="display:inline-block;margin-top:12px">Contribute an entry <span aria-hidden="true">&#8594;</span></a>
-</div>
+<p class="n-small" style="margin:14px 0 0;max-width:58ch">Individual works are named here only with a verified title, artist and location. <a href="/contact/">Send one</a> and it goes in with artist credit.</p>
 </div>
 <figure style="margin:0">
 {% photo "niwot-gateway-sculpture.jpg", "The Vintage Colorado Niwot gateway sculpture, a steel arch over an oval sign, with the Flatirons behind it", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 38vw, 525px", "display:block;width:100%;height:clamp(220px,25vw,350px);object-fit:cover;object-position:center 62%" %}
@@ -160,12 +156,23 @@ pageStyles: |
 </div>
 </section>
 
-<section class="n-bg-white n-pad-sm" aria-label="Next steps">
+{#- Our Story and Plan a Visit are reached from here and the footer rather
+    than the primary navigation. -#}
+<section class="n-bg-white n-pad-sm" aria-labelledby="next-h">
 <div class="n-wrap">
-<div class="n-btns">
-<a class="n-btn" href="/eat-shop/">Where to eat and shop</a>
-<a class="n-btn n-btn--ghost" href="/plan-a-visit/">Plan a visit</a>
-<a class="n-btn n-btn--ghost" href="/events/">What&#8217;s on</a>
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<div class="n-label">Before and after the walk</div>
+<h2 class="n-h2" id="next-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);max-width:18ch;color:var(--n-evergreen)">Getting here, and how the place came to be</h2>
+</div>
+<div>
+<p class="n-body" style="margin:0;max-width:60ch">Directions, parking, transit and what can be confirmed about accessibility are on the visitor page. The railroad, the 1875 plat and how Niwot stayed unincorporated are on Our Story.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn" href="/plan-a-visit/">Plan a visit</a>
+<a class="n-btn n-btn--ghost" href="/our-story/">Our Story</a>
+<a class="n-btn n-btn--ghost" href="/eat-shop/">Where to eat and shop</a>
+</div>
+</div>
 </div>
 </div>
 </section>

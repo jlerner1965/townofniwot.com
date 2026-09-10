@@ -13,16 +13,21 @@
    - Campaign material is labeled as advocacy wherever it appears, and the
      Commission is never presented as an advocate.
    - `official` on a question or issue is the Commission's own label for it
-     ("Question 1", "Issue 1"). It is left unset until it has been read from
-     the certified ballot: this guide's order is not evidence of the
-     ballot's, and a number that turned out not to match would be worse
-     than none. The template renders it only when set.
+     ("Question 1", "Issue 1"), rendered beside the summary. The labels were
+     read from the Commission's ballot page by the September 10, 2026 launch
+     audit, whose order this file now follows; confirm them against the
+     certified ballot after the proof review, and clear a label rather than
+     leave a wrong one.
 
    The qualifications added on 2026-09-09 (the food exemption, the
    marijuana tax's start and conditions, the constitutional revenue limits
    and the 2027 start, the bond's repayment source, the dependency of the
    charter commission on incorporation) follow the pre-launch audit's
-   reading of the Commission's ballot page and summaries on that date.
+   reading of the Commission's ballot page and summaries on that date. The
+   2026-09-10 additions (the official labels, the first-full-year revenue
+   figures the ballot text states for the first three issues, the number of
+   candidates for Question 3, and the split of roles between the Commission
+   and the County Clerk) follow the launch audit's reading of the same page.
    Confirm each against the certified text after the proof review.
 
    Anything that cannot be supported by a filed document or an official
@@ -56,64 +61,66 @@ const tasks = [
   },
 ];
 
-/* The compact status strip. */
+/* The compact status strip. Two bodies, two roles: the Commission decides
+   ballot content and procedure for this question; the Clerk conducts the
+   coordinated election it appears in. */
 const status = [
   { label: 'Election date', value: 'November 3, 2026', note: 'A coordinated mail-ballot election held with other Boulder County contests.' },
   { label: 'Who may vote', value: 'Registered electors', note: 'Those residing within the proposed boundary.' },
-  { label: 'Run by', value: 'Niwot Election Commission', note: 'Appointed by the Boulder County District Court, in coordination with the County Clerk and Recorder.' },
+  { label: 'Ballot content and procedure', value: 'Niwot Election Commission', note: 'Appointed by the Boulder County District Court. The Boulder County Clerk and Recorder conducts the coordinated election itself.' },
   { label: 'Last verified', value: site.verified, note: 'Checked against official sources on this date. The official text controls.' },
 ];
 
 const questions = [
   {
-    official: null,
+    official: 'Question 1',
     title: 'Whether Niwot should incorporate as a municipality',
     body: 'Whether the territory described in the petition should be organized as a Colorado municipality. Approval would begin the creation of a town government; rejection would leave the area unincorporated and administered by Boulder County, and none of the other measures would take effect.',
     sourceHref: BALLOT,
   },
   {
-    official: null,
+    official: 'Question 2',
     title: 'Whether to form a nine-member home rule charter commission',
     body: 'Whether a commission of nine members should be formed to draft a proposed home rule charter for the new municipality. The commission drafts a charter; it does not adopt one. It is formed only if incorporation is approved.',
     sourceHref: BALLOT,
   },
   {
-    official: null,
+    official: 'Question 3',
     title: 'Which nine charter commission candidates should be elected',
-    body: 'Which candidates would serve on that charter commission. Candidates appear on the same ballot, and those elected take office only if incorporation and the charter commission question are both approved.',
+    body: 'Which of the 28 candidates on the ballot would serve on that charter commission: voters may select up to nine. The Commission’s summary ties this question to the two before it — the nine elected take office only if incorporation (Question 1) and the charter commission (Question 2) are both approved.',
     sourceHref: BALLOT,
   },
 ];
 
 const fiscal = [
   {
-    official: null,
+    official: 'Issue 1',
     title: 'A 2.5% sales and use tax beginning January 1, 2028',
-    body: 'Authorization to levy a municipal sales and use tax at 2.5%, with collection beginning January 1, 2028. The ballot text exempts food for domestic consumption.',
+    body: 'Authorization to levy a municipal sales and use tax at 2.5%, with collection beginning January 1, 2028. The ballot text exempts food for domestic consumption and states an estimated $2.8 million in revenue in the first full fiscal year.',
     sourceHref: BALLOT,
   },
   {
-    official: null,
+    official: 'Issue 2',
     title: 'A four-mill property tax',
-    body: 'Authorization to levy a property tax of four mills within the municipal boundary.',
+    body: 'Authorization to levy a property tax of four mills within the municipal boundary. The ballot text states an estimated $900,000 in revenue in the first full fiscal year.',
     sourceHref: BALLOT,
   },
   {
-    official: null,
+    official: 'Issue 3',
     title: 'An additional 3% sales tax on retail marijuana, beginning January 1, 2028',
-    body: 'Authorization for an additional special sales tax of 3% on retail marijuana sales, with collection beginning January 1, 2028. It applies only if retail marijuana businesses operate within the municipality.',
+    body: 'Authorization for an additional special sales tax of 3% on retail marijuana sales, with collection beginning January 1, 2028. It applies only if retail marijuana businesses operate within the municipality. The ballot text states an estimated $60,000 in revenue in the first full fiscal year.',
     sourceHref: BALLOT,
   },
   {
-    official: null,
+    official: 'Issue 4',
     title: 'Authorization to retain and spend collected revenue from 2027',
     body: 'Authorization for the municipality to keep and spend all the revenue it collects from 2027 onward, as a voter-approved revenue change under the revenue and spending limits in Article X, Section 20 of the Colorado Constitution (the Taxpayer’s Bill of Rights), rather than refunding amounts above those limits.',
     sourceHref: BALLOT,
   },
   {
-    official: null,
+    official: 'Issue 5',
     title: 'Authorization for up to $15 million in debt for transportation infrastructure',
-    body: 'Authorization to incur up to $15 million in debt for transportation infrastructure, with a maximum total repayment cost of up to $28 million. The petition proposes repaying it from the sales and use tax above, so this authorization depends on that tax being approved.',
+    body: 'Authorization to incur up to $15 million in debt for transportation infrastructure, with a maximum total repayment cost of up to $28 million. The petition proposes repaying it from the sales and use tax in Issue 1, so this authorization depends on that tax being approved.',
     sourceHref: BALLOT,
   },
 ];
@@ -135,10 +142,10 @@ const after = [
 
 /* One entry per destination. Task-specific links are in `tasks` above. */
 const official = [
-  { label: 'Niwot Election Commission', note: 'Notices, meeting records and the election timetable', href: 'https://niwotelection.org/' },
+  { label: 'Niwot Election Commission', note: 'Ballot content and procedure for this question; notices, meeting records and the timetable', href: 'https://niwotelection.org/' },
   { label: 'Official ballot content', note: 'The certified questions and fiscal issues', href: BALLOT },
   { label: 'Election FAQ and the proposed boundary', note: 'Including how to check an address against the petition exhibits', href: FAQ },
-  { label: 'Boulder County Elections', note: 'Registration, address updates, drop-off and voting locations, results', href: COUNTY },
+  { label: 'Boulder County Elections', note: 'The Clerk and Recorder conducts the coordinated election: registration, address updates, drop-off and voting locations, results', href: COUNTY },
 ];
 
 /* Every registered campaign committee, listed together and labeled
