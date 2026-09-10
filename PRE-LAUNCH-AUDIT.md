@@ -1,5 +1,48 @@
 # Pre-launch audit — TownofNiwot.com
 
+## Fourth pass: the coherence pass of September 10, 2026
+
+The client's reading of the consolidated site was that it looked "off"
+without being able to say why. Reviewing every page against that, the cause
+was not any one page: the site was speaking two visual languages at once,
+and several habits amplified the seam.
+
+The 2026 visual refresh had been layered onto the original flat, editorial
+identity as a set of overrides, and it brought a second vocabulary borrowed
+from product interfaces — a translucent blurred masthead with a drop shadow,
+buttons and cards that lift under the cursor, photographs that zoom, a navy
+band from outside the palette. The masthead read as a SaaS product, the hero
+as a magazine, the destination cards as an app, and the interior pages as a
+newspaper. Each was competent alone; together they did not agree.
+
+Four habits made it worse. Seven background tints in one homepage scroll
+read as a stack of panels rather than a page. The launch audit's descriptive
+titles were still set at the display size chosen for two-word ones, so
+"Visit Niwot: Directions, Parking & Accessibility" ran to four lines at 72px
+while the paragraph beside it stayed small, and the homepage showed the
+wordmark twice at 120px. Uppercase with wide tracking was on every link,
+caption, breadcrumb, citation and footer line as well as the section labels,
+so nothing it was meant to emphasise stood out. And ten different one-off
+crop heights meant a photograph was a different size on every page.
+
+### What changed
+
+| Finding | What changed |
+|---|---|
+| Two vocabularies | The product layer is gone: no `box-shadow` anywhere, no hover lift on buttons or cards, no image zoom, and a solid masthead in place of the translucent blurred one. Depth is carried by rules, grounds and the railway devices. The palette and the cinematic hero stay — the launch audit called both strong. |
+| Seven grounds | Four, one of them reserved: soft white (default), warm paper (alternate), evergreen (dark anchor) and pale sky (civic content only). The homepage's quick links move onto white, its community band onto paper, and the events band from a navy of its own onto evergreen. `.n-bg-sage` resolves to paper so no page had to change. Plan a Visit's orientation section moves off the sky ground, which now means civic and nothing else. |
+| Poster-sized titles | One display scale, 30px to 46px, with 24 characters of measure so a descriptive title sets in two lines. `.n-h2` and `.n-h3` come down with it so the hierarchy still reads H1 > H2 > H3. The hero wordmark drops from 120px to 80px, stating the name once beside the masthead rather than shouting it a second time. |
+| Everything in tracked capitals | Uppercase now means "section label" and nothing else: `.n-label`, the five navigation items, buttons, and the calendar's day tags and month controls. Links, captions, breadcrumbs, footer meta, timeline citations and the fold toggles are set in the case they were written in. "View details" reads the same as a homepage link and as an events-page button, which it did not before. |
+| Ten crop heights | Three frames by role — `.n-ph-lg` for a lead or band, `.n-ph-md` for a card or entry, `.n-ph-sm` for one of a pair — and one frame shared by all four homepage cards so the headings under them sit on one line across each row. |
+| The directory sidebar | Its full-width Association button wrapped to two lines and competed with the category filter; it is a plain link under the filter now. |
+
+The rules are written into README, "The visual system", so the next edit has
+something to drift against.
+
+Nothing in the content, the data or the interaction model changed. All 77
+tests and the full browser-check suite pass, and Lighthouse is unchanged
+(Accessibility, Best Practices and SEO 100 on every page).
+
 ## Third pass: the launch audit of September 10, 2026
 
 A second external reviewer audited the live site on September 10, 2026 and

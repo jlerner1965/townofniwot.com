@@ -450,7 +450,7 @@ export function renderUpcoming(list, mode, now) {
       const action =
         mode === 'select'
           ? '<button type="button" class="n-jump" data-jump="' + inst.date + '" data-jump-event="' + escapeHtml(inst.id) + '"' +
-            ' style="margin-top:auto;align-self:start;background:none;border:0;border-bottom:1px solid currentColor;color:var(--n-sky-ink);font:inherit;font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">View details <span aria-hidden="true">&#8594;</span></button>'
+            ' style="margin-top:auto;align-self:start;background:none;border:0;border-bottom:1px solid currentColor;color:var(--n-sky-ink);font:inherit;font-size:.9375rem;font-weight:500;cursor:pointer">View details <span aria-hidden="true">&#8594;</span></button>'
           : '<a class="n-link" href="' + escapeHtml(eventUrl(inst)) + '" style="margin-top:auto;align-self:start">View details <span aria-hidden="true">&#8594;</span></a>';
       const time = timeLabel(inst);
       return (

@@ -336,6 +336,34 @@ Vercel also adds `X-Robots-Tag: noindex` to preview deployments itself.
 `www.townofniwot.com` redirects permanently to the apex; Vercel upgrades HTTP
 to HTTPS itself.
 
+## The visual system
+
+One vocabulary, flat and editorial. It is written down because the site has
+twice drifted into a second one, and a rule that lives only in the CSS gets
+overridden by the next person in a hurry.
+
+- **Depth comes from rules, grounds and the railway devices — never from
+  shadow.** No `box-shadow` anywhere, and nothing moves under the cursor but
+  color. A card is a top rule and a photograph, not a floating panel.
+- **Four grounds.** Soft white is the default, warm paper the alternate,
+  evergreen the dark anchor, and pale sky belongs to civic content alone.
+  `.n-bg-sage` is kept as a name but resolves to paper. A page should not
+  use more than three in a row.
+- **Uppercase with wide tracking means "section label".** It is on `.n-label`,
+  the five navigation items, buttons, and the calendar's day tags and month
+  controls. Everything else — links, captions, breadcrumbs, footer meta,
+  citations, fold toggles — is set in the case it was written in. When
+  everything is tracked capitals, nothing is emphasised.
+- **One type scale.** `.n-display` for the page title (30–46px, set inline
+  per page so it can carry its own measure), `.n-h2` (24–36px), `.n-h3`
+  (19–24px). A descriptive title needs about 24 characters of measure; at
+  72px it wrapped to four lines and outweighed the page.
+- **Three photograph frames**, by the job the picture does: `.n-ph-lg` for a
+  lead or a full-width band, `.n-ph-md` for a card or a field-guide entry,
+  `.n-ph-sm` for one of a pair. The homepage hero and its four cards are
+  framed by their own rules. Do not write a one-off height.
+- **border-radius is 0.** No exceptions; `verify.mjs` fails a rounded corner.
+
 ## Design rules that are load-bearing
 
 Three ideas drive the design. Preserve them.
