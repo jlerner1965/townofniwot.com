@@ -8,7 +8,7 @@ import { buildNow } from '../../lib/events.js';
 /* Data files each page renders, for the sitemap's <lastmod>. */
 const CORRECTIONS = 'src/_data/corrections.js';
 const DEPS = {
-  'index.njk': ['src/_data/events.js', 'src/_data/listings.js', 'src/_data/organizations.js'],
+  'index.njk': ['src/_data/events.js'],
   'eat-shop.njk': ['src/_data/listings.js', CORRECTIONS],
   'events.njk': ['src/_data/events.js', CORRECTIONS],
   'community.njk': ['src/_data/organizations.js', 'src/_data/services.js', CORRECTIONS],

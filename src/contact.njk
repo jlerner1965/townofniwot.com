@@ -1,0 +1,96 @@
+---
+layout: layouts/base.njk
+title: Send a listing, an event or a correction
+seoTitle: Send a Listing, Event or Correction | TownofNiwot.com
+crumbLabel: Contact
+description: Send TownofNiwot.com a business listing, an event, a public-art entry, an accessibility note or a correction, with the source it rests on.
+permalink: /contact/
+# A utility page: it exists to hold the form, which the September 2026
+# launch audit asked to have off the visitor page. It carries no content of
+# its own worth indexing, so it stays out of the sitemap like /thanks/.
+noindex: true
+scripts:
+  - /assets/js/forms.js
+---
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">Contribute</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.25rem,1.6rem + 3vw,4.5rem);line-height:.98;max-width:16ch;color:var(--n-evergreen)">Send a listing, an event or a correction</h1>
+</div>
+<p class="n-lead" style="margin:0;max-width:50ch">Business owners, event organizers and residents keep this guide accurate. Send yours with a link to its source and it goes in with the date it was verified.</p>
+</div>
+</div>
+</section>
+
+<section class="n-bg-green n-pad" id="contact" aria-labelledby="contact-h">
+<div class="n-wrap">
+<div class="n-g2">
+<div>
+<h2 class="n-label" id="contact-h" style="margin:0">The form</h2>
+<form data-contact-form method="post" action="/api/contact" style="display:grid;gap:18px;max-width:560px;margin-top:20px">
+<div class="n-sr" aria-hidden="true">
+<label for="v-company">Leave this field empty</label>
+<input id="v-company" name="company" type="text" tabindex="-1" autocomplete="off">
+</div>
+<div>
+<label class="n-label" for="v-kind" style="color:var(--n-gold-lt)">What is this?</label>
+<select class="n-field" id="v-kind" name="kind">
+<option>Business listing</option>
+<option>Event listing</option>
+<option>Public art inventory</option>
+<option>Accessibility correction</option>
+<option>Correction to this guide</option>
+<option>Something else</option>
+</select>
+</div>
+<div>
+<label class="n-label" for="v-name" style="color:var(--n-gold-lt)">Name of the business, event or page</label>
+<input class="n-field" id="v-name" name="subject" type="text" required placeholder="e.g. Explore &#8212; public art">
+</div>
+<div>
+<label class="n-label" for="v-detail" style="color:var(--n-gold-lt)">Details</label>
+<textarea class="n-field" id="v-detail" name="detail" rows="5" required></textarea>
+</div>
+<div>
+<label class="n-label" for="v-src" style="color:var(--n-gold-lt)">Link to your own page or the source</label>
+<input class="n-field" id="v-src" name="source" type="url" inputmode="url" autocomplete="url" placeholder="https://">
+</div>
+<div>
+<label class="n-label" for="v-email" style="color:var(--n-gold-lt)">Your email</label>
+<input class="n-field" id="v-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="Used only to reply about this submission">
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+<button class="n-btn" type="submit" style="cursor:pointer;font-family:inherit">Send submission</button>
+</div>
+<p class="n-small" style="margin:0;max-width:54ch;color:var(--n-sage-lt)">Your email is optional and is used only to reply about this submission. Sending a correction does not sign you up for anything. <a href="/privacy/">How submissions are handled</a>.</p>
+</form>
+<template data-form-success><p role="status" style="margin:24px 0 0;padding-top:16px;border-top:3px solid var(--n-gold-lt);max-width:54ch;color:var(--n-white)">Thank you &#8212; your submission has been sent. It goes in with the date it was verified.</p></template>
+<template data-form-unavailable><p role="status" data-message style="margin:24px 0 0;padding-top:16px;border-top:3px solid var(--n-gold-lt);max-width:54ch;color:var(--n-white)">This form is not connected yet, so nothing was sent. For anything official, the <a href="/community/#resources">responsible body</a> is the reliable contact.</p></template>
+</div>
+<div>
+<div class="n-label">What goes in</div>
+<h2 class="n-h2" style="margin-top:12px;max-width:20ch">With its source, and with its date</h2>
+<p class="n-body" style="margin:16px 0 0;max-width:50ch;color:var(--n-paper)">A business listing needs a name, a category, an address and a website or the Business Association listing. An event needs the organizer&#8217;s own page with the date on it. A correction needs the page, what is wrong and what it should say.</p>
+<p class="n-body" style="margin:14px 0 0;max-width:50ch;color:var(--n-paper)">Listings and events are published with the date they were checked. A correction to a published fact is listed on Our Story with its date and a note of what changed. A claim that cannot be supported is removed rather than softened.</p>
+<div style="margin-top:20px">
+{%- if site.editor.email %}
+<div style="display:grid;gap:4px;padding:14px 0;border-top:1px solid rgba(158,173,152,.35)">
+<span class="n-label n-label--quiet" style="color:var(--n-sage-lt)">This guide&#8217;s editor{% if site.editor.name %} &#8212; {{ site.editor.name }}{% endif %}</span>
+<a class="n-link" data-editor-email href="mailto:{{ site.editor.email }}" style="justify-self:start;text-transform:none;letter-spacing:0">{{ site.editor.email }}</a>
+</div>
+{%- endif %}
+<div style="display:grid;gap:4px;padding:14px 0;border-top:1px solid rgba(158,173,152,.35)">
+<span class="n-label n-label--quiet" style="color:var(--n-sage-lt)">For anything official &#8212; permits, roads, ballots, water</span>
+<a class="n-link" href="/community/#resources" style="justify-self:start">Resident resources: the responsible body for each service <span aria-hidden="true">&#8594;</span></a>
+</div>
+<div style="display:grid;gap:4px;padding:14px 0;border-top:1px solid rgba(158,173,152,.35);border-bottom:1px solid rgba(158,173,152,.35)">
+<span class="n-label n-label--quiet" style="color:var(--n-sage-lt)">Emergency</span>
+<span style="color:var(--n-white)">Call 911</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>

@@ -70,14 +70,15 @@ const expectedCount = events.filter((e) => e.status === 'tentative').length;
 /* Expected element counts per page. A data wiring mistake renders an empty
    loop and nothing else complains, so the count is asserted explicitly. */
 const COUNTS = {
-  home: { '[data-upcoming] article': Math.min(3, upcoming.length), '.n-quick a': 6, '.n-exp article': 4, 'a[href^="/eat-shop/?category="]': listings.categories.length - 1 },
+  home: { '[data-upcoming] article': Math.min(3, upcoming.length), '.n-quick a': 4, '.n-exp article': 4, '.n-split-links a': 6, '.n-nav a': 5 },
   explore: { '.n-entry': 4, '.n-entry--flip': 2 },
-  'eat-shop': { '[data-listing]': listings.entries.length, 'input[name="category"]': listings.categories.length, 'fieldset legend': 1 },
-  events: { '[data-upcoming] article': upcoming.length, '[data-day]': 28, '[data-expected] li': expectedCount },
-  community: { '.n-srow': 10, '#orgs li': 6, '[data-orgs-public] li': 2 },
+  'eat-shop': { '[data-listing]': listings.entries.length, 'input[name="category"]': listings.categories.length, 'fieldset legend': 1, '[data-group]': listings.categories.length - 1, 'select[data-dir-select]': 1 },
+  events: { '[data-upcoming] article': upcoming.length, '[data-day]': 28, '[data-expected] li': expectedCount, '[data-cal-fold]': 1 },
+  community: { '.n-srow': 10, '.n-sgroup': 4, '#orgs li': 6, '[data-orgs-public] li': 2 },
   'our-story': { '.n-era': 5, '[data-corrections] dt': 1 },
-  civic: { '.n-tasks > div': 3, '.n-strip > div': 4, '#ballot li': 3, '#fiscal li': 5, '#after li': 5, '#official a[data-official]': 4, '.n-toc a': 6, '[data-corrections] dt': 1 },
-  'plan-a-visit': { '.n-g4 > div': 4, 'form [name]': 6, 'form a[href="/privacy/"]': 1 },
+  civic: { '.n-tasks > div': 3, '.n-strip > div': 4, '#ballot li': 3, '#fiscal li': 5, '[data-fiscal-fold]': 5, '#after li': 5, '#official a[data-official]': 4, '.n-toc a': 6, '[data-corrections] dt': 1 },
+  'plan-a-visit': { '.n-g4 > div': 4, '#map img': 1 },
+  contact: { 'form [name]': 6, 'form a[href="/privacy/"]': 1 },
   privacy: { 'main h2': 7 },
   404: { '.n-lost a': 6 },
 };
@@ -91,6 +92,7 @@ const PAGES = [
   ['our-story', '/our-story/'],
   ['civic', '/civic/incorporation-election/'],
   ['plan-a-visit', '/plan-a-visit/'],
+  ['contact', '/contact/'],
   ['privacy', '/privacy/'],
   ['404', '/404.html'],
 ];
@@ -313,8 +315,12 @@ const noindex404 = await page.evaluate(() => (document.querySelector('meta[name=
 if (noindex404 !== 'noindex, follow') note('404: page is not noindex');
 console.log('✓ unknown route: HTTP 404 with the custom, noindex page');
 
-// The homepage hero photo sits inside the gutter, sharing its right edge
-// with the nav and the body copy rather than bleeding off the screen.
+/* The homepage hero is a full-bleed split masthead since the 2026 visual
+   refresh: the photograph runs to the screen edge on purpose. What has to
+   hold at every width is that it never runs past it, that the text column
+   keeps its gutter, and that the stacked hero on a phone stays short — the
+   launch audit measured 440px of text over a 320px photograph and asked
+   for roughly 340 over 230. */
 const bleedWidths = [390, 768, 1024, 1280, 1440, 1920, 2560];
 const bleedResults = [];
 for (const w of bleedWidths) {
@@ -325,25 +331,28 @@ for (const w of bleedWidths) {
   await bp.waitForTimeout(120);
   const r = await bp.evaluate(() => {
     const img = document.querySelector('.n-hero figure img');
-    const wrap = document.querySelector('.n-hero').closest('.n-wrap');
-    const box = wrap.getBoundingClientRect();
-    const contentRight = box.right - parseFloat(getComputedStyle(wrap).paddingRight);
+    const text = document.querySelector('.n-hero > div');
+    const tb = text.getBoundingClientRect();
+    const ib = img.getBoundingClientRect();
     return {
-      right: Math.round(img.getBoundingClientRect().right),
-      contentRight: Math.round(contentRight),
+      right: Math.round(ib.right),
+      left: Math.round(ib.left),
+      imgH: Math.round(ib.height),
+      textH: Math.round(tb.height),
+      textLeft: Math.round(tb.left + parseFloat(getComputedStyle(text).paddingLeft)),
+      stacked: ib.top >= tb.bottom - 1,
       edge: document.documentElement.clientWidth,
       scrollW: document.documentElement.scrollWidth,
     };
   });
-  if (Math.abs(r.right - r.contentRight) > 1) {
-    note(`home @ ${w}px: hero photo is not aligned to the content edge (${r.right} vs ${r.contentRight})`);
-  }
-  if (r.right >= r.edge - 1) note(`home @ ${w}px: hero photo is touching the screen edge`);
+  if (r.right > r.edge + 1 || r.left < -1) note(`home @ ${w}px: hero photo runs past the screen edge (${r.left}..${r.right} vs ${r.edge})`);
+  if (r.textLeft < 16) note(`home @ ${w}px: hero text has no gutter (${r.textLeft}px)`);
   if (r.scrollW > r.edge + 1) note(`home @ ${w}px: horizontal scroll (${r.scrollW} vs ${r.edge})`);
-  bleedResults.push(`${w}→${r.edge - r.right}px`);
+  if (r.stacked && (r.textH > (w <= 480 ? 420 : 520) || r.imgH > (w <= 480 ? 240 : 330))) note(`home @ ${w}px: stacked hero too tall — text ${r.textH}px over photo ${r.imgH}px`);
+  bleedResults.push(`${w}→${r.stacked ? r.textH + '+' + r.imgH + 'px' : 'split'}`);
   await bctx.close();
 }
-console.log(`✓ hero photo clears the screen edge at every width: ${bleedResults.join(', ')}`);
+console.log(`✓ hero: inside the viewport at every width, short when stacked: ${bleedResults.join(', ')}`);
 
 // Keyboard: the skip link is first, visible when focused, and works; every
 // control reached by Tab shows a focus indicator.
@@ -379,7 +388,7 @@ console.log(`✓ keyboard: skip link works, ${ringResults.length} tabbed control
    focused from the keyboard state (so :focus-visible applies) and the ring
    colour is compared with the ground found just outside the ring, or with
    the control's own ground when the ring is drawn inside it. */
-const FOCUS_PAGES = ['/', '/eat-shop/', '/events/', '/civic/incorporation-election/', '/plan-a-visit/', '/privacy/'];
+const FOCUS_PAGES = ['/', '/eat-shop/', '/events/', '/civic/incorporation-election/', '/plan-a-visit/', '/contact/', '/privacy/'];
 const lowRings = [];
 let ringsChecked = 0;
 for (const fpath of FOCUS_PAGES) {
@@ -488,10 +497,21 @@ for (const width of MAP_WIDTHS) {
 console.log(`✓ map: labels inside the viewBox and never under ${mapMin.toFixed(1)}px, 320 through 2560`);
 
 // --- Directory filtering ---
-/* Visible means laid out, not merely lacking the attribute: a display rule
-   that beat `hidden` would leave a filtered-out row on screen. */
+/* A row counts as shown when neither it nor its category group is hidden,
+   and it is actually laid out — a display rule that beat `hidden` would
+   leave a filtered-out row on screen. Rows inside a closed group are shown
+   in the filter's sense (they are what the group folds), so the group's
+   open state is checked separately. */
 const visible = () =>
-  page.evaluate(() => Array.from(document.querySelectorAll('[data-listing]')).filter((r) => !r.hidden && getComputedStyle(r).display !== 'none').length);
+  page.evaluate(() =>
+    Array.from(document.querySelectorAll('[data-listing]')).filter((r) => {
+      const group = r.closest('[data-group]');
+      if (r.hidden || (group && group.hidden)) return false;
+      return !group || !group.open ? true : getComputedStyle(r).display !== 'none';
+    }).length
+  );
+const openGroups = () => page.evaluate(() => Array.from(document.querySelectorAll('[data-group]')).filter((g) => g.open && !g.hidden).map((g) => g.dataset.group));
+const shownGroups = () => page.evaluate(() => Array.from(document.querySelectorAll('[data-group]')).filter((g) => !g.hidden).map((g) => g.dataset.group));
 const state = () =>
   page.evaluate(() => ({
     search: window.location.search,
@@ -528,6 +548,11 @@ if ((semantics.legend || '').trim() !== 'Filter by category') note(`eat-shop: le
 if (semantics.checked !== 1) note(`eat-shop: ${semantics.checked} radios checked`);
 if (semantics.live !== 'polite') note('eat-shop: result count is not aria-live="polite"');
 if ((await visible()) !== totalListings) note(`eat-shop: expected ${totalListings} listings on load`);
+/* The page opens compact: every group present, every group folded. */
+if ((await openGroups()).length !== 0) note(`eat-shop: groups open on load: ${(await openGroups()).join(', ')}`);
+if ((await shownGroups()).length !== listings.categories.length - 1) note('eat-shop: a category group is missing on load');
+const selectShown = await page.evaluate(() => document.querySelector('[data-dir-select]').getBoundingClientRect().height > 0);
+if (selectShown) note('eat-shop: the phone category selector is shown on a desktop');
 
 // URL-driven filtering.
 await page.goto(BASE + '/eat-shop/?category=coffee-bakery', { waitUntil: 'load' });
@@ -537,24 +562,27 @@ if (s.checked !== 'coffee-bakery' || s.heading !== labelOf('coffee-bakery') || (
   note(`eat-shop: ?category=coffee-bakery did not load the filtered state: ${JSON.stringify(s)}`);
 }
 if (s.count !== `${countOf('coffee-bakery')} listings`) note(`eat-shop: count label "${s.count}" for coffee-bakery`);
+if (JSON.stringify(await openGroups()) !== '["coffee-bakery"]' || JSON.stringify(await shownGroups()) !== '["coffee-bakery"]') {
+  note(`eat-shop: ?category=coffee-bakery should leave only that group, open: open=${JSON.stringify(await openGroups())} shown=${JSON.stringify(await shownGroups())}`);
+}
 /* Scroll so the filter rail and the first rows are in frame, instantly —
    the page's smooth scrolling would otherwise still be moving. */
 await page.evaluate(() => window.scrollTo({ top: document.querySelector('#dir-h').getBoundingClientRect().top + window.scrollY - 110, behavior: 'instant' }));
 await page.waitForTimeout(150);
 await page.screenshot({ path: `${SHOTS}/eat-shop-filtered-desktop.png`, fullPage: false });
 
-// The filter in force is named, with a reset beside it, and the page opens
-// on the search rather than on the photographs.
+// The filter in force is named, with a reset beside it. The page opens on
+// the title, the two photographs and then the search, with the first
+// listing below that — a screen, not a scroll.
 const order = await page.evaluate(() => ({
   search: document.getElementById('dir-q').getBoundingClientRect().top + window.scrollY,
   firstRow: document.querySelector('[data-listing]:not([hidden])').getBoundingClientRect().top + window.scrollY,
   photos: document.querySelector('.n-pair').getBoundingClientRect().top + window.scrollY,
-  lastRow: Array.from(document.querySelectorAll('[data-listing]')).pop().getBoundingClientRect().top + window.scrollY,
   h1: document.querySelector('h1').getBoundingClientRect().bottom + window.scrollY,
 }));
 if (!(order.search > order.h1 && order.search < order.firstRow)) note(`eat-shop: search is not between the title and the first listing: ${JSON.stringify(order)}`);
-if (!(order.photos > order.lastRow)) note('eat-shop: the photographs are not below the listings');
-if (order.search - order.h1 > 200) note(`eat-shop: ${Math.round(order.search - order.h1)}px between the title and the search box`);
+if (!(order.photos > order.h1 && order.photos < order.search)) note('eat-shop: the photographs are not directly below the introduction');
+if (order.search - order.h1 > 520) note(`eat-shop: ${Math.round(order.search - order.h1)}px between the title and the search box`);
 const strip = await page.evaluate(() => {
   const el = document.querySelector('[data-dir-active]');
   return { shown: !el.hidden && getComputedStyle(el).display !== 'none', label: document.querySelector('[data-dir-active-label]').textContent.trim() };
@@ -616,6 +644,22 @@ await page.click('[data-dir-clear]');
 await page.waitForTimeout(150);
 s = await state();
 if ((await visible()) !== totalListings || s.search !== '' || s.checked !== 'all') note(`eat-shop: Clear filters did not restore everything: ${JSON.stringify(s)}`);
+if ((await openGroups()).length !== 0) note('eat-shop: Clear filters left groups open');
+
+// A search opens every group that holds a match and folds nothing else away
+// silently: the groups with no match leave, the rest open on their matches.
+await page.fill('#dir-q', 'coffee');
+await page.waitForTimeout(150);
+const coffeeGroups = await page.evaluate(() =>
+  Array.from(document.querySelectorAll('[data-group]')).map((g) => ({ slug: g.dataset.group, hidden: g.hidden, open: g.open, count: g.querySelector('[data-group-count]').textContent, rows: Array.from(g.querySelectorAll('[data-listing]')).filter((r) => !r.hidden).length }))
+);
+for (const g of coffeeGroups) {
+  if (g.rows === 0 && !g.hidden) note(`eat-shop: search "coffee" left the empty ${g.slug} group on the page`);
+  if (g.rows > 0 && (!g.open || g.hidden)) note(`eat-shop: search "coffee" did not open ${g.slug}, which holds ${g.rows} matches`);
+  if (Number(g.count) !== g.rows) note(`eat-shop: ${g.slug} summary says ${g.count} while ${g.rows} rows match`);
+}
+await page.fill('#dir-q', '');
+await page.waitForTimeout(120);
 
 // Search by street, and plain search.
 await page.fill('#dir-q', 'coffee');
@@ -646,19 +690,52 @@ const left = await page.evaluate(() => document.activeElement.name !== 'category
 if (!left) note('eat-shop: Tab did not leave the radio group in one stop');
 console.log('✓ directory: radio semantics, URL state, back/forward, combined search, zero results and keyboard all behave');
 
+/* On a phone the ten tiles give way to one <select>, which drives the same
+   state and follows it. */
 const fctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
 await isolate(fctx, []);
 const fp = await fctx.newPage();
 await fp.goto(BASE + '/eat-shop/?category=restaurants-bars', { waitUntil: 'load' });
 await fp.waitForTimeout(300);
-await fp.evaluate(() => window.scrollTo({ top: document.querySelector('fieldset.n-cats').getBoundingClientRect().top + window.scrollY - 90, behavior: 'instant' }));
+const phoneControls = await fp.evaluate(() => ({
+  tiles: getComputedStyle(document.querySelector('fieldset.n-cats')).display,
+  select: document.querySelector('[data-dir-select]').getBoundingClientRect().height > 0 ? 'shown' : 'none',
+  value: document.querySelector('[data-dir-select]').value,
+  height: Math.round(document.querySelector('[data-dir-select]').getBoundingClientRect().height),
+}));
+if (phoneControls.tiles !== 'none' || phoneControls.select === 'none') note(`eat-shop/mobile: expected the selector, not the tiles: ${JSON.stringify(phoneControls)}`);
+if (phoneControls.value !== 'restaurants-bars') note(`eat-shop/mobile: the selector does not show the category in force: ${phoneControls.value}`);
+if (phoneControls.height < 44) note(`eat-shop/mobile: the selector is ${phoneControls.height}px tall`);
+await fp.selectOption('[data-dir-select]', 'coffee-bakery');
+await fp.waitForTimeout(200);
+const phoneState = await fp.evaluate(() => ({
+  search: window.location.search,
+  checked: (document.querySelector('input[name="category"]:checked') || {}).value,
+  open: Array.from(document.querySelectorAll('[data-group]')).filter((g) => g.open && !g.hidden).map((g) => g.dataset.group),
+  shown: Array.from(document.querySelectorAll('[data-listing]')).filter((r) => !r.hidden).length,
+}));
+if (phoneState.search !== '?category=coffee-bakery' || phoneState.checked !== 'coffee-bakery' || JSON.stringify(phoneState.open) !== '["coffee-bakery"]' || phoneState.shown !== countOf('coffee-bakery')) {
+  note(`eat-shop/mobile: the selector did not drive the filter: ${JSON.stringify(phoneState)}`);
+}
+await fp.evaluate(() => window.scrollTo({ top: document.querySelector('[data-dir-select]').getBoundingClientRect().top + window.scrollY - 90, behavior: 'instant' }));
 await fp.waitForTimeout(150);
 await fp.screenshot({ path: `${SHOTS}/eat-shop-filtered-mobile.png` });
 await fctx.close();
+console.log('✓ directory/mobile: one selector in place of the tiles, driving the same state');
 
 // --- Calendar ---
 await page.goto(BASE + '/events/', { waitUntil: 'load' });
 await page.waitForTimeout(400);
+/* The month view ships folded, and a plain visit leaves it so. */
+const foldOnLoad = await page.evaluate(() => ({ open: document.querySelector('[data-cal-fold]').open, expected: document.querySelector('#expected').open }));
+if (foldOnLoad.open || foldOnLoad.expected) note(`events: a fold is open on a plain visit: ${JSON.stringify(foldOnLoad)}`);
+const listLayout = await page.evaluate(() => {
+  const rows = Array.from(document.querySelectorAll('[data-upcoming] article'));
+  return { rows: rows.length, grid: rows.every((r) => getComputedStyle(r).display === 'grid'), tallest: Math.max(...rows.map((r) => r.getBoundingClientRect().height)) };
+});
+if (listLayout.rows && (!listLayout.grid || listLayout.tallest > 200)) note(`events: the upcoming list is not laid out as rows: ${JSON.stringify(listLayout)}`);
+await page.evaluate(() => { document.querySelector('[data-cal-fold]').open = true; });
+await page.waitForTimeout(100);
 const monthNow = await page.textContent('[data-cal-label]');
 const expectedMonth = new Date().toLocaleString('en-US', { month: 'long', timeZone: 'America/Denver' }) + ' ' + new Date().toLocaleString('en-US', { year: 'numeric', timeZone: 'America/Denver' });
 if (monthNow.trim() !== expectedMonth) note(`events: calendar opened on ${monthNow.trim()}, expected ${expectedMonth}`);
@@ -727,9 +804,11 @@ if (!disabledNonEvent) note('events: days without events are not disabled');
 if (upcoming.length) {
   /* "View details" in the strip selects that day and that event. */
   const last = upcoming[upcoming.length - 1];
+  await page.evaluate(() => { document.querySelector('[data-cal-fold]').open = false; });
   await page.click(`[data-jump="${last.date}"][data-jump-event="${last.id}"]`);
   await page.waitForTimeout(200);
   rail = await railState();
+  if (!(await page.evaluate(() => document.querySelector('[data-cal-fold]').open))) note('events: View details did not unfold the month view');
   if (rail.pressed !== last.date || rail.expanded !== last.event.name) note(`events: View details did not open ${last.id} on ${last.date}: ${JSON.stringify({ pressed: rail.pressed, expanded: rail.expanded })}`);
   if (!rail.url.includes('date=' + last.date) || !rail.url.includes('event=' + encodeURIComponent(last.id))) note(`events: the URL does not carry the selection: ${rail.url}`);
   const focusedCell = await page.evaluate(() => document.activeElement.hasAttribute('data-day'));
@@ -741,6 +820,7 @@ if (upcoming.length) {
   await page.goto(BASE + '/events/?date=' + first.date + '&event=' + encodeURIComponent(first.id) + '#cal-h', { waitUntil: 'load' });
   await page.waitForTimeout(300);
   rail = await railState();
+  if (!(await page.evaluate(() => document.querySelector('[data-cal-fold]').open))) note('events: a deep link did not unfold the month view');
   if (rail.pressed !== first.date || rail.expanded !== first.event.name) note(`events: deep link did not select ${first.id}: ${JSON.stringify({ pressed: rail.pressed, expanded: rail.expanded })}`);
   if (sameDay.length > 1) {
     if (rail.picks !== sameDay.length || rail.pick !== first.id) note(`events: a day with ${sameDay.length} events should list them with ${first.id} chosen: ${JSON.stringify({ picks: rail.picks, pick: rail.pick })}`);
@@ -757,6 +837,7 @@ if (upcoming.length) {
   await page.waitForTimeout(300);
   rail = await railState();
   if (rail.label !== monthNow.trim()) note(`events: a deep link to an empty day moved the calendar to ${rail.label}`);
+  if (await page.evaluate(() => document.querySelector('[data-cal-fold]').open)) note('events: a deep link to an empty day unfolded the month view');
 }
 console.log(`✓ calendar: opens on ${monthNow.trim()}, the rail follows the month, cards match the records, deep links and the day list select the event`);
 await page.screenshot({ path: `${SHOTS}/events-selected.png` });
@@ -771,15 +852,15 @@ homeLinks.forEach((l) => {
 if (homeLinks.length) console.log(`✓ home: ${homeLinks.length} event cards deep-link to their day and event`);
 
 // --- Forms: labels, and server-side field errors announced and associated ---
-await page.goto(BASE + '/plan-a-visit/', { waitUntil: 'load' });
+await page.goto(BASE + '/contact/', { waitUntil: 'load' });
 const unlabelled = await page.evaluate(() =>
   Array.from(document.querySelectorAll('form input:not([type="hidden"]), form select, form textarea'))
     .filter((el) => !(el.labels && el.labels.length) && !el.getAttribute('aria-label'))
     .map((el) => el.name)
 );
-unlabelled.forEach((n) => note(`plan-a-visit: field "${n}" has no label`));
+unlabelled.forEach((n) => note(`contact: field "${n}" has no label`));
 const autocompletes = await page.evaluate(() => Array.from(document.querySelectorAll('input[type="email"]')).map((i) => i.getAttribute('autocomplete')));
-if (!autocompletes.every((a) => a === 'email')) note(`plan-a-visit: email inputs lack autocomplete="email": ${autocompletes}`);
+if (!autocompletes.every((a) => a === 'email')) note(`contact: email inputs lack autocomplete="email": ${autocompletes}`);
 const honeypot = await page.evaluate(() => {
   const el = document.getElementById('v-company');
   const wrap = el.closest('[aria-hidden="true"]');
@@ -792,7 +873,7 @@ const honeypot = await page.evaluate(() => {
     autocomplete: el.getAttribute('autocomplete'),
   };
 });
-if (honeypot.tabindex !== '-1' || !honeypot.hidden || !honeypot.clipped || honeypot.autocomplete !== 'off') note(`plan-a-visit: honeypot is exposed: ${JSON.stringify(honeypot)}`);
+if (honeypot.tabindex !== '-1' || !honeypot.hidden || !honeypot.clipped || honeypot.autocomplete !== 'off') note(`contact: honeypot is exposed: ${JSON.stringify(honeypot)}`);
 await page.route('**/api/contact', (route) =>
   route.fulfill({
     status: 400,
@@ -815,7 +896,7 @@ const fieldError = await page.evaluate(() => {
     focused: document.activeElement === email,
   };
 });
-if (fieldError.invalid !== 'true' || !fieldError.described || !fieldError.alert || !fieldError.focused) note(`plan-a-visit: field error not associated and announced: ${JSON.stringify(fieldError)}`);
+if (fieldError.invalid !== 'true' || !fieldError.described || !fieldError.alert || !fieldError.focused) note(`contact: field error not associated and announced: ${JSON.stringify(fieldError)}`);
 await page.unroute('**/api/contact');
 console.log('✓ forms: every field labelled, email autocomplete set, honeypot hidden, server errors tied to their field');
 
@@ -862,7 +943,7 @@ const fallback = await np.evaluate(() => ({
   links: Array.from(document.querySelectorAll('.n-nav a')).filter((a) => a.getBoundingClientRect().height > 0).length,
   overflow: document.documentElement.scrollWidth > window.innerWidth + 1,
 }));
-if (fallback.nav === 'none' || fallback.burger !== 'none' || fallback.links < 7 || fallback.overflow) note(`mobile: no-script navigation fallback wrong: ${JSON.stringify(fallback)}`);
+if (fallback.nav === 'none' || fallback.burger !== 'none' || fallback.links !== 5 || fallback.overflow) note(`mobile: no-script navigation fallback wrong: ${JSON.stringify(fallback)}`);
 else console.log('✓ mobile: without JavaScript the navigation is shown in full');
 await nojs.close();
 
@@ -884,6 +965,20 @@ for (const path of MOBILE_PAGES) {
 }
 stuck.forEach((f) => note(`mobile: sticky element in a stacked layout: ${f}`));
 if (!stuck.length) console.log('✓ mobile: no sticky rails pinned over stacked content');
+
+/* The five fiscal issues fold on a phone and stand open on a desktop. */
+await mp.goto(BASE + '/civic/incorporation-election/', { waitUntil: 'load' });
+await mp.waitForTimeout(200);
+const foldsPhone = await mp.evaluate(() => Array.from(document.querySelectorAll('[data-fiscal-fold]')).map((d) => d.open));
+if (foldsPhone.length !== 5 || foldsPhone.some(Boolean)) note(`civic/mobile: fiscal issues should start folded on a phone: ${JSON.stringify(foldsPhone)}`);
+await mp.click('[data-fiscal-fold] summary');
+await mp.waitForTimeout(100);
+if (!(await mp.evaluate(() => document.querySelector('[data-fiscal-fold]').open))) note('civic/mobile: a fiscal issue did not open on its title');
+await page.goto(BASE + '/civic/incorporation-election/', { waitUntil: 'load' });
+await page.waitForTimeout(200);
+const foldsDesk = await page.evaluate(() => Array.from(document.querySelectorAll('[data-fiscal-fold]')).map((d) => d.open));
+if (foldsDesk.length !== 5 || !foldsDesk.every(Boolean)) note(`civic/desktop: fiscal issues should stand open on a desktop: ${JSON.stringify(foldsDesk)}`);
+console.log('✓ civic: fiscal issues fold on a phone and stand open on a desktop');
 
 /* A seventh of a phone screen is not wide enough for a series name, and an
    overflowing label is painted over by the next cell's background rather
@@ -910,7 +1005,7 @@ for (const path of MOBILE_PAGES) {
   await mp.goto(BASE + path, { waitUntil: 'load' });
   await mp.waitForTimeout(200);
   const found = await mp.evaluate(() =>
-    Array.from(document.querySelectorAll('button, .n-btn, .n-link, input:not([tabindex="-1"]):not([type="radio"]), .n-chip-l, select, textarea, .n-crumbs a, .n-foot a'))
+    Array.from(document.querySelectorAll('button, .n-btn, .n-link, input:not([tabindex="-1"]):not([type="radio"]), .n-chip-l, select, textarea, summary, .n-crumbs a, .n-foot a'))
       .filter((el) => {
         const r = el.getBoundingClientRect();
         if (!r.width && !r.height) return false;

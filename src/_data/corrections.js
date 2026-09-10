@@ -9,6 +9,30 @@
    layout, and never silently. */
 export default [
   {
+    date: '2026-09-10',
+    page: '/events/',
+    summary:
+      'Eight dated events from the Niwot Business Association’s calendar were added after the launch audit found them missing: House Blend Band (September 12), the Tree Carving Fundraiser and Trivia Night (September 15), The Road of Remembrance (September 16), the Basin Design Open House (September 19), the Blessing of the Animals (October 4), the Niwot Wellness Lecture Series (October 7), the Holiday Parade (November 28, previously listed as awaiting a date) and the Holiday Magic Market Fayre (December 5). Venues and start times not read from the listings are left off rather than guessed, and each entry says so. The month grid, the “recently held” list and the change log left the page.',
+  },
+  {
+    date: '2026-09-10',
+    page: '/civic/incorporation-election/',
+    summary:
+      'The Commission’s own labels (Question 1 to 3, Issue 1 to 5) now appear beside each summary. The first three fiscal issues carry the first-full-year revenue estimates the ballot text states ($2.8 million, $900,000 and $60,000). Question 3 says voters may select up to nine of 28 candidates, and its dependency on Questions 1 and 2 follows the Commission’s summary. The page now distinguishes the Commission’s role (ballot content and procedure) from the Boulder County Clerk and Recorder’s (conducting the coordinated election). All of it rests on the launch audit’s September 10 reading of the Commission’s ballot page and is to be re-checked after the September 11 proof review.',
+  },
+  {
+    date: '2026-09-10',
+    page: '/community/',
+    summary:
+      'The Sheriff’s Office link now goes to the office’s own page (the earlier address redirected to its jobs page) and the Left Hand Water District link to the district’s .gov address, which its .org address now redirects to. Resident resources are grouped by topic.',
+  },
+  {
+    date: '2026-09-10',
+    page: '/eat-shop/',
+    summary:
+      'After a sweep of every external link: Robinson Consulting and Strohl Electric were held back (their Association listings now redirect elsewhere or answer 404); Butterfield Wellness Center and The Hidden Yoga Studio point at the Association directory while their own sites answer 502. Listings are folded by category.',
+  },
+  {
     date: '2026-09-09',
     page: '/events/',
     summary:

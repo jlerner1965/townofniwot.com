@@ -10,6 +10,8 @@ bodyClass: n-civic
 footMetaRight: Official ballot language controls
 ogImage: niwot-gateway-sculpture.jpg
 ogImageAlt: The Vintage Colorado Niwot gateway sculpture at the highway edge
+scripts:
+  - /assets/js/page-civic.js
 pageStyles: |
   /* This page carries no red or green accents: on a ballot page those colors
      read as oppose and support. Evergreen, charcoal, soft white and muted
@@ -25,7 +27,11 @@ pageStyles: |
      blue on the light grounds, and the lightened sky on the dark ones, where
      the blue would be 1.8:1 against evergreen. */
   .n-civic :where(a,button,input,select,textarea,summary):focus-visible{outline-color:#3E6E8C}
-  .n-civic .n-head :where(a,button):focus-visible,.n-civic .n-foot :where(a,button):focus-visible,.n-civic .n-bg-green :where(a,button,input,select,textarea,summary):focus-visible,.n-civic .n-skip:focus-visible{outline-color:var(--n-sky-lt)}
+  /* The masthead is light and the skip link's ring falls on the page ground,
+     so both take the muted blue; the footer and the evergreen band are dark
+     and take the lightened sky. */
+  .n-civic .n-head :where(a,button):focus-visible,.n-civic .n-skip:focus-visible{outline-color:#3E6E8C}
+  .n-civic .n-foot :where(a,button):focus-visible,.n-civic .n-bg-green :where(a,button,input,select,textarea,summary):focus-visible{outline-color:var(--n-sky-lt)}
   .n-civic .n-head{border-bottom-color:#3E6E8C}
   .n-tasks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,32px)}
   .n-tasks>div{padding:18px 20px;background:#FAF8F2;border-left:3px solid #24483A}
@@ -36,6 +42,18 @@ pageStyles: |
      few screens rather than a long scroll; they stack again on a phone. */
   .n-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,2.5vw,40px);list-style:none;margin:clamp(20px,2.5vw,32px) 0 0;padding:0}
   .n-cols>li{padding-top:14px;border-top:2px solid #24483A}
+  /* Each fiscal issue is a <details>, written open. page-civic.js closes
+     them on a phone, where five long cells would be one very long column;
+     the title is then the control. */
+  .n-fiscal summary{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 14px;align-items:start;min-height:44px;list-style:none;cursor:pointer}
+  .n-fiscal summary::-webkit-details-marker{display:none}
+  .n-fiscal summary .n-gmark{display:none;width:11px;height:11px;margin-top:6px;border-right:2px solid #24483A;border-bottom:2px solid #24483A;transform:rotate(45deg);transition:transform .18s ease}
+  .n-fiscal[open] summary .n-gmark{transform:rotate(-135deg)}
+  .n-fiscal summary:hover h3{color:#3E6E8C}
+  .n-log summary{cursor:pointer;color:#35617D;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+  .n-log summary:hover{color:#24483A}
+  @media (max-width:1080px){.n-log summary{padding-top:12px;padding-bottom:12px}}
+  @media (max-width:640px){.n-fiscal summary .n-gmark{display:block}}
   .n-civic [data-official]{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:baseline;padding:12px 0;border-top:1px solid var(--n-rule);font-size:1rem;color:#24483A;text-decoration:none}
   .n-civic [data-official]:hover{color:#3E6E8C}
   .n-civic [data-official] small{display:block;grid-column:1/-1;font-size:.875rem;color:var(--n-muted)}
@@ -118,8 +136,8 @@ pageStyles: |
 <h2 class="n-h2" id="q-h" style="color:#24483A">Three questions</h2>
 <p class="n-body" style="max-width:74ch;margin:0">Voters inside the proposed boundary decide three separate matters. They are counted separately, but the second and third take effect only if the first is approved.</p>
 </div>
-{#- The Commission's own labels ("Question 1") render only once they have
-    been read from the certified ballot; see election.js. -#}
+{#- The Commission's own labels ("Question 1") are rendered from
+    election.js, where their source is recorded. -#}
 <ul class="n-cols">
 {%- for q in election.questions %}
 <li>
@@ -141,17 +159,24 @@ pageStyles: |
 <div class="n-shead" style="border-bottom-color:#24483A">
 <div class="n-label">Fiscal questions</div>
 <h2 class="n-h2" id="f-h" style="color:#24483A">Five fiscal issues</h2>
-<p class="n-body" style="max-width:74ch;margin:0">Each is a separate authorization, listed here as filed and without argument about whether it is advisable. All of them apply only if a municipality is created.</p>
+<p class="n-body" style="max-width:74ch;margin:0">Each is a separate authorization, listed here as filed and without argument about whether it is advisable. All of them apply only if a municipality is created. Where the ballot text states an estimated first-full-year revenue, the figure is given.</p>
 </div>
 <ul class="n-cols">
 {%- for f in election.fiscal %}
 <li>
+<details class="n-fiscal" data-fiscal-fold open>
+<summary>
+<span>
 {%- if f.official %}
-<div class="n-label n-label--quiet" style="margin-bottom:8px">{{ f.official }}</div>
+<span class="n-label n-label--quiet" style="display:block;margin-bottom:8px">{{ f.official }}</span>
 {%- endif %}
 <h3 style="margin:0;font-size:1.0625rem;line-height:1.35;color:#24483A;font-weight:600">{{ f.title }}</h3>
+</span>
+<span class="n-gmark" aria-hidden="true"></span>
+</summary>
 <p class="n-body" style="margin:8px 0 0;font-size:.9375rem">{{ f.body }}</p>
 <a class="n-link" href="{{ f.sourceHref }}" rel="noopener" style="display:inline-block;margin-top:12px;font-size:12px">Official text <span aria-hidden="true">&#8599;</span></a>
+</details>
 </li>
 {%- endfor %}
 </ul>
@@ -185,7 +210,7 @@ pageStyles: |
 <div class="n-shead" style="border-bottom-color:#24483A">
 <div class="n-label">Official resources</div>
 <h2 class="n-h2" id="o-h" style="color:#24483A">Go to the source</h2>
-<p class="n-body" style="max-width:74ch;margin:0">The Niwot Election Commission, appointed by the Boulder County District Court, administers this election in coordination with the Boulder County Clerk and Recorder. This guide is not an election authority.</p>
+<p class="n-body" style="max-width:74ch;margin:0">Two bodies, two roles. The Niwot Election Commission, appointed by the Boulder County District Court, is responsible for the ballot content and the procedure for this question. The Boulder County Clerk and Recorder conducts the coordinated election it appears in: registration, ballots, drop-off and results. This guide is not an election authority.</p>
 </div>
 <div class="n-g2" style="margin-top:clamp(20px,2.5vw,32px)">
 <div style="border-bottom:1px solid var(--n-rule)">
@@ -221,7 +246,9 @@ pageStyles: |
 <div>
 <p class="n-body" style="margin:0;max-width:64ch">Anything on this page that cannot be supported by a filed document or an official publication is removed rather than softened. Every change to a published fact is listed here with its date.</p>
 {%- if pageCorrections.length %}
-<dl data-corrections style="margin:18px 0 0;max-width:64ch">
+<details class="n-log" style="margin-top:16px;max-width:64ch">
+<summary>Dated changes ({{ pageCorrections.length }})</summary>
+<dl data-corrections style="margin:8px 0 0">
 {%- for c in pageCorrections %}
 <div style="padding:12px 0;border-top:1px solid var(--n-rule)">
 <dt class="n-label n-label--quiet" style="font-size:12px">{{ c.date | humanDate }}</dt>
@@ -229,11 +256,12 @@ pageStyles: |
 </div>
 {%- endfor %}
 </dl>
+</details>
 {%- else %}
 <p class="n-body" data-corrections-none style="margin:14px 0 0;max-width:64ch">No corrections have been published for this page yet.</p>
 {%- endif %}
 <div class="n-btns" style="margin-top:16px">
-<a class="n-btn" href="/plan-a-visit/#contact">Report a correction</a>
+<a class="n-btn" href="/contact/">Report a correction</a>
 <a class="n-btn n-btn--ghost" href="/our-story/#sources">Editorial standards</a>
 </div>
 </div>

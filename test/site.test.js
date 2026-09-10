@@ -15,6 +15,7 @@ import services from '../src/_data/services.js';
 import organizations from '../src/_data/organizations.js';
 import election from '../src/_data/election.js';
 import corrections from '../src/_data/corrections.js';
+import nav from '../src/_data/nav.js';
 import { buildUpcoming, expandEvents, instancesOn, dateLabel, parseIso, monthDefault, MONTHS } from '../src/assets/js/calendar-core.js';
 import { HASHED_NAME } from '../lib/assets.js';
 
@@ -43,8 +44,11 @@ before(() => {
   assert.ok(fs.existsSync(ROOT), '_site is missing — run `npm run build` first');
 });
 
-test('all eight primary pages, the privacy page, the 404 and the utility files are built', () => {
-  for (const url of [...INDEXABLE, '/thanks/']) assert.ok(fs.existsSync(fileFor(url)), url);
+/* Utility pages: built and reachable, kept out of the index and the sitemap. */
+const UTILITY = ['/thanks/', '/contact/'];
+
+test('all eight primary pages, the privacy page, the utility pages, the 404 and the utility files are built', () => {
+  for (const url of [...INDEXABLE, ...UTILITY]) assert.ok(fs.existsSync(fileFor(url)), url);
   for (const file of ['404.html', 'sitemap.xml', 'robots.txt', 'favicon.svg', 'favicon.ico', 'apple-touch-icon.png']) assert.ok(fs.existsSync(path.join(ROOT, file)), file);
 });
 
@@ -67,7 +71,7 @@ test('titles, descriptions, canonicals and Open Graph tags are unique and correc
 });
 
 test('every page has exactly one H1 and no skipped heading levels', () => {
-  for (const url of [...INDEXABLE, '/thanks/', '/404.html']) {
+  for (const url of [...INDEXABLE, ...UTILITY, '/404.html']) {
     const html = read(url);
     const levels = [...html.matchAll(/<h([1-6])[\s>]/g)].map((m) => Number(m[1]));
     assert.equal(levels.filter((l) => l === 1).length, 1, `${url} h1 count`);
@@ -79,8 +83,8 @@ test('every page has exactly one H1 and no skipped heading levels', () => {
   }
 });
 
-test('the 404 and thank-you pages are noindex and carry no canonical', () => {
-  for (const url of ['/404.html', '/thanks/']) {
+test('the 404, thank-you and contact pages are noindex and carry no canonical', () => {
+  for (const url of ['/404.html', ...UTILITY]) {
     const html = read(url);
     assert.match(html, /<meta name="robots" content="noindex, follow">/, url);
     assert.ok(!/rel="canonical"/.test(html), url);
@@ -88,14 +92,71 @@ test('the 404 and thank-you pages are noindex and carry no canonical', () => {
 });
 
 test('the masthead identifier, footer disclaimer and privacy links are on every page', () => {
-  for (const url of [...INDEXABLE, '/thanks/', '/404.html']) {
+  for (const url of [...INDEXABLE, ...UTILITY, '/404.html']) {
     const html = read(url);
     assert.match(html, /<small>Independent community guide<\/small>/, url);
     assert.ok(html.includes(site.disclaimer), `${url} disclaimer`);
     assert.match(html, /href="\/privacy\/"/, url);
   }
-  assert.ok(read('/').split('href="/privacy/"').length >= 3, 'privacy link beside the newsletter form');
-  assert.ok(read('/plan-a-visit/').includes('How submissions are handled'), 'privacy link beside the submission form');
+  assert.ok(read('/contact/').includes('How submissions are handled'), 'privacy link beside the submission form');
+});
+
+/* ---- navigation and the homepage, after the September 2026 launch audit ---- */
+
+test('the primary navigation has five items; Our Story and Plan a Visit stay reachable from the footer and Explore', () => {
+  assert.deepEqual(nav.map((n) => n.label), ['Explore', 'Eat & Shop', 'Events', 'Community', '2026 Election']);
+  for (const url of [...INDEXABLE, ...UTILITY, '/404.html']) {
+    const html = read(url);
+    const menu = html.slice(html.indexOf('<nav class="n-nav"'), html.indexOf('</nav>'));
+    assert.equal((menu.match(/<a[ >]/g) || []).length, nav.length, `${url} menu items`);
+    assert.ok(!menu.includes('/our-story/') && !menu.includes('/plan-a-visit/'), `${url} menu`);
+    const footer = html.slice(html.indexOf('<footer'));
+    assert.ok(footer.includes('href="/our-story/"') && footer.includes('href="/plan-a-visit/"') && footer.includes('href="/contact/"'), `${url} footer`);
+  }
+  const explore = read('/explore/');
+  assert.ok(explore.includes('href="/our-story/"') && explore.includes('href="/plan-a-visit/"'), 'Explore links both');
+  assert.ok(!explore.includes('Inventory in progress'));
+});
+
+test('the homepage is six sections with four quick links, no newsletter form and no repeated interior lists', () => {
+  const html = read('/');
+  const main = html.slice(html.indexOf('<main'), html.indexOf('</main>'));
+  assert.equal((main.match(/<section /g) || []).length, 6, 'six sections');
+  assert.equal((main.match(/class="n-shift" href="/g) || []).length, 4, 'four quick links');
+  assert.ok(!main.includes('<form'), 'no form on the homepage');
+  assert.ok(!main.includes('name="kind" value="newsletter"'), 'no newsletter form');
+  assert.ok(!main.includes('/eat-shop/?category='), 'no category grid');
+  for (const o of organizations) assert.ok(!main.includes(`>${o.name}<`), `${o.name} is not listed on the homepage`);
+  assert.ok(!main.includes('CB&amp;Q 14649'), 'no history summary');
+  assert.ok(main.includes('November 3, 2026'), 'the compact election notice stays');
+  assert.ok(main.includes('Community Groups &amp; Resident Resources') && main.includes('Plan Your Visit'), 'the split section');
+  const words = main.replace(/<[^>]+>/g, ' ').replace(/&[#\w]+;/g, ' ').split(/\s+/).filter(Boolean).length;
+  assert.ok(words < 620, `homepage word count ${words}`);
+});
+
+test('the contact page holds the submission form; the visitor page has no form and no contact matrix', () => {
+  const contact = read('/contact/');
+  assert.match(contact, /<form data-contact-form method="post" action="\/api\/contact"/);
+  assert.equal((contact.match(/ name="(company|kind|subject|detail|source|email)"/g) || []).length, 6);
+  const visit = read('/plan-a-visit/');
+  assert.ok(!visit.includes('<form'), 'no form on the visitor page');
+  assert.ok(!visit.includes('Go direct instead'), 'no contact matrix');
+  assert.ok(visit.includes('href="/community/#resources"'), 'one link to resident resources');
+  assert.ok(visit.includes('alt="Brick and clapboard buildings on the 300 block of Second Avenue'), 'the streetscape photograph');
+  assert.ok(!html_has_form_script(visit), 'forms.js is not loaded on the visitor page');
+});
+
+function html_has_form_script(html) {
+  return /forms\.[0-9a-f]+\.js/.test(html);
+}
+
+test('the visible titles say what each page is', () => {
+  const h1 = (url) => decode(tag(read(url), /<h1[^>]*>([^<]*)<\/h1>/));
+  assert.equal(h1('/explore/'), 'Explore Niwot: Four Places in Walking Order');
+  assert.equal(h1('/eat-shop/'), 'Niwot Restaurants, Shops & Local Services');
+  assert.equal(h1('/community/'), 'Community Groups & Resident Resources');
+  assert.equal(h1('/our-story/'), 'Niwot History: Railroad, Town Grid & Community');
+  assert.equal(h1('/plan-a-visit/'), 'Visit Niwot: Directions, Parking & Accessibility');
 });
 
 test('internal links and in-page anchors all resolve', () => {
@@ -229,22 +290,41 @@ test('every directory row says where its link goes, and none calls the Associati
   assert.ok(!html.includes('/6964-n-79th-st/'));
 });
 
-test('the directory opens on its search, names the filter in force and keeps its policy note short', () => {
+test('the directory opens on its photographs and search, folds the listings by category and names the filter in force', () => {
   const html = read('/eat-shop/');
+  const h1 = html.indexOf('<h1');
+  const photos = html.indexOf('class="n-pair"');
   const search = html.indexOf('id="dir-q"');
   const firstRow = html.indexOf('data-listing');
-  const photos = html.indexOf('class="n-pair"');
-  assert.ok(search > 0 && search < firstRow, 'search before the first listing');
-  assert.ok(photos > html.lastIndexOf('data-listing'), 'photographs after the listings');
+  assert.ok(h1 < photos && photos < search && search < firstRow, 'title, photographs, search, listings — in that order');
+  const groups = [...html.matchAll(/<details class="n-group" id="cat-([a-z-]+)" data-group="([a-z-]+)">/g)];
+  assert.deepEqual(groups.map((m) => m[2]), listings.categories.filter((c) => c.slug !== 'all').map((c) => c.slug), 'one group per category, in order');
+  assert.ok(!/<details class="n-group"[^>]* open/.test(html), 'every group ships folded');
+  for (const c of listings.categories.filter((c) => c.slug !== 'all')) {
+    const block = html.slice(html.indexOf(`data-group="${c.slug}"`), html.indexOf('</details>', html.indexOf(`data-group="${c.slug}"`)));
+    assert.equal((block.match(/data-listing/g) || []).length, c.count, `${c.label} rows in its group`);
+    assert.ok(block.includes(`data-group-count>${c.count}<`), `${c.label} count on its summary`);
+  }
+  const options = [...html.matchAll(/<option value="([a-z-]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(options, listings.categories.map((c) => c.slug), 'the phone selector offers every category');
+  assert.ok(html.indexOf('<select id="dir-cat"') > html.indexOf('</form>'), 'the selector sits outside the form');
   assert.match(html, /<div class="n-active" data-dir-active hidden>/);
   assert.match(html, /<details class="n-how">\s*<summary>How this directory is compiled<\/summary>/);
   assert.ok(html.split('data-dir-clear').length >= 3, 'a reset in the strip and in the empty state');
+  assert.ok(!html.includes('data-corrections'), 'no change log on the directory');
 });
 
-test('the homepage category links open the matching filtered directory', () => {
-  const html = read('/');
-  const links = [...html.matchAll(/href="\/eat-shop\/\?category=([a-z-]+)"/g)].map((m) => m[1]);
-  assert.deepEqual(links, listings.categories.filter((c) => c.slug !== 'all').map((c) => c.slug));
+test('the link sweep held back the rows it could not stand behind and rerouted the ones whose sites were down', () => {
+  const byId = new Map(listings.records.map((r) => [r.slug, r]));
+  for (const slug of ['robinson-consulting', 'strohl-electric']) assert.equal(byId.get(slug).status, 'unverified', slug);
+  for (const slug of ['butterfield-wellness', 'hidden-yoga-studio']) {
+    const row = listings.entries.find((e) => e.slug === slug);
+    assert.ok(row, `${slug} still listed`);
+    assert.equal(row.href, 'https://niwot.com/');
+    assert.equal(row.linkLabel, 'Find in the Association directory');
+  }
+  const html = read('/eat-shop/');
+  for (const dead of ['butterfieldwellness.com', 'thehiddenyogastudio.com', 'listing/robinson-consulting', 'listing/strohl-electric']) assert.ok(!html.includes(dead), dead);
 });
 
 /* ---- events ---- */
@@ -328,6 +408,44 @@ test('the homepage "Coming up" cards are the first three upcoming instances, eac
   assert.ok(!html.includes('href="/events/#cal-h"'), 'no card sends every reader to the same anchor');
 });
 
+test('the events page is a list, a folded month view and a folded expected list, with no archive or change log', () => {
+  const html = read('/events/');
+  const list = html.indexOf('data-upcoming="select"');
+  const fold = html.indexOf('<details class="n-fold" id="calendar" data-cal-fold>');
+  const expected = html.indexOf('<details class="n-fold" id="expected">');
+  assert.ok(list > 0 && list < fold && fold < expected, 'list, then the month view, then the expected list');
+  assert.ok(!/<details class="n-fold"[^>]* open/.test(html), 'both folds ship closed');
+  assert.ok(html.includes('id="cal-h"') && html.includes('id="next-h"'), 'the anchors the cards and the empty-month note use');
+  assert.ok(html.includes('href="https://niwot.com/upcoming-events/"'), 'the full community calendar is linked');
+  assert.ok(!html.includes('data-archive') && !html.includes('Recently held'), 'no archive');
+  assert.ok(!html.includes('data-corrections'), 'no change log');
+  assert.ok(html.indexOf('alt="The red CB&amp;Q 14649 caboose') < list, 'the photograph sits beside the list');
+});
+
+test('the launch audit’s missing events are dated records and the Holiday Parade is confirmed for November 28', () => {
+  const byId = new Map(events.map((e) => [e.id, e]));
+  const expected = {
+    'house-blend-band-2026-09-12': '2026-09-12',
+    'tree-carving-fundraiser-trivia-2026-09-15': '2026-09-15',
+    'road-of-remembrance-2026-09-16': '2026-09-16',
+    'basin-design-open-house-2026-09-19': '2026-09-19',
+    'blessing-of-the-animals-2026-10-04': '2026-10-04',
+    'niwot-wellness-lecture-2026-10-07': '2026-10-07',
+    'holiday-parade-2026': '2026-11-28',
+    'holiday-magic-market-fayre-2026-12-05': '2026-12-05',
+  };
+  for (const [id, date] of Object.entries(expected)) {
+    const ev = byId.get(id);
+    assert.ok(ev, id);
+    assert.equal(ev.status, 'confirmed', id);
+    assert.equal(ev.startDate, date, id);
+    assert.ok(ev.sourceUrl.startsWith('https://niwot.com/'), `${id} source`);
+  }
+  assert.ok(!events.some((e) => e.status === 'tentative' && /parade/i.test(e.name)), 'the parade is no longer awaiting a date');
+  const graph = jsonLd(read('/events/')).find((d) => d['@graph'])['@graph'];
+  assert.ok(graph.some((e) => e.name === 'Niwot Holiday Parade' && String(e.startDate).startsWith('2026-11-28')));
+});
+
 test('the September 11 records carry hours and Enchanted Evening is a confirmed date', () => {
   const byId = new Map(events.map((e) => [e.id, e]));
   for (const id of ['second-friday-art-walk-2026-09-11', 'osmosis-opening-diane-pike-2026-09-11']) {
@@ -362,10 +480,15 @@ test('the election page puts the three voting tasks first, links the boundary to
   }
   assert.ok(!html.includes('statutory limit'));
   assert.ok(!html.includes('Approval of one does not automatically decide another'));
-  /* The Commission's numbering renders only once it has been read from the certified ballot. */
-  for (const item of [...election.questions, ...election.fiscal]) {
-    if (!item.official) assert.ok(!/>(Question|Issue) \d</.test(html), 'no invented ballot numbering');
+  /* The Commission's own numbering, read from its ballot page, beside every measure. */
+  assert.deepEqual(election.questions.map((q) => q.official), ['Question 1', 'Question 2', 'Question 3']);
+  assert.deepEqual(election.fiscal.map((f) => f.official), ['Issue 1', 'Issue 2', 'Issue 3', 'Issue 4', 'Issue 5']);
+  for (const item of [...election.questions, ...election.fiscal]) assert.ok(html.includes(`>${item.official}<`), item.official);
+  for (const phrase of ['$2.8 million', '$900,000', '$60,000', 'up to nine', '28 candidates', 'Boulder County Clerk and Recorder conducts', 'ballot content and the procedure']) {
+    assert.ok(html.includes(phrase), phrase);
   }
+  assert.equal((html.match(/<details class="n-fiscal" data-fiscal-fold open>/g) || []).length, election.fiscal.length, 'each fiscal issue folds, written open');
+  assert.ok(html.includes('page-civic'), 'the fold script is loaded');
   assert.ok(html.indexOf('id="changes"') > 0);
   assert.equal((html.slice(html.indexOf('id="changes"')).match(/<dt class="n-label n-label--quiet" style="font-size:12px">/g) || []).length, corrections.filter((c) => c.page === '/civic/incorporation-election/').length);
 });
@@ -403,16 +526,37 @@ test('resident services link to the responsible page, not a homepage, and the or
   assert.ok(!html.includes('Ask a neighbor'));
 });
 
-test('the corrections log is published in full on Our Story and per page elsewhere', () => {
+/* Since the launch audit the full log lives folded on Our Story; the
+   election page keeps its own entries folded (its trust depends on them)
+   and the privacy page its own (a policy says when it changed). No other
+   page carries a change log. */
+const KEEPS_OWN_LOG = ['/civic/incorporation-election/', '/privacy/'];
+
+test('the corrections log is published in full on Our Story, folded, and only the election and privacy pages keep their own', () => {
   const story = read('/our-story/');
   for (const c of corrections) assert.ok(story.includes(c.summary.replace(/&/g, '&amp;').replace(/'/g, '&#39;')) || story.includes(c.summary), c.page);
   assert.ok(corrections.every((c) => /^\d{4}-\d{2}-\d{2}$/.test(c.date) && c.page.startsWith('/') && c.summary.length > 20));
+  assert.match(story, /<details class="n-log" id="corrections"[^>]*>\s*<summary>Editorial changes \(\d+\)<\/summary>/, 'the log is folded');
   assert.ok(story.includes('href="https://niwothistoricalsociety.org/history/"'), 'timeline sources are links');
   assert.ok(!story.includes('county records'), 'no generic source labels');
-  for (const url of new Set(corrections.map((c) => c.page))) {
+  assert.ok(story.includes('alt="The red CB&amp;Q 14649 caboose') && story.includes('alt="The Niwot Tribune false-front building'), 'two documentary photographs');
+  for (const url of INDEXABLE) {
     if (url === '/our-story/') continue;
     const html = read(url);
     const own = corrections.filter((c) => c.page === url);
-    assert.equal((html.match(/<dl data-corrections/g) || []).length, own.length ? 1 : 0, url);
+    const expected = KEEPS_OWN_LOG.includes(url) && own.length ? 1 : 0;
+    assert.equal((html.match(/<dl data-corrections/g) || []).length, expected, url);
   }
+});
+
+test('the community page groups the resident services, shows a photograph and links the corrected destinations', () => {
+  const html = read('/community/');
+  const headings = [...html.matchAll(/<div class="n-sgroup">\s*<h3[^>]*>([^<]*)<\/h3>/g)].map((m) => m[1]);
+  assert.deepEqual(headings, [...new Set(services.map((s) => s.group))], 'one heading per group, in data order');
+  assert.ok(services.every((s) => s.group), 'every service names its group');
+  assert.ok(html.includes('href="https://bouldercounty.gov/safety/sheriff/"') && !html.includes('bouldercounty.gov/sheriff/"'), 'the Sheriff link');
+  assert.ok(html.includes('href="https://lefthandwater.gov/"') && !html.includes('lefthandwater.org'), 'the water district link');
+  const photo = html.indexOf('alt="The red CB&amp;Q 14649 caboose');
+  assert.ok(photo > html.indexOf('id="orgs"') && photo < html.indexOf('id="resources"'), 'the photograph sits between the two lists');
+  for (const o of organizations) assert.ok(o.body.split(/\.\s/).length <= 2, `${o.name} description is short`);
 });

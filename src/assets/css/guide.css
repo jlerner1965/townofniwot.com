@@ -198,6 +198,12 @@ a:hover { color: var(--n-red-ink); }
 .n-callout--paper { background: var(--n-paper); border-left-color: var(--n-red); }
 .n-callout--sky { background: var(--n-sky-pale); border-left-color: var(--n-sky); }
 
+/* ---- upcoming-event entries ----
+   Written by calendar-core.js for the build and the browser alike. A card
+   by default (the homepage); the events page lays the same markup out as a
+   row (see its page styles). */
+.n-up { display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 3px solid var(--n-red); }
+
 /* ---- forms ---- */
 .n-field { display: block; width: 100%; margin-top: 8px; padding: 13px 14px; background: var(--n-white); border: 2px solid var(--n-evergreen); font: inherit; font-size: 1rem; color: var(--n-ink); }
 textarea.n-field { resize: vertical; }
@@ -299,7 +305,7 @@ a { text-underline-offset: 4px; }
   padding-left: 12px;
   border-left: 1px solid var(--n-ink);
   color: var(--n-muted);
-  font-size: .7rem;
+  font-size: .75rem;
   font-weight: 600;
   letter-spacing: .08em;
   vertical-align: .15em;
@@ -337,6 +343,12 @@ a { text-underline-offset: 4px; }
 .n-nav a.n-on::after { transform: scaleX(1); }
 
 .n-head :where(a, button):focus-visible { outline-color: var(--n-red); }
+/* The skip link's ring is drawn outside it, over the page ground, so it is
+   the red (5:1 on the soft white), not the gold meant for dark grounds. The
+   hero and the events band are dark and take the gold, like .n-bg-green. */
+.n-skip:focus-visible { outline-color: var(--n-red); }
+.n-home-hero :where(a, button):focus-visible,
+.n-home-events :where(a, button):focus-visible { outline-color: var(--n-gold-lt); }
 
 .n-burger {
   width: 44px;
@@ -510,7 +522,7 @@ a { text-underline-offset: 4px; }
 
 .n-home .n-quick {
   counter-reset: quick-link;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0 18px;
   border-top: 2px solid var(--n-ink);
 }
@@ -608,22 +620,10 @@ a { text-underline-offset: 4px; }
 .n-home .n-exp article img { transition: transform .45s ease; }
 .n-home .n-exp article:hover img { transform: scale(1.018); }
 
-.n-home-shop { background: #F8F6F0; }
-
 .n-home-community {
   background: var(--n-sage-pale);
   border-color: var(--n-sage) !important;
 }
-
-.n-home-history { background: var(--n-white); }
-
-.n-home-history .n-g3 > div {
-  padding: 22px 22px 24px !important;
-  border-top-width: 4px !important;
-  background: #F8F6F0;
-}
-
-.n-home-contact { background: var(--n-evergreen); }
 
 /* The existing footer information remains unchanged in a denser finish. */
 .n-foot { background: #10282A; }
@@ -652,7 +652,6 @@ a { text-underline-offset: 4px; }
   }
   .n-nav a::after { display: none; }
   .n-nav a.n-on { border-bottom-color: var(--n-red); }
-  .n-home .n-quick { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 900px) {
@@ -661,11 +660,13 @@ a { text-underline-offset: 4px; }
     grid-template-columns: minmax(0, 1fr);
   }
   .n-home .n-hero > div {
-    min-height: 470px;
-    padding: 56px var(--n-gutter) !important;
+    min-height: 0;
+    padding: 44px var(--n-gutter) !important;
   }
-  .n-home .n-hero figure,
-  .n-home .n-hero figure img { min-height: 390px; }
+  /* Stacked, the photograph gets a fixed frame and the crop does the rest;
+     left to its own ratio it would be 500px tall on a tablet. */
+  .n-home .n-hero figure { height: 320px; min-height: 0; }
+  .n-home .n-hero figure img { min-height: 0; }
   .n-home .n-exp { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .n-home .n-exp-wide { grid-column: span 2; }
 }
@@ -679,21 +680,31 @@ a { text-underline-offset: 4px; }
     padding: 0;
     border: 0;
   }
-  .n-home .n-hero > div { min-height: 440px; }
-  .n-home .n-hero-mark { font-size: clamp(4rem, 21vw, 6rem); }
-  .n-home .n-hero .n-btns { display: grid; }
-  .n-home .n-hero .n-btn { width: 100%; text-align: center; }
-  .n-home .n-hero figure,
-  .n-home .n-hero figure img { min-height: 320px; }
+  /* The launch audit measured 440px of hero text over a 320px photograph on
+     a phone and asked for about 340 over 230: the census line steps aside
+     (it is on Our Story and the election page), the two actions share a
+     row, and the frame is 230px. */
+  .n-home .n-hero > div { min-height: 0; padding: 24px var(--n-gutter) 26px !important; }
+  .n-home .n-hero-mark { font-size: clamp(3rem, 14vw, 4rem); }
+  .n-home .n-hero-mark + .n-lead { margin-top: 10px !important; font-size: 1.35rem !important; }
+  .n-home .n-hero .n-rail { margin-top: 12px !important; }
+  .n-home .n-hero .n-rail + div { display: none !important; }
+  .n-home .n-hero .n-body { font-size: .9375rem; margin-top: 14px !important; }
+  .n-home .n-hero .n-btns { display: flex; margin-top: 18px !important; }
+  .n-home .n-hero .n-btn { flex: 1 1 140px; padding-inline: 12px; text-align: center; }
+  .n-home .n-hero figure { height: 230px; }
   .n-home .n-quick { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .n-home .n-exp { grid-template-columns: minmax(0, 1fr); }
   .n-home .n-exp-wide { grid-column: span 1; }
   .n-home-events [data-upcoming] article { min-height: 0; }
 }
 
+/* Still two across on the narrowest phones: four links in one column is a
+   screen and a half before the first section. */
 @media (max-width: 430px) {
-  .n-home .n-quick { grid-template-columns: minmax(0, 1fr); }
-  .n-home .n-quick > a { min-height: 98px; }
+  .n-home .n-quick { gap: 0 14px; }
+  .n-home .n-quick > a { min-height: 104px; }
+  .n-home .n-quick .n-small { max-width: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

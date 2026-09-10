@@ -1,5 +1,73 @@
 # Pre-launch audit — TownofNiwot.com
 
+## Third pass: the launch audit of September 10, 2026
+
+A second external reviewer audited the live site on September 10, 2026 and
+put it at about 7/10 launch-ready: the visual identity and the technical
+foundation sound, the problem not the number of pages but how much of them
+is shown at once — seven equal-weight menu choices, a homepage previewing
+almost every interior page, a 65-row directory shown in one list, public
+change logs, editorial headings that do not say what a page is, several
+broken or misdirected external links, and event and election information
+already behind the sources. Its verdict was one focused consolidation and
+correction pass, not another redesign. This section records what the
+`claude/chatgpt-conversation-finish-iy3l4h` branch does about each
+finding, what it deliberately does not do, and what still needs a person.
+The earlier records follow below, unchanged.
+
+As with the second pass, the sandbox this work was done in could not open
+niwot.com, niwotelection.org, bouldercounty.gov or any business site (the
+network policy refuses them), so every factual change below rests on the
+audit's own dated reading of those pages. Each data file says so beside the
+record, and the "needs a person" list says which readings to confirm.
+
+### Findings applied
+
+| Finding | What changed |
+|---|---|
+| Seven navigation choices | `nav.js` carries five: Explore, Eat & Shop, Events, Community, 2026 Election. Our Story and Plan a Visit keep their URLs and are reached from the footer on every page, the homepage hero and split section, and a new closing section on Explore; Privacy is footer-only. |
+| Homepage previews every interior page (nine regions, ~700 words) | Six sections: hero, four quick links (Events, Directory, Resident Resources, Plan a Visit), the compact election notice, the next three events, the four Explore photo cards, and a community/visitor split section that points at the interior pages instead of repeating them. The ten-category grid, the organization list, the resident-resource list, the three-card history and the "add a listing" block are gone; the test suite asserts six sections, four quick links, no form and under 620 words. |
+| Newsletter unproven | The "Notices by email" form left the homepage. The endpoint still accepts newsletter posts and the privacy page still states the commitments; the form returns after one real signup, one correction, one failed-delivery test and one unsubscribe have been seen to work (README, "Forms"). |
+| Election page behind the official source | `election.js`: the Commission's labels (Question 1–3, Issue 1–5) render beside every summary; Issues 1–3 carry the first-full-year revenue estimates the ballot text states ($2.8 million, $900,000, $60,000); Question 3 says voters may select up to nine of 28 candidates and ties its effect to Questions 1 and 2 as the Commission's summary does; the status strip and the official-resources section distinguish the Commission's role (ballot content and procedure) from the Boulder County Clerk and Recorder's (conducting the coordinated election). The five fiscal summaries are `<details>` written open, closed on a phone by `page-civic.js`. The "Changes to this page" list is folded. `verified` is September 10, 2026, the date of the audit's reading. |
+| Events calendar incomplete; Holiday Parade shown as undated | `events.js`: eight records added from the Association's calendar — House Blend Band (Sep 12), Tree Carving Fundraiser and Trivia Night (Sep 15), The Road of Remembrance (Sep 16), Basin Design Open House (Sep 19), Blessing of the Animals (Oct 4), Niwot Wellness Lecture Series (Oct 7), the Holiday Parade (Nov 28, now confirmed) and the Holiday Magic Market Fayre (Dec 5). The audit reported names and dates only, so those records carry no venue or start time and each says its venue is on the listing rather than guessing one. |
+| Events page: list, grid, detail, tentative cards, venue story, change log and archive all competing | The page is the title, the caboose photograph beside a one-column list of every upcoming occurrence, a link to the Association's full calendar and a submit link. The month grid and its detail rail are folded under "Month view" and unfold when a homepage card, a deep link or "View details" chooses a day (the audit asked for the grid removed; folding keeps the deep links and the day-list work of the previous pass at no cost to the page's length). The expected list is folded; the "recently held" list and the change log are gone. The list rows come from the same `renderUpcoming` as the homepage cards, now laid out by a class rather than an inline style. |
+| External links | Robinson Consulting (listing redirects to iTrade Colorado) and Strohl Electric (404) are held back as `unverified`; Butterfield Wellness Center and The Hidden Yoga Studio (both 502) keep their rows but point at the Association directory until their sites answer; the Sheriff link is the office's own page under `/safety/sheriff/`; Left Hand Water is `lefthandwater.gov`. Slifer Front Range (timed out), Niwot Law and Garden Gate Cafe (403 to the automated client) are unchanged and listed for a person. The Google Fonts "404s" in the audit's report are the preconnect hints, not links. |
+| 65-row directory shown at once, 12,149px tall | Listings are folded by category (`<details>` per group, all closed on load, each summary a 56px row with its count); a category filter opens its group and hides the rest, a search opens every group with a match and updates each count. On a phone the ten tiles give way to one `<select>` outside the form, so a no-script submit never sends two category values; without a script the tiles return. The two photographs sit directly below the introduction, above the search. The directory's change log is gone. |
+| Editorial headings | Visible H1s: "Explore Niwot: Four Places in Walking Order", "Niwot Restaurants, Shops & Local Services", "Community Groups & Resident Resources", "Niwot History: Railroad, Town Grid & Community", "Visit Niwot: Directions, Parking & Accessibility". The editorial phrases stay as the label above each. On the homepage the split section is "Community Groups & Resident Resources" and "Plan Your Visit", with "Eat & Shop in Niwot" and "The Story of Niwot" as its links. "Inventory in progress" left Explore; one sentence keeps the invitation. |
+| Community: 813 words, no photograph | The caboose photograph sits between the organizations and the resident resources (there is no licensed concert or art-walk photograph; the caption says what the lawn is used for). Organization descriptions are one or two sentences, the `runs` line carrying the detail. Resident resources are grouped under four topic headings (`group` on each row in `services.js`, order in the page's front matter). The page's change log is gone. |
+| Our Story: the corrections log overwhelms the ending | The full log is folded under "Editorial changes (n)" and stays the site-wide record. Two documentary photographs — the Tribune false front and the caboose — follow the introduction. |
+| Plan a Visit: an unrelated form and a repeated contact matrix | Both are gone. The form has its own noindex page, `/contact/`, and every "add a listing" and "report a correction" link points there; the visitor page links once to resident resources. The Second Avenue streetscape sits beside the orientation map. |
+| Mobile: a 440px hero over a 320px photograph; six quick links in one column; the 65-row directory; the election cards | Stacked, the hero is about 410px of text over a 230px frame (the census line steps aside on a phone, the two actions share a row); the four quick links are 2×2 down to 320px; the directory and election folds above. `verify.mjs` measures the stacked hero and fails it above 420 over 240. Touch targets are unchanged, and the folds' summaries are 56px. |
+| Pre-existing browser-check failures | The baseline run of `verify.mjs` reported 35 problems that predate this pass: the 11.2px masthead identifier, focus rings at 1.4–2.4:1 on the light masthead, the skip link, the dark hero and the events band, and a hero-containment check written before the visual refresh made the hero full-bleed. The identifier is 12px; the rings are red on the light masthead and behind the skip link, gold on the hero and the events band, and blue on the election page's masthead; the hero check now asserts what the design intends (inside the viewport, short when stacked). |
+
+### Not applied, and why
+
+- **Removing the month grid outright.** Folded instead, as above. Removing
+  it would also remove the homepage cards' deep links and the busy-day list
+  the second pass built; folded, it costs the page nothing until asked for.
+- **Venues and times for the eight added events.** Not in what the audit
+  reported, and the organizer's calendar could not be opened from here. The
+  records say so rather than guess (README item 15).
+- **An official boundary map on the election page.** None could be
+  retrieved from here; the page links the Commission's FAQ, which names the
+  petition exhibits (README item 18).
+- **A concert or art-walk photograph on Community.** The eight licensed
+  photographs include none; the caboose on the concert lawn stands in.
+- **Removing the three links that answered 403 or timed out.** A 403 to an
+  automated client is usually bot-blocking, not a dead site; they are
+  listed for a person (README item 16).
+
+### Still needs a person
+
+Search Console submission and an indexing request for the homepage; one
+real submission through `/contact/` into an inbox you control before the
+newsletter form returns; the election page re-checked against the
+Commission's page after the September 11 proof review (labels, figures and
+Question 3 wording included); the eight events' venues and times; the five
+business sites listed above; and a real-device pass, since the audit's own
+responsive pass predates the consolidation. These are README items 2, 10
+and 14–18.
+
 ## Second pass: the external audit of September 9, 2026
 
 An external reviewer audited the live site on September 9, 2026 and

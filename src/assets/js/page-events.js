@@ -34,6 +34,7 @@ const label = document.querySelector('[data-cal-label]');
 const detailRail = document.querySelector('[data-cal-detail]');
 const strip = document.querySelector('[data-upcoming]');
 const thisMonthBtn = document.querySelector('[data-cal-today]');
+const fold = document.querySelector('[data-cal-fold]');
 const prevBtn = document.querySelector('[data-cal-prev]');
 const nextBtn = document.querySelector('[data-cal-next]');
 
@@ -41,6 +42,13 @@ if (events.length && grid && label && detailRail) {
   const now = nowInNiwot();
   const today = parseIso(now.date);
   const state = { year: today.y, month: today.m, sel: null, pick: null };
+
+  /* The month view is folded by default. Anything that chooses a day —
+     a deep link, "View details" in the list — unfolds it first, or the
+     selection would land inside a closed <details>. */
+  function unfold() {
+    if (fold) fold.open = true;
+  }
 
   /* A deep link names a day (and optionally an event on it). It is honoured
      only when that day actually carries something; otherwise the calendar
@@ -54,6 +62,7 @@ if (events.length && grid && label && detailRail) {
     state.month = m;
     state.sel = d;
     state.pick = params.get('event') || null;
+    unfold();
   }
 
   function writeUrl() {
@@ -151,6 +160,7 @@ if (events.length && grid && label && detailRail) {
       state.month = m;
       state.sel = d;
       state.pick = button.dataset.jumpEvent || null;
+      unfold();
       render();
       grid.scrollIntoView({ block: 'center' });
       const cell = grid.querySelector('[data-date="' + d + '"]');

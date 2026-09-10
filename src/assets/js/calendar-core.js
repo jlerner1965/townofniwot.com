@@ -428,7 +428,9 @@ export function eventUrl(inst) {
 }
 
 /* `mode: 'link'` sends the reader to the events page (used on the homepage).
-   `mode: 'select'` loads the occurrence into the detail rail in place. */
+   `mode: 'select'` loads the occurrence into the detail rail in place. The
+   article's layout comes from `.n-up` in guide.css — a card on the homepage,
+   a row in the events page's list — rather than from an inline style. */
 export function renderUpcoming(list, mode, now) {
   if (!list.length) {
     /* The events page has its "Expected" list further down; the homepage
@@ -452,7 +454,7 @@ export function renderUpcoming(list, mode, now) {
           : '<a class="n-link" href="' + escapeHtml(eventUrl(inst)) + '" style="margin-top:auto;align-self:start">View details <span aria-hidden="true">&#8594;</span></a>';
       const time = timeLabel(inst);
       return (
-        '<article data-event-id="' + escapeHtml(inst.id) + '" data-event-date="' + inst.date + '" data-event-status="' + escapeHtml(ev.status) + '" style="display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:3px solid var(--n-red)">' +
+        '<article data-event-id="' + escapeHtml(inst.id) + '" data-event-date="' + inst.date + '" data-event-status="' + escapeHtml(ev.status) + '" class="n-up">' +
         '<div class="n-label">' + escapeHtml(dateLabel(inst, now)) + (time ? ' &#183; ' + escapeHtml(time.replace(', ' + TZ_LABEL, '')) : '') + '</div>' +
         '<h3 class="n-h3" style="font-size:1.375rem;color:var(--n-evergreen)">' + escapeHtml(ev.name) + '</h3>' +
         (ev.status !== 'confirmed' ? '<div class="n-label">' + escapeHtml(statusLabel(ev.status)) + '</div>' : '') +

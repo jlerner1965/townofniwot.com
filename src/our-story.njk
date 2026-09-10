@@ -12,14 +12,19 @@ ogImageAlt: The valley floor below Niwot with a conical butte in the middle dist
 pageStyles: |
   .n-open{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.6fr);gap:clamp(24px,3vw,56px);align-items:end}
   .n-era{display:grid;grid-template-columns:minmax(0,.26fr) minmax(0,1fr);gap:clamp(14px,2.5vw,44px);align-items:start}
+  .n-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2vw,32px)}
+  .n-log summary{cursor:pointer;color:var(--n-sky-ink);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+  .n-log summary:hover{color:var(--n-red-ink)}
+  @media (max-width:1080px){.n-log summary{padding-top:12px;padding-bottom:12px}}
   @media (max-width:900px){.n-open,.n-era{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:620px){.n-pair{grid-template-columns:minmax(0,1fr)}}
 ---
 <section class="n-bg-white" aria-labelledby="title-h">
 <div class="n-wrap" style="padding-top:clamp(28px,4vw,60px)">
 <div class="n-open">
 <div>
-<div class="n-label">Our story</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.5rem,1.8rem + 3.4vw,5.25rem);line-height:.96;max-width:18ch;color:var(--n-evergreen)">The railroad shaped the Niwot we know.</h1>
+<div class="n-label">The railroad shaped the Niwot we know</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.25rem,1.6rem + 3vw,4.5rem);line-height:.98;max-width:18ch;color:var(--n-evergreen)">Niwot History: Railroad, Town Grid &amp; Community</h1>
 </div>
 {#- The source aerial is oversaturated and only 547px wide; it is desaturated
     to match the documentary treatment and never displayed wider than ~500px. -#}
@@ -36,6 +41,16 @@ pageStyles: |
 <div class="n-read">
 <p class="n-lead" style="margin:0">Niwot exists because a rail line was built through the Left Hand valley in the 1870s. The town plat was recorded in 1875, and the street grid still follows the tracks rather than the county roads that came later. The brick block on Second Avenue is what remains of that decision.</p>
 <p class="n-body" style="margin:22px 0 0">It has never been an incorporated municipality. There is no mayor and no town hall, which is part of why the place feels the way it does: what happens here is organized by the people who live here, through the business association, the arts groups and the neighbors who show up.</p>
+</div>
+<div class="n-pair" style="margin-top:clamp(28px,3.5vw,52px)">
+<figure style="margin:0">
+{% photo "niwot-tribune-storefront.jpg", "The Niwot Tribune false-front building on Second Avenue with a shingled porch roof, painted columns and a grand piano on the sidewalk", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;height:clamp(200px,22vw,320px);object-fit:cover;object-position:center 52%" %}
+<figcaption class="n-cap">The Niwot Tribune building &#8212; a false front from the railroad period, still on Second Avenue</figcaption>
+</figure>
+<figure style="margin:0">
+{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;height:clamp(200px,22vw,320px);object-fit:cover;object-position:center 52%" %}
+<figcaption class="n-cap">CB&amp;Q 14649, built 1907 &#8212; Whistle Stop Park</figcaption>
+</figure>
 </div>
 </div>
 </section>
@@ -79,7 +94,8 @@ pageStyles: |
 <p class="n-body" style="margin:0;max-width:62ch;color:var(--n-paper)">Two commercial clusters, a historic district, and farmland that starts where the sidewalks stop. Services come from Boulder County and a set of special districts rather than a town government, and in November 2026 residents inside a proposed boundary vote on whether that should change.</p>
 <div class="n-btns" style="margin-top:24px">
 <a class="n-btn" href="/civic/incorporation-election/">The 2026 election</a>
-<a class="n-btn n-btn--ghost" href="/community/">Community organizations</a>
+<a class="n-btn n-btn--ghost" href="/community/">Community groups</a>
+<a class="n-btn n-btn--ghost" href="/plan-a-visit/">Plan a visit</a>
 </div>
 </div>
 </div>
@@ -95,10 +111,14 @@ pageStyles: |
 </div>
 <div>
 <p class="n-body" style="margin:0;max-width:66ch">Population is the 2020 census figure for the Niwot census designated place. Historical dates come from the Niwot Historical Society&#8217;s timeline and the recorded town plat; the caboose&#8217;s identity and date from the Niwot Cultural Arts Association&#8217;s Whistle Stop Park page. Each timeline entry links to its source.</p>
-<p class="n-body" style="margin:18px 0 0;max-width:66ch">If something here is wrong, it is corrected with the date and a note describing what changed. A claim that cannot be supported is removed rather than softened. Every correction published on this site is listed below.</p>
-<h3 class="n-label n-label--quiet" id="corrections" style="margin:24px 0 0">Corrections and changes</h3>
+<p class="n-body" style="margin:18px 0 0;max-width:66ch">If something here is wrong, it is corrected with the date and a note describing what changed. A claim that cannot be supported is removed rather than softened. Every correction published on this site is in the log below, folded so it does not crowd the story.</p>
+{#- The full, dated log for the whole site. It is the record the pages
+    promise; it is folded because a reader who came for the history should
+    not end on a change list. -#}
+<details class="n-log" id="corrections" style="margin-top:24px;max-width:66ch">
+<summary>Editorial changes ({{ corrections.length }})</summary>
 {%- if corrections.length %}
-<dl data-corrections style="margin:8px 0 0;max-width:66ch">
+<dl data-corrections style="margin:8px 0 0">
 {%- for c in corrections %}
 <div style="padding:12px 0;border-top:1px solid var(--n-rule)">
 <dt class="n-label n-label--quiet" style="font-size:12px">{{ c.date | humanDate }} &#183; <a href="{{ c.page }}" style="color:inherit">{{ c.page }}</a></dt>
@@ -107,10 +127,11 @@ pageStyles: |
 {%- endfor %}
 </dl>
 {%- else %}
-<p class="n-body" data-corrections-none style="margin:8px 0 0;max-width:66ch">No corrections have been published yet.</p>
+<p class="n-body" data-corrections-none style="margin:8px 0 0">No corrections have been published yet.</p>
 {%- endif %}
+</details>
 <div class="n-btns" style="margin-top:24px">
-<a class="n-btn" href="/plan-a-visit/#contact">Report a correction</a>
+<a class="n-btn" href="/contact/">Report a correction</a>
 </div>
 </div>
 </div>

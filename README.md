@@ -3,11 +3,18 @@
 An independent community guide to Niwot, Colorado — an unincorporated community
 in Boulder County, between Boulder and Longmont.
 
-Nine static pages serving two audiences at once: residents who need to know
-which agency handles which service, and visitors deciding whether to make the
-drive. It also carries neutral voter information for the November 3, 2026
-incorporation election, which is why parts of it are held to a stricter
-editorial standard than a typical destination site.
+Nine indexable pages serving two audiences at once: residents who need to
+know which agency handles which service, and visitors deciding whether to
+make the drive. It also carries neutral voter information for the
+November 3, 2026 incorporation election, which is why parts of it are held to
+a stricter editorial standard than a typical destination site.
+
+The primary navigation shows five of them (Explore, Eat & Shop, Events,
+Community, 2026 Election). Our Story and Plan a Visit keep their URLs and
+are reached from the footer, the homepage and the Explore page; Privacy is
+footer-only. A tenth, noindex page (`/contact/`) holds the submission form.
+That is the shape the September 10, 2026 launch audit asked for, recorded in
+`PRE-LAUNCH-AUDIT.md`.
 
 ## Running it
 
@@ -22,10 +29,10 @@ npm run links      # every external link in _site/ answers 2xx (needs an open ne
 node lighthouse.mjs   # Lighthouse against _site/, six pages on desktop
 ```
 
-The two September 2026 pre-launch audits — what was checked, what was fixed
-and what still needs a person — are recorded in `PRE-LAUNCH-AUDIT.md`. The
-second, an external review of the live site, is the source of most of the
-"needs a human" items below.
+The three September 2026 pre-launch audits — what was checked, what was
+fixed and what still needs a person — are recorded in `PRE-LAUNCH-AUDIT.md`.
+The second and third, external reviews of the live site, are the source of
+most of the "needs a human" items below.
 
 Output is plain static HTML in `_site/`. It needs no server-side runtime and
 deploys to any static host; the one function (`api/contact.js`) is a Vercel
@@ -55,9 +62,9 @@ src/
     partials/          Header and footer
   assets/
     css/guide.css      Palette, chrome, grids, graphic devices
-    js/                Mobile menu, calendar, directory, forms
+    js/                Mobile menu, calendar, directory, forms, the election page's folds
     photos/            Eight licensed photographs
-  *.njk               One file per page
+  *.njk               One file per page; contact.njk is the noindex form page
 lib/
   directory.js      Directory schema, validation and publication
   events.js         Event schema, validation and Event structured data
@@ -238,9 +245,15 @@ lets Facebook render the image on the first share rather than the second.
 
 ### Forms
 
-The two forms POST to `/api/contact` natively, so they work with JavaScript
-absent or broken; the endpoint answers a normal form post with a 303 to
-`/thanks/`. `forms.js` only upgrades that — it posts the same payload in the
+The submission form lives on `/contact/`, a noindex utility page; every
+"add a listing" and "report a correction" link on the site points there.
+The newsletter form is not on the site: the launch audit could not prove
+delivery, and it comes back (its markup is in git history, on the homepage
+before the launch-audit pass) only after one real signup, one correction,
+one failed-delivery test and one unsubscribe have been seen to work. The
+endpoint still accepts both kinds. The forms POST to `/api/contact`
+natively, so they work with JavaScript absent or broken; the endpoint
+answers a normal form post with a 303 to `/thanks/`. `forms.js` only upgrades that — it posts the same payload in the
 background and renders the outcome in place. Outcome text comes from the
 endpoint rather than the page, so a form that cannot deliver says why, and
 field errors are written under the field they belong to, tied to it with
@@ -255,7 +268,7 @@ stripped and lengths capped. Newsletter responses never say whether an
 address is already on the list. Newsletter consent is the notices form
 itself; sending a correction never signs anyone up.
 
-The privacy page (`/privacy/`) is linked beside both forms and in the footer.
+The privacy page (`/privacy/`) is linked beside the form and in the footer.
 It names the providers involved (Vercel, Resend, Google Fonts), retention,
 unsubscribe behaviour and how to ask for access or deletion. Update its
 effective date when it changes, and add an entry to `corrections.js`.
@@ -415,27 +428,37 @@ of the design, not a content-team preference:
 4. **Dated verification.** "Last verified" stamps on civic content and on
    every directory row; "Checked" dates on every event; corrections published
    with their date and what changed, in `src/_data/corrections.js`, which
-   Our Story renders in full and each page renders for itself.
+   Our Story renders in full (folded under "Editorial changes") and the
+   election and privacy pages render for themselves; since the launch audit
+   no other page carries a change log.
 5. **The disclaimer appears on every page.** It is rendered from `site.js` by
    the shared layout so it cannot be dropped from one page by accident, and
    the masthead on every page reads "Independent community guide".
 
 ## Content status
 
-- **Directory** — 65 published records across ten categories, plus two held
-  back (one closed, one unverified), compiled from each business's own site,
+- **Directory** — 63 published records across ten categories, plus four held
+  back (one closed, three unverified — two of them after the September 10
+  link sweep), compiled from each business's own site,
   the Niwot Business Association directory and the *Left Hand Valley
   Courier*. Rows dated 2026-09-08 were compiled on the first pass; rows dated
   2026-09-09 were re-checked or added in the September 2026 audit. The
   header comment in `src/_data/listings.js` records the closures dropped and
-  each record's `editorialNote` records where sources disagreed. Coverage is
+  each record's `editorialNote` records where sources disagreed. Listings
+  render folded by category, with a search across all of them and a
+  category selector on a phone. Coverage is
   not a claim of completeness — the Association directory was searched rather
   than crawled, and a sole trader with no public listing will not be in it —
   and the page says so.
-- **Events** — seven confirmed 2026 records read from niwot.com, niwotarts.org
-  and the Courier, and three expected annual events without dates. The Niwot
-  Farmers Market is not listed: no organizer source for a current season was
-  found. The hours on the September 11 records and the Enchanted Evening date
+- **Events** — fifteen confirmed 2026 records read from niwot.com,
+  niwotarts.org and the Courier, and two expected annual events without
+  dates. Eight of the records (and the Holiday Parade's date) were added on
+  September 10, 2026 from the launch audit's comparison against the Business
+  Association's calendar; the audit reported names and dates only, so those
+  records carry no venue or start time and say so — see item 15 below. The
+  Niwot Farmers Market is not listed: no organizer source for a current
+  season was found. The events page is a list with the month grid and the
+  expected list folded beneath it. The hours on the September 11 records and the Enchanted Evening date
   were taken from the external audit's reading of the organizers' dated
   listings on September 9, 2026 (the audit sandbox could not open those
   sites); each record's description says where its time comes from and the
@@ -506,7 +529,25 @@ Both accept real data through `src/_data/` with no template changes.
 14. **Run a real-device pass** at 320, 390, 768 and 1366 CSS pixels,
     portrait and landscape, at 200% zoom, on an iPhone with Safari and an
     Android phone with Chrome. The browser checks cover those widths in
-    Chromium only.
+    Chromium only, and the launch audit's own responsive pass predates the
+    consolidation.
+15. **Fill in the eight events added from the Association's calendar**
+    (`src/_data/events.js`, the records dated 2026-09-10): open each listing
+    once, add the venue and the start time, and set `verifiedAt`. Until then
+    each says its venue is on the listing.
+16. **Check the three links the sweep could not settle by machine** —
+    sliferfrontrange.com (timed out), niwotlaw.com and thegardengatecafe.com
+    (403 to the automated client) — and the two sites that answered 502
+    (butterfieldwellness.com, thehiddenyogastudio.com); restore each row's
+    `website` when the site answers.
+17. **Request indexing.** After the sitemap is submitted (below), request
+    indexing of the homepage in Search Console; the launch audit found no
+    page of the site indexed yet.
+18. **Re-check the election page after the September 11 proof review**,
+    now including the Commission's labels, the three revenue figures and the
+    Question 3 wording, all of which rest on the launch audit's September 10
+    reading of the ballot page. Add the official boundary map to the page if
+    the Commission publishes one.
 
 ### Submitting the sitemap
 
@@ -542,7 +583,7 @@ editorial notes absent from the HTML, and the event list, month grid, detail
 rail and structured data all agreeing.
 
 `verify.mjs` serves `_site/` with the vercel.json headers and drives it in
-Chromium. Across all nine pages and the 404 at desktop and mobile widths it
+Chromium. Across all ten pages and the 404 at desktop and mobile widths it
 checks: no console errors (a CSP violation counts), no horizontal overflow at
 320, 390, 768, 1280 or 1440, every image loaded with alt text, no text under
 12px, no text ink painted outside the viewport, no rounded corners, the
@@ -551,11 +592,11 @@ counts, and an axe-core audit against the WCAG 2.2 AA rule set.
 
 Then the targeted checks: HTTP 404 with the custom noindex page for an unknown
 route; the skip link first in tab order, visible when focused and working;
-a visible focus ring on every tabbed control, and on six pages every
+a visible focus ring on every tabbed control, and on seven pages every
 control's ring measured against the ground behind it at 3:1 or better (the
 external audit found the red ring at 2.0:1 on the evergreen bands, so those
-grounds use the light gold); the hero photo aligned to the
-content edge at 390 through 2560; the Explore flip not crushing its photo;
+grounds use the light gold); the full-bleed hero inside the viewport at 390
+through 2560 and short when stacked on a phone; the Explore flip not crushing its photo;
 anchor clearance under the sticky header; the schematic map's labels at
 eleven widths; the directory's radio semantics, URL-driven filtering, Back and
 Forward restoration, combined search-and-category state, zero-result
@@ -566,8 +607,12 @@ three presses of Next (a day from the month shown, or a note naming the
 month), "View details" selecting the day and the event, a homepage-style
 deep link opening its day and event, the day list on a busy day switching the
 expanded event, and the homepage cards carrying those deep links; the
-directory opening on its search with the photographs below the listings and
-the active-filter strip naming the filter and clearing it; form labels,
+directory opening on its photographs and search, folding every category
+group until a filter or a search opens the ones that match, the phone
+selector driving the same state, and the active-filter strip naming the
+filter and clearing it; the events page's month view folded until a deep
+link or "View details" unfolds it; the election page's fiscal issues folded
+on a phone and open on a desktop; form labels,
 `autocomplete="email"`, the honeypot hidden and out of tab order, and a
 mocked server error tied to its field and announced (nothing is ever sent);
 the mobile menu's `aria-expanded` and accessible name, Tab into the menu,

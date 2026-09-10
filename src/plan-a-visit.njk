@@ -2,13 +2,11 @@
 layout: layouts/base.njk
 title: Plan a Visit
 seoTitle: "Visit Niwot, Colorado: Directions, Parking & Accessibility"
-description: How to get to Niwot, Colorado, where to park, how to get around on foot and by bike, what can be confirmed about accessibility, and how to send a correction.
+description: How to get to Niwot, Colorado, where to park, how to get around on foot and by bike, and what can be confirmed about accessibility.
 navKey: visit
 permalink: /plan-a-visit/
 ogImage: niwot-gateway-sculpture.jpg
 ogImageAlt: The Vintage Colorado Niwot gateway sculpture with the Flatirons behind it
-scripts:
-  - /assets/js/forms.js
 pageStyles: |
   .n-maprow{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(24px,3vw,52px);align-items:start}
   /* The schematic scales to whatever column it is given, so the column decides
@@ -78,43 +76,22 @@ nextLinks:
   - label: Parks & trails
     note: Whistle Stop Park and the trail network
     href: /explore/#outdoors
-direct:
-  - what: County roads and snow removal
-    who: County Road Maintenance
-    href: https://bouldercounty.gov/transportation/road-maintenance/
-  - what: Building permits and land use
-    who: Boulder County Planning
-    href: https://bouldercounty.gov/property-and-land/land-use/planning/
-  - what: Trails and open space
-    who: Trail closures and alerts
-    href: https://bouldercounty.gov/open-space/parks-and-trails/trail-closures/
-  - what: Business directory and events
-    who: Niwot Business Association
-    href: https://niwot.com/
-  - what: Water service
-    who: Left Hand Water District
-    href: https://lefthandwater.org/
-  - what: Fire and rescue
-    who: Mountain View Fire Rescue
-    href: https://www.mvfpd.org/
-  - what: Elections
-    who: Boulder County Elections
-    href: https://bouldercounty.gov/elections/
 ---
 <section class="n-bg-white" aria-labelledby="title-h">
 <div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
 <div class="n-g2-wide" style="align-items:end">
 <div>
-<div class="n-label">Plan a visit</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.5rem,1.8rem + 3.4vw,5rem);line-height:.96;max-width:15ch;color:var(--n-evergreen)">Park once, then walk it</h1>
+<div class="n-label">Park once, then walk it</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.25rem,1.6rem + 3vw,4.5rem);line-height:.98;max-width:16ch;color:var(--n-evergreen)">Visit Niwot: Directions, Parking &amp; Accessibility</h1>
 </div>
 <p class="n-lead" style="margin:0;max-width:50ch">Niwot sits off the Diagonal Highway between Boulder and Longmont. Leave the car on or near Second Avenue: the two commercial blocks are within a fifteen-minute walk of each other, and the park and the trail are at their edges.</p>
 </div>
 </div>
 </section>
 
-{#- Orientation map. Decorative-plus: it carries a full aria-label, and
-    everything shown in it is also available as text on this page. -#}
+{#- Orientation: the streetscape beside the schematic. The map is
+    decorative-plus — it carries a full aria-label, and everything shown in
+    it is also available as text on this page. -#}
 <section class="n-bg-sky n-pad-sm" id="map" aria-labelledby="map-h" style="border-top:1px solid var(--n-sky);border-bottom:1px solid var(--n-sky)">
 <div class="n-wrap">
 <h2 class="n-label" id="map-h" style="color:var(--n-sky-ink);margin:0 0 18px">Orientation</h2>
@@ -207,7 +184,11 @@ direct:
 <p class="n-small" style="margin:12px 0 0">Schematic, not to scale. It shows how the pieces sit relative to one another, not exact distances or street geometry.</p>
 </div>
 <div>
-<div class="n-label n-label--quiet" style="color:var(--n-ink)">Get directions</div>
+<figure style="margin:0">
+{% photo "second-avenue-patios.jpg", "Brick and clapboard buildings on the 300 block of Second Avenue with hanging baskets, patio tables and umbrellas out front under mature trees", "(max-width: 1199px) calc(100vw - 40px), (max-width: 1440px) 32vw, 440px", "display:block;width:100%;height:clamp(180px,20vw,260px);object-fit:cover;object-position:center 58%", true %}
+<figcaption class="n-cap">Second Avenue, the 300 block &#8212; where the walk starts</figcaption>
+</figure>
+<div class="n-label n-label--quiet" style="margin-top:22px;color:var(--n-ink)">Get directions</div>
 <div style="display:grid;gap:0;margin-top:10px">
 {%- for p in places %}
 <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:14px 0;border-top:1px solid rgba(36,72,58,.25)">
@@ -253,9 +234,8 @@ direct:
 <div>
 <div class="n-label">On the ground</div>
 <h2 class="n-h2" id="ground-h" style="margin-top:12px;max-width:16ch;color:var(--n-evergreen)">Parking, walking and transit</h2>
-<p class="n-small" style="margin:18px 0 0;max-width:46ch">Niwot is unincorporated, so parking rules, road work and trail closures are set by Boulder County rather than a town. Posted signs override anything written here.</p>
+<p class="n-small" style="margin:18px 0 0;max-width:46ch">Niwot is unincorporated, so parking rules, road work and trail closures are set by Boulder County rather than a town. Posted signs override anything written here. The county pages and districts responsible for each service are listed once, under <a href="/community/#resources">resident resources</a>.</p>
 <div class="n-btns" style="margin-top:22px">
-<a class="n-btn n-btn--ghost" href="https://bouldercounty.gov/transportation/road-maintenance/" rel="noopener">County roads <span aria-hidden="true">&#8599;</span></a>
 <a class="n-btn n-btn--ghost" href="https://bouldercounty.gov/open-space/parks-and-trails/trail-closures/" rel="noopener">Trail closures <span aria-hidden="true">&#8599;</span></a>
 <a class="n-btn n-btn--ghost" href="https://app.rtd-denver.com/route/BOLT/schedule" rel="noopener">Route BOLT <span aria-hidden="true">&#8599;</span></a>
 </div>
@@ -283,7 +263,7 @@ direct:
 <div class="n-label" style="color:var(--n-sky-ink)">Accessibility</div>
 <h2 class="n-h3" id="acc-h" style="margin-top:10px;font-size:1.375rem;color:var(--n-evergreen)">What we can confirm</h2>
 <p class="n-body" style="margin:12px 0 0;font-size:.9375rem">Second Avenue has continuous sidewalks with curb ramps at the cross streets, and the Whistle Stop Park lawn is reached from a paved path. Entrances vary across the historic block: several have a single step at the door and some have raised wooden porches.</p>
-<p class="n-body" style="margin:12px 0 0;font-size:.9375rem">Step-free access differs building by building, so contact a business directly before relying on it. Public restrooms and designated accessible parking have not yet been confirmed on the ground and are not claimed here. Corrections and additions to this section are welcome and published with their date.</p>
+<p class="n-body" style="margin:12px 0 0;font-size:.9375rem">Step-free access differs building by building, so contact a business directly before relying on it. Public restrooms and designated accessible parking have not yet been confirmed on the ground and are not claimed here. <a href="/contact/">Corrections and additions</a> to this section are welcome and published with their date.</p>
 </div>
 <div>
 <div class="n-label n-label--quiet">Then go and see</div>
@@ -297,79 +277,6 @@ direct:
 <span aria-hidden="true" style="color:var(--n-red)">&#8594;</span>
 </a>
 {%- endfor %}
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<section class="n-bg-green n-pad" id="contact" aria-labelledby="contact-h">
-<div class="n-wrap">
-<div class="n-g2">
-<div>
-<div class="n-label">Contribute</div>
-<h2 class="n-h2" id="contact-h" style="margin-top:12px;max-width:20ch">Add a listing, an event, or a correction</h2>
-<p class="n-body" style="margin:16px 0 0;max-width:54ch;color:var(--n-paper)">Business owners, event organizers and residents keep this guide accurate. Send yours and it goes in with the date it was verified.</p>
-<form data-contact-form method="post" action="/api/contact" style="display:grid;gap:18px;max-width:560px;margin-top:24px">
-<div class="n-sr" aria-hidden="true">
-<label for="v-company">Leave this field empty</label>
-<input id="v-company" name="company" type="text" tabindex="-1" autocomplete="off">
-</div>
-<div>
-<label class="n-label" for="v-kind" style="color:var(--n-gold-lt)">What is this?</label>
-<select class="n-field" id="v-kind" name="kind">
-<option>Business listing</option>
-<option>Event listing</option>
-<option>Public art inventory</option>
-<option>Accessibility correction</option>
-<option>Correction to this guide</option>
-<option>Something else</option>
-</select>
-</div>
-<div>
-<label class="n-label" for="v-name" style="color:var(--n-gold-lt)">Name of the business, event or page</label>
-<input class="n-field" id="v-name" name="subject" type="text" required placeholder="e.g. Explore &#8212; public art">
-</div>
-<div>
-<label class="n-label" for="v-detail" style="color:var(--n-gold-lt)">Details</label>
-<textarea class="n-field" id="v-detail" name="detail" rows="5" required></textarea>
-</div>
-<div>
-<label class="n-label" for="v-src" style="color:var(--n-gold-lt)">Link to your own page or the source</label>
-<input class="n-field" id="v-src" name="source" type="url" inputmode="url" autocomplete="url" placeholder="https://">
-</div>
-<div>
-<label class="n-label" for="v-email" style="color:var(--n-gold-lt)">Your email</label>
-<input class="n-field" id="v-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="Used only to reply about this submission">
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
-<button class="n-btn" type="submit" style="cursor:pointer;font-family:inherit">Send submission</button>
-</div>
-<p class="n-small" style="margin:0;max-width:54ch;color:var(--n-sage-lt)">Your email is optional and is used only to reply about this submission. Sending a correction does not sign you up for notices. <a href="/privacy/">How submissions are handled</a>.</p>
-</form>
-<template data-form-success><p role="status" style="margin:24px 0 0;padding-top:16px;border-top:3px solid var(--n-gold-lt);max-width:54ch;color:var(--n-white)">Thank you &#8212; your submission has been sent. It goes in with the date it was verified.</p></template>
-<template data-form-unavailable><p role="status" data-message style="margin:24px 0 0;padding-top:16px;border-top:3px solid var(--n-gold-lt);max-width:54ch;color:var(--n-white)">This form is not connected yet, so nothing was sent. Use the direct contacts listed beside this form &#8212; each one is the responsible body for its subject.</p></template>
-</div>
-<div>
-<div class="n-label">Go direct instead</div>
-<p class="n-body" style="margin:12px 0 0;max-width:42ch;color:var(--n-paper)">For anything official &#8212; permits, roads, ballots, water &#8212; the responsible body is the only reliable contact. None of the bodies below runs this website.</p>
-<div style="margin-top:20px">
-{%- if site.editor.email %}
-<div style="display:grid;gap:4px;padding:14px 0;border-top:1px solid rgba(158,173,152,.35)">
-<span class="n-label n-label--quiet" style="color:var(--n-sage-lt)">This guide&#8217;s editor{% if site.editor.name %} &#8212; {{ site.editor.name }}{% endif %}</span>
-<a class="n-link" data-editor-email href="mailto:{{ site.editor.email }}" style="justify-self:start;text-transform:none;letter-spacing:0">{{ site.editor.email }}</a>
-</div>
-{%- endif %}
-{%- for d in direct %}
-<div style="display:grid;gap:4px;padding:14px 0;border-top:1px solid rgba(158,173,152,.35)">
-<span class="n-label n-label--quiet" style="color:var(--n-sage-lt)">{{ d.what }}</span>
-<a class="n-link" href="{{ d.href }}" rel="noopener" style="justify-self:start">{{ d.who }} <span aria-hidden="true">&#8599;</span></a>
-</div>
-{%- endfor %}
-<div style="display:grid;gap:4px;padding:14px 0;border-top:1px solid rgba(158,173,152,.35);border-bottom:1px solid rgba(158,173,152,.35)">
-<span class="n-label n-label--quiet" style="color:var(--n-sage-lt)">Emergency</span>
-<span style="color:var(--n-white)">Call 911</span>
-</div>
 </div>
 </div>
 </div>
