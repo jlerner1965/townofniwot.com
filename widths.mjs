@@ -19,7 +19,24 @@ const server = createServer(async (req, res) => {
 await new Promise((r) => server.listen(8097, r));
 
 const WIDTHS = [320, 360, 375, 390, 414, 480, 540, 560, 600, 620, 700, 768, 820, 900, 960, 1000, 1024, 1080, 1200, 1280, 1366, 1440, 1512, 1600, 1920, 2560];
-const PAGES = ['/', '/explore/', '/eat-shop/', '/events/', '/community/', '/our-story/', '/civic/incorporation-election/', '/plan-a-visit/', '/404.html'];
+const PAGES = [
+  '/',
+  '/things-to-do/',
+  '/old-town-niwot/',
+  '/one-day-in-niwot/',
+  '/restaurants/',
+  '/eat-shop/',
+  '/events/',
+  '/annual-events/',
+  '/events/rock-and-rails/',
+  '/parks-trails/',
+  '/living-in-niwot/',
+  '/community/',
+  '/history/',
+  '/civic/incorporation-election/',
+  '/plan-a-visit/',
+  '/404.html',
+];
 
 const browser = await chromium.launch(
   process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}

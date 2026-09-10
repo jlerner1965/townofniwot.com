@@ -1,0 +1,185 @@
+---
+layout: layouts/base.njk
+title: One Day in Niwot
+crumbLabel: One Day in Niwot
+seoTitle: "Visiting Niwot, Colorado: a One-Day Itinerary"
+description: How to spend one day in Niwot, Colorado — coffee on Second Avenue, the historic block, the public art, lunch on a patio, the trail out to the fields and dinner before the drive home, with everything within a short walk.
+navKey: things-to-do
+permalink: /one-day-in-niwot/
+ogImage: second-avenue-patios.jpg
+ogImageAlt: Patios and hanging baskets on the 300 block of Second Avenue in Niwot
+pageStyles: |
+  .n-stop{display:grid;grid-template-columns:minmax(86px,.14fr) minmax(0,1fr);gap:clamp(14px,2.5vw,40px);align-items:start;padding:26px 0;border-top:1px solid var(--n-rule)}
+  .n-stop:first-child{border-top:3px solid var(--n-red)}
+  .n-clock{font-family:var(--n-serif);font-size:clamp(1.125rem,1rem + .5vw,1.5rem);line-height:1.15;color:var(--n-red-ink)}
+  .n-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:start}
+  .n-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2vw,32px)}
+  @media (max-width:760px){.n-stop{grid-template-columns:minmax(0,1fr);gap:6px}}
+  @media (max-width:900px){.n-two{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:620px){.n-pair{grid-template-columns:minmax(0,1fr)}}
+# The shape of the day. The times are a suggested order of things, not
+# opening hours — this site does not publish those anywhere, and each stop
+# links to the business or the county page that does.
+stops:
+  - clock: Morning
+    title: Coffee on Second Avenue
+    body: Start on the 100 and 200 blocks with a coffee and something baked. The Old Oak Coffeehouse is at 136 Second Avenue, and Emory Jane’s mobile espresso bar is out around Niwot on some days — where it parks changes, and the operator publishes the schedule. Sit outside if the tables are out — the morning is the quiet part of the day here.
+    links:
+      - label: Coffee, bakery and sweets
+        href: /restaurants/#coffee-sweets
+  - clock: Late morning
+    title: Walk the historic block
+    body: Second Avenue end to end takes about ten minutes if you do not stop, and considerably longer if you do. The brick and false-front buildings date from the railroad period and the street grid runs at an angle to everything around it, which is the 1875 plat still showing. The shops, the antiques and the galleries are all on this walk.
+    links:
+      - label: The Old Town guide
+        href: /old-town-niwot/
+      - label: Why the street runs at an angle
+        href: /history/
+  - clock: Midday
+    title: The caboose, and the public art
+    body: Whistle Stop Park is at the western end of the block, at Murray Street and First Avenue, with CB&Q 14649 — a Burlington Route caboose built in 1907 — standing on a short length of track. The steel gateway sculpture is at the highway edge of the community, and further works are sited around the commercial blocks.
+    links:
+      - label: Parks and trails
+        href: /parks-trails/
+      - label: Public art
+        href: /things-to-do/#art
+  - clock: Lunch
+    title: A patio, if the weather allows
+    body: Cottonwood Square is a fifteen-minute walk north-east and holds the second cluster of kitchens, with two bronze bears on the corner. Several places across the two blocks describe outdoor seating on their own pages, and the restaurant guide lists which; the rest may have tables out without saying so.
+    links:
+      - label: Where to eat
+        href: /restaurants/
+  - clock: Afternoon
+    title: Out to the fields
+    body: East of the blocks the sidewalks stop and the farmland starts. The LoBo Regional Trail runs through Niwot between Longmont and Boulder — twelve miles end to end — and the local paths connect to it. Check the county's closures page before setting out, and take its Niwot trails map with you.
+    links:
+      - label: The trails, and the county's rules
+        href: /parks-trails/
+  - clock: Evening
+    title: Dinner, and whatever is on
+    body: Niwot has Italian on two blocks, Mexican and Chinese on the square, sushi at the back of the market, a brewery and a bar with its own kitchen. On a summer Thursday there is a free concert on the park lawn; on a second Friday the shops stay open late for the art walk; on the Friday evenings of the season there is dancing on the square.
+    links:
+      - label: What is on
+        href: /events/
+      - label: Rock & Rails
+        href: /events/rock-and-rails/
+---
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">One day, one parking space</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Visiting Niwot: a One-Day Itinerary</h1>
+</div>
+<p class="n-lead" style="margin:0;max-width:50ch">Niwot is small enough to see properly in a day and interesting enough to be worth the drive. Here is the order that works: coffee, the historic block, the caboose, lunch on a patio, the trail out to the fields, and dinner before you go home.</p>
+</div>
+<div class="n-pair" style="margin-top:clamp(20px,2.5vw,36px)">
+<figure class="n-ph-sm" style="margin:0">
+{% photo "second-avenue-patios.jpg", "Brick and clapboard buildings on the 300 block of Second Avenue with hanging baskets and patio tables out front", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 56%", true %}
+<figcaption class="n-cap">Morning on the 300 block</figcaption>
+</figure>
+<figure class="n-ph-sm" style="margin:0">
+{% photo "front-range-sunset-trail.jpg", "Sunset over the Front Range from a dirt trail on the grassland edge of Niwot", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 58%", true %}
+<figcaption class="n-cap">And the end of it, looking west</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+{#- The one thing a visitor most needs to know before setting out. -#}
+<section class="n-bg-sky n-pad-sm" aria-labelledby="before-h" style="border-top:1px solid var(--n-sky);border-bottom:1px solid var(--n-sky)">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:center;gap:clamp(16px,2vw,44px)">
+<div>
+<h2 class="n-label" id="before-h" style="color:var(--n-sky-ink);margin:0">Before you set out</h2>
+<div style="font-family:var(--n-serif);font-size:clamp(1.25rem,1.1rem + .8vw,1.75rem);line-height:1.15;color:var(--n-evergreen);margin-top:8px">Check the hours you depend on</div>
+</div>
+<div>
+<p class="n-body" style="margin:0;max-width:58ch">The times below are an order of things, not opening hours. This site does not publish hours for any business, because they change faster than anything else and a wrong one sends you to a locked door. If the day turns on one particular kitchen or gallery, open its own page first &#8212; every entry links to it.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white" aria-labelledby="day-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead">
+<div class="n-label">The day</div>
+<h2 class="n-h2" id="day-h" style="color:var(--n-evergreen)">Six stops, under two miles of walking</h2>
+</div>
+<ol style="list-style:none;margin:clamp(18px,2.2vw,30px) 0 0;padding:0">
+{%- for s in stops %}
+<li class="n-stop">
+<div class="n-clock">{{ s.clock }}</div>
+<div>
+<h3 class="n-h3" style="font-size:1.375rem;color:var(--n-evergreen)">{{ s.title }}</h3>
+<p class="n-body" style="margin:12px 0 0;max-width:66ch;font-size:.9375rem">{{ s.body }}</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px">
+{%- for l in s.links %}
+<a class="n-link" href="{{ l.href }}">{{ l.label }} <span aria-hidden="true">&#8594;</span></a>
+{%- endfor %}
+</div>
+</div>
+</li>
+{%- endfor %}
+</ol>
+</div>
+</section>
+
+<section class="n-bg-paper" id="practical" aria-labelledby="practical-h" style="padding-block:clamp(30px,4vw,64px);border-top:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-two">
+<div>
+<div class="n-label">Practical</div>
+<h2 class="n-h2" id="practical-h" style="margin-top:12px;max-width:20ch;color:var(--n-evergreen)">Getting here, and when to come</h2>
+<p class="n-body" style="margin:14px 0 0;max-width:52ch">Niwot is off the Diagonal Highway between Boulder and Longmont &#8212; about twenty minutes from Boulder, fifteen from Longmont, fifty from Denver and an hour from the airport. Park on or near Second Avenue and walk: the two commercial blocks are fifteen minutes apart and the park and the trail are at their edges.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn" href="/plan-a-visit/">Directions, parking and access</a>
+</div>
+</div>
+<div>
+<div class="n-callout n-callout--paper" style="background:var(--n-white)">
+<div class="n-label">Which day to pick</div>
+<dl style="margin:14px 0 0">
+<div style="padding:12px 0;border-top:1px solid var(--n-rule)">
+<dt class="n-label n-label--quiet" style="font-size:12px">For quiet</dt>
+<dd class="n-body" style="margin:6px 0 0;font-size:.9375rem">A weekday morning. The block is yours.</dd>
+</div>
+<div style="padding:12px 0;border-top:1px solid var(--n-rule)">
+<dt class="n-label n-label--quiet" style="font-size:12px">For music</dt>
+<dd class="n-body" style="margin:6px 0 0;font-size:.9375rem">A summer Thursday, for the free concert on the park lawn; a Friday evening of the season, for the dancing on the square.</dd>
+</div>
+<div style="padding:12px 0;border-top:1px solid var(--n-rule)">
+<dt class="n-label n-label--quiet" style="font-size:12px">For the galleries</dt>
+<dd class="n-body" style="margin:6px 0 0;font-size:.9375rem">A second Friday, when the shops stay open late for the art walk.</dd>
+</div>
+<div style="padding:12px 0;border-top:1px solid var(--n-rule)">
+<dt class="n-label n-label--quiet" style="font-size:12px">With children</dt>
+<dd class="n-body" style="margin:6px 0 0;font-size:.9375rem">Late October, for the costume parade and trick-or-treating on Second Avenue; the Saturday after Thanksgiving, for the parade.</dd>
+</div>
+</dl>
+<a class="n-link" href="/annual-events/" style="display:inline-block;margin-top:14px">Every annual event <span aria-hidden="true">&#8594;</span></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white n-pad-sm" aria-labelledby="stay-h">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<div class="n-label">If one day is not enough</div>
+<h2 class="n-h2" id="stay-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);max-width:18ch;color:var(--n-evergreen)">Staying, or coming back</h2>
+</div>
+<div>
+<p class="n-body" style="margin:0;max-width:60ch">The directory carries one place to stay in the village itself &#8212; the Niwot Inn &amp; Spa, fourteen rooms in the middle of Old Town &#8212; and Boulder is about twenty minutes away, Longmont about fifteen. If you are thinking about more than a visit, the residents&#8217; page covers what living here actually involves, including the November 2026 vote on whether Niwot should become a town.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn n-btn--ghost" href="/eat-shop/#niwot-inn">Where to stay</a>
+<a class="n-btn n-btn--ghost" href="/living-in-niwot/">Living in Niwot</a>
+<a class="n-btn n-btn--ghost" href="/things-to-do/">Things to do</a>
+</div>
+</div>
+</div>
+</div>
+</section>

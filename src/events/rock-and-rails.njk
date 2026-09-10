@@ -1,0 +1,229 @@
+---
+layout: layouts/base.njk
+title: Rock & Rails
+crumbLabel: Rock & Rails
+crumbParent:
+  name: Events
+  url: /events/
+seoTitle: "Rock & Rails Niwot: Dates, Times, Parking & What to Know"
+description: A guide to Rock & Rails, the free Thursday-evening concert series on the lawn at Whistle Stop Park in Niwot, Colorado — the season, the hours, where to park, what is nearby to eat, and what to check with the organizer.
+navKey: events
+permalink: /events/rock-and-rails/
+ogImage: whistle-stop-caboose.jpg
+ogImageAlt: The red CB&Q 14649 caboose at Whistle Stop Park, where the Rock & Rails concerts are held
+footMetaRight: Season and hours from the organizer’s page
+# One page, updated each spring when the Cultural Arts Association publishes
+# the season — not /2026/, /2027/ and so on. A per-year URL would split the
+# links and the search history of an event that is the same event every year,
+# and would leave last year's page live and wrong.
+pageStyles: |
+  .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:16px 0 0;padding:0}
+  .n-key{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 clamp(18px,2.5vw,40px);margin-top:clamp(20px,2.5vw,32px);border-top:2px solid var(--n-evergreen)}
+  .n-key > div{padding:16px 0 18px;border-bottom:1px solid var(--n-rule)}
+  .n-key dt{margin:0 0 6px;font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--n-muted)}
+  .n-key dd{margin:0;font-family:var(--n-serif);font-size:clamp(1.125rem,1rem + .5vw,1.375rem);line-height:1.2;color:var(--n-evergreen)}
+  .n-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:start}
+  .n-check{list-style:none;margin:16px 0 0;padding:0}
+  .n-check li{padding:13px 0 13px 26px;border-top:1px solid var(--n-rule);position:relative}
+  .n-check li::before{content:"";position:absolute;left:0;top:20px;width:10px;height:2px;background:var(--n-red)}
+  @media (max-width:900px){.n-key{grid-template-columns:repeat(2,minmax(0,1fr))}.n-two{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:520px){.n-key{grid-template-columns:minmax(0,1fr)}}
+---
+{%- set rr = annualBuild.byId['rock-rails'] %}
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">Free concerts, Whistle Stop Park</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Rock &amp; Rails, Niwot</h1>
+</div>
+<div>
+<p class="n-lead" style="margin:0;max-width:50ch">The free Thursday-evening concert series on the lawn beside the caboose, and the largest thing Niwot does. Produced by the Niwot Cultural Arts Association with the Niwot Business Association.</p>
+<nav aria-label="On this page">
+<ul class="n-toc">
+<li><a class="n-link" href="#season">This season</a></li>
+<li><a class="n-link" href="#getting-there">Getting there &amp; parking</a></li>
+<li><a class="n-link" href="#food">Food and drink</a></li>
+<li><a class="n-link" href="#before">Before you go</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<dl class="n-key">
+<div>
+<dt>Where</dt>
+<dd>Whistle Stop Park, Old Town</dd>
+</div>
+<div>
+<dt>When</dt>
+<dd>Thursday evenings, June to August</dd>
+</div>
+<div>
+<dt>Admission</dt>
+<dd>Free</dd>
+</div>
+<div>
+<dt>Run by</dt>
+<dd>Niwot Cultural Arts Association</dd>
+</div>
+</dl>
+</div>
+</section>
+
+<section class="n-bg-paper n-pad-sm" aria-label="Whistle Stop Park" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
+<div class="n-wrap">
+<figure class="n-ph-lg" style="margin:0">
+{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 900px) calc(100vw - 40px), 1180px", "display:block;width:100%;object-fit:cover;object-position:center 52%", true %}
+<figcaption class="n-cap">CB&amp;Q 14649, built 1907 &#8212; the concerts are on the lawn beside it</figcaption>
+</figure>
+</div>
+</section>
+
+{#- The season, straight from the event records: whatever is confirmed, and
+    an honest "not yet" where nothing is. The dates are never composed here —
+    they come through src/_data/annualBuild.js from events.js, so this page
+    cannot show a date the calendar would not. -#}
+<section class="n-bg-white" id="season" aria-labelledby="season-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead">
+<div class="n-label">The season</div>
+<h2 class="n-h2" id="season-h" style="color:var(--n-evergreen)">Dates and times</h2>
+</div>
+<div class="n-two" style="margin-top:clamp(20px,2.5vw,32px)">
+<div>
+<p class="n-body" style="margin:0;max-width:60ch">The 2026 season ran every Thursday from June 4 to August 27. Happy hour and the opening act start at 5pm and the headline band plays from 6:30pm, on the organizer&#8217;s own description of the series.</p>
+<p class="n-body" style="margin:16px 0 0;max-width:60ch">The following season&#8217;s dates and line-up are published by the Cultural Arts Association in the spring. Until they are, this page carries no 2027 dates and no line-up: a concert series that has always happened is still not a date until its organizer says so. This page is updated in place each spring rather than replaced by a new one, so a link to it keeps working from one season to the next.</p>
+<p class="n-small" style="margin:16px 0 0;max-width:60ch">The line-up is announced band by band on the organizer&#8217;s page and the Business Association&#8217;s calendar. This guide does not reproduce it: by the time a name is copied here it is as likely to be last year&#8217;s as this year&#8217;s.</p>
+<div class="n-btns" style="margin-top:22px">
+<a class="n-btn" href="https://niwotarts.org/rock-rails/" rel="noopener">Season and line-up <span aria-hidden="true">&#8599;</span></a>
+<a class="n-btn n-btn--ghost" href="/events/">The dated calendar</a>
+</div>
+</div>
+<div>
+<div class="n-callout n-callout--paper">
+<div class="n-label">On file here</div>
+{%- if rr %}
+<dl style="margin:14px 0 0">
+{%- for o in rr.occurrences %}
+<div style="padding:12px 0;border-top:1px solid var(--n-rule)">
+<dt class="n-label{% if o.when == 'expected' %} n-label--quiet{% endif %}" style="font-size:12px">{% if o.when == 'upcoming' %}Confirmed{% elif o.when == 'past' %}Last season{% else %}Not yet dated{% endif %}</dt>
+<dd class="n-body" style="margin:6px 0 0;font-size:.9375rem">{{ o.label }}{% if o.detail %} &#183; {{ o.detail }}{% endif %}</dd>
+</div>
+{%- endfor %}
+</dl>
+<p class="n-small" style="margin:14px 0 0;font-size:.875rem">Checked on the organizer&#8217;s page {{ rr.verifiedAt | humanDate }}.</p>
+{%- endif %}
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-paper" id="getting-there" aria-labelledby="there-h" style="padding-block:clamp(30px,4vw,64px);border-top:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-shead">
+<div class="n-label">Arriving</div>
+<h2 class="n-h2" id="there-h" style="color:var(--n-evergreen)">Getting there and parking</h2>
+</div>
+<div class="n-two" style="margin-top:clamp(20px,2.5vw,32px)">
+<div>
+<p class="n-body" style="margin:0;max-width:60ch">Whistle Stop Park is at the south-west corner of Murray Street and First Avenue, at the western end of Old Town. Niwot is off the Diagonal Highway between Boulder and Longmont &#8212; about twenty minutes from Boulder, fifteen from Longmont and fifty from Denver.</p>
+<p class="n-body" style="margin:16px 0 0;max-width:60ch">Parking is street parking along Second Avenue and the lots that serve the Old Town block, free at the time of writing, with posted restrictions applying. The park is a short walk from anywhere on the block, so park once and walk in rather than looking for something closer.</p>
+<p class="n-body" style="margin:16px 0 0;max-width:60ch">By bike, the LoBo Regional Trail runs through Niwot between Boulder and Longmont. By bus, RTD&#8217;s Route BOLT runs along the Diagonal with a stop at Highway 119 and Niwot Road; construction of the CO 119 bus rapid transit line has been changing stops on that corridor, so check the route before setting out.</p>
+<div class="n-btns" style="margin-top:22px">
+<a class="n-btn n-btn--ghost" href="{{ 'Whistle Stop Park, Niwot, CO 80503' | directions }}" rel="noopener">Directions to the park <span aria-hidden="true">&#8599;</span></a>
+<a class="n-btn n-btn--ghost" href="/plan-a-visit/">Plan a visit</a>
+</div>
+</div>
+<div>
+<div class="n-callout n-callout--sky">
+<div class="n-label" style="color:var(--n-sky-ink)">The evening runs from 5pm</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Music starts at 5pm and the headline band plays from 6:30pm, so there is an hour and a half before the main set &#8212; enough for dinner on the block first. How busy the parking gets is not something this guide has measured.</p>
+</div>
+<div class="n-callout n-callout--paper" style="margin-top:18px">
+<div class="n-label">Accessibility</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">The venue is a park lawn. This guide has not read a published accessibility statement for the site or the event, so it does not describe surfaces, seating or facilities &#8212; ask the organizer, who will know.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white" id="food" aria-labelledby="food-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">Dinner before, or a table after</div>
+<h2 class="n-h2" id="food-h" style="margin-top:12px;color:var(--n-evergreen)">Food and drink nearby</h2>
+</div>
+<a class="n-link" href="/restaurants/">Every place to eat in Niwot <span aria-hidden="true">&#8594;</span></a>
+</div>
+<p class="n-body" style="margin:clamp(18px,2vw,26px) 0 0;max-width:72ch">What is sold on the lawn, and whether you may bring your own food or drink, is the organizer&#8217;s to decide and is published on the organizer&#8217;s page rather than here. What is certain is that the concerts are in the middle of Old Town, and these kitchens are within a few minutes&#8217; walk of the park.</p>
+<ul style="list-style:none;margin:clamp(16px,2vw,24px) 0 0;padding:0">
+{%- for r in listings.food.entries %}{% if r.area and 'Old Town' in r.area %}
+<li style="display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.3fr);gap:10px 28px;align-items:baseline;padding:14px 0;border-top:1px solid var(--n-rule)">
+<div>
+<a class="n-link" href="/restaurants/#{{ r.slug }}" style="font-size:1.0625rem">{{ r.name }}</a>
+<span class="n-small" style="display:block;margin-top:4px;font-size:.875rem">{{ r.cuisine | default(r.kind) }}</span>
+</div>
+<span class="n-small" style="font-size:.875rem">{{ r.address }}</span>
+</li>
+{%- endif %}{% endfor %}
+</ul>
+<p class="n-small" style="margin:16px 0 0;max-width:72ch">Cottonwood Square, a few minutes further on, holds more of them. Hours are not reproduced anywhere on this site &#8212; each entry links to the business&#8217;s own page, which is where the current ones are.</p>
+</div>
+</section>
+
+<section class="n-bg-paper" id="before" aria-labelledby="before-h" style="padding-block:clamp(30px,4vw,64px);border-top:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-shead">
+<div class="n-label">Before you go</div>
+<h2 class="n-h2" id="before-h" style="color:var(--n-evergreen)">What this guide can confirm, and what to check</h2>
+</div>
+<div class="n-two" style="margin-top:clamp(20px,2.5vw,32px)">
+<div>
+<h3 class="n-h3" style="color:var(--n-evergreen)">Confirmed here</h3>
+<ul class="n-check">
+<li class="n-body" style="font-size:.9375rem">Admission is free.</li>
+<li class="n-body" style="font-size:.9375rem">It is on Thursday evenings through the summer, on the lawn at Whistle Stop Park.</li>
+<li class="n-body" style="font-size:.9375rem">Music starts at 5pm and the headline band plays from 6:30pm.</li>
+<li class="n-body" style="font-size:.9375rem">The venue is an open park lawn, not a seated hall.</li>
+<li class="n-body" style="font-size:.9375rem">It is produced by the Cultural Arts Association with the Business Association.</li>
+</ul>
+</div>
+<div>
+<h3 class="n-h3" style="color:var(--n-evergreen)">Check with the organizer</h3>
+<p class="n-body" style="margin:12px 0 0;max-width:52ch;font-size:.9375rem">These change from season to season, and this guide will not guess at them. The organizer&#8217;s page states each one.</p>
+<ul class="n-check">
+<li class="n-body" style="font-size:.9375rem">Whether you may bring a cooler, outside food or your own drink.</li>
+<li class="n-body" style="font-size:.9375rem">Whether dogs are welcome on the lawn.</li>
+<li class="n-body" style="font-size:.9375rem">Chairs, blankets and where they may be set down.</li>
+<li class="n-body" style="font-size:.9375rem">What food and drink is sold on site, and how to pay for it.</li>
+<li class="n-body" style="font-size:.9375rem">What happens to an evening if the weather turns.</li>
+</ul>
+<div class="n-btns" style="margin-top:22px">
+<a class="n-btn" href="https://niwotarts.org/rock-rails/" rel="noopener">Ask the organizer <span aria-hidden="true">&#8599;</span></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white n-pad-sm" aria-labelledby="next-h">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<div class="n-label">The rest of the year</div>
+<h2 class="n-h2" id="next-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);max-width:18ch;color:var(--n-evergreen)">Niwot does this all summer, and then some</h2>
+</div>
+<div>
+<p class="n-body" style="margin:0;max-width:60ch">Dancing Under the Stars runs on Friday evenings in Cottonwood Square, the Art Walk takes both blocks on second Fridays, and the year ends with a tree lighting and a parade over Thanksgiving weekend. The annual guide has all of them; the calendar has the dates organizers have published.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn" href="/annual-events/">Events &amp; festivals</a>
+<a class="n-btn n-btn--ghost" href="/parks-trails/">Whistle Stop Park &amp; trails</a>
+<a class="n-btn n-btn--ghost" href="/things-to-do/">Things to do</a>
+</div>
+</div>
+</div>
+</div>
+</section>

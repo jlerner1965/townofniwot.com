@@ -15,6 +15,9 @@ import { extname, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import listings from './src/_data/listings.js';
 import events from './src/_data/events.js';
+import annualEvents from './src/_data/annualEvents.js';
+import trails from './src/_data/trails.js';
+import nav from './src/_data/nav.js';
 import { buildUpcoming, zonedParts } from './src/assets/js/calendar-core.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -67,15 +70,31 @@ const now = zonedParts(new Date());
 const upcoming = buildUpcoming(events, now);
 const expectedCount = events.filter((e) => e.status === 'tentative').length;
 
+/* Counts the new landing pages are asserted against, derived from the same
+   data they render: a facet dropped in the data would otherwise take a row
+   with it and nothing would complain. */
+const foodFacets = listings.food.entries.reduce((n, e) => n + e.facets.length, 0);
+const trailFacts = trails.reduce((n, t) => n + t.facts.length, 0);
+const oldTownGroups = listings.categories.filter(
+  (c) => c.slug !== 'all' && listings.entries.some((e) => e.category === c.slug && e.area && e.area.includes('Old Town'))
+).length;
+
 /* Expected element counts per page. A data wiring mistake renders an empty
    loop and nothing else complains, so the count is asserted explicitly. */
 const COUNTS = {
-  home: { '[data-upcoming] article': Math.min(3, upcoming.length), '.n-quick a': 4, '.n-exp article': 4, '.n-split-links a': 6, '.n-nav a': 5 },
-  explore: { '.n-entry': 4, '.n-entry--flip': 2 },
+  home: { '[data-upcoming] article': Math.min(3, upcoming.length), '.n-quick a': 4, '.n-exp article': 4, '.n-split-links a': 6, '.n-nav a': nav.length, '.n-foot-col': 5 },
+  'things-to-do': { '.n-entry': 6, '.n-entry--flip': 3, '.n-toc a': 6 },
+  restaurants: { '[data-food-group]': listings.food.groups.length, '.n-meal': listings.food.entries.length, '.n-facts dt': foodFacets, '.n-toc a': listings.food.groups.length },
+  'annual-events': { '.n-series': annualEvents.length, '.n-toc a': annualEvents.length, '#not-listed': 1 },
+  'rock-and-rails': { '.n-key > div': 4, '.n-check li': 10, '.n-toc a': 4 },
+  'parks-trails': { '.n-place': trails.length, '.n-place dt': trailFacts, '.n-official a': 4 },
+  'old-town-niwot': { '.n-block > div': oldTownGroups, '.n-toc a': 4 },
+  'one-day-in-niwot': { '.n-stop': 6 },
+  'living-in-niwot': { '.n-task': 6, '.n-orgrow': 4, '.n-toc a': 4 },
   'eat-shop': { '[data-listing]': listings.entries.length, 'input[name="category"]': listings.categories.length, 'fieldset legend': 1, '[data-group]': listings.categories.length - 1, 'select[data-dir-select]': 1 },
   events: { '[data-upcoming] article': upcoming.length, '[data-day]': 28, '[data-expected] li': expectedCount, '[data-cal-fold]': 1 },
   community: { '.n-srow': 10, '.n-sgroup': 4, '#orgs li': 6, '[data-orgs-public] li': 2 },
-  'our-story': { '.n-era': 5, '[data-corrections] dt': 1 },
+  history: { '.n-era': 5, '[data-corrections] dt': 1 },
   civic: { '.n-tasks > div': 3, '.n-strip > div': 4, '#ballot li': 3, '#fiscal li': 5, '[data-fiscal-fold]': 5, '#after li': 5, '#official a[data-official]': 4, '.n-toc a': 6, '[data-corrections] dt': 1 },
   'plan-a-visit': { '.n-g4 > div': 4, '#map img': 1 },
   contact: { 'form [name]': 6, 'form a[href="/privacy/"]': 1 },
@@ -85,11 +104,18 @@ const COUNTS = {
 
 const PAGES = [
   ['home', '/'],
-  ['explore', '/explore/'],
+  ['things-to-do', '/things-to-do/'],
+  ['old-town-niwot', '/old-town-niwot/'],
+  ['one-day-in-niwot', '/one-day-in-niwot/'],
+  ['restaurants', '/restaurants/'],
   ['eat-shop', '/eat-shop/'],
   ['events', '/events/'],
+  ['annual-events', '/annual-events/'],
+  ['rock-and-rails', '/events/rock-and-rails/'],
+  ['parks-trails', '/parks-trails/'],
+  ['living-in-niwot', '/living-in-niwot/'],
   ['community', '/community/'],
-  ['our-story', '/our-story/'],
+  ['history', '/history/'],
   ['civic', '/civic/incorporation-election/'],
   ['plan-a-visit', '/plan-a-visit/'],
   ['contact', '/contact/'],
@@ -299,6 +325,38 @@ for (const width of [320, 768, 1440]) {
 }
 console.log('✓ no horizontal overflow at 320, 390, 768, 1280 or 1440 on any page');
 
+/* The masthead is one row at every width. Six navigation items need 1240px
+   to sit beside the identifier, which is why guide.css collapses the menu
+   below that; a seventh item, or a longer label, would wrap "2026 Election"
+   onto a second line and push every page down by 70px. This is the check
+   that catches it. */
+{
+  const rows = [];
+  for (const width of [1241, 1280, 1366, 1440, 1600, 1920, 2560]) {
+    const hctx = await browser.newContext({ viewport: { width, height: 900 } });
+    await isolate(hctx, []);
+    const hp = await hctx.newPage();
+    await hp.goto(BASE + '/', { waitUntil: 'load' });
+    await hp.waitForTimeout(80);
+    const r = await hp.evaluate(() => {
+      const links = Array.from(document.querySelectorAll('.n-nav a'));
+      const shown = links.filter((a) => a.getBoundingClientRect().height > 0);
+      return {
+        menuShown: getComputedStyle(document.querySelector('.n-nav')).display !== 'none',
+        navRows: new Set(shown.map((a) => Math.round(a.getBoundingClientRect().top))).size,
+        links: shown.length,
+        headH: Math.round(document.querySelector('.n-head').getBoundingClientRect().height),
+      };
+    });
+    if (!r.menuShown) note(`masthead @ ${width}px: the horizontal menu is collapsed above the 1240px breakpoint`);
+    if (r.navRows > 1) note(`masthead @ ${width}px: the ${r.links} navigation items wrap onto ${r.navRows} rows`);
+    if (r.headH > 90) note(`masthead @ ${width}px: header is ${r.headH}px — it has wrapped to a second line`);
+    rows.push(`${width}→${r.headH}px`);
+    await hctx.close();
+  }
+  console.log('✓ masthead: six navigation items on one row, header a single line at', rows.join(', '));
+}
+
 // --- Targeted checks the handoff flagged as real defects ---
 
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
@@ -388,7 +446,7 @@ console.log(`✓ keyboard: skip link works, ${ringResults.length} tabbed control
    focused from the keyboard state (so :focus-visible applies) and the ring
    colour is compared with the ground found just outside the ring, or with
    the control's own ground when the ring is drawn inside it. */
-const FOCUS_PAGES = ['/', '/eat-shop/', '/events/', '/civic/incorporation-election/', '/plan-a-visit/', '/contact/', '/privacy/'];
+const FOCUS_PAGES = ['/', '/restaurants/', '/eat-shop/', '/events/', '/annual-events/', '/parks-trails/', '/living-in-niwot/', '/civic/incorporation-election/', '/plan-a-visit/', '/contact/', '/privacy/'];
 const lowRings = [];
 let ringsChecked = 0;
 for (const fpath of FOCUS_PAGES) {
@@ -436,22 +494,23 @@ for (const fpath of FOCUS_PAGES) {
 lowRings.forEach((f) => note(`focus: ${f}`));
 if (!lowRings.length) console.log(`✓ focus rings: ${ringsChecked} controls across ${FOCUS_PAGES.length} pages, every ring at least 3:1 against its ground`);
 
-// Explore flipped entries must not crush the photo into the 64px numeral track.
-await page.goto(BASE + '/explore/', { waitUntil: 'load' });
+// The field guide's flipped entries must not crush the photo into the 64px
+// numeral track.
+await page.goto(BASE + '/things-to-do/', { waitUntil: 'load' });
 const flip = await page.evaluate(() =>
   Array.from(document.querySelectorAll('.n-entry--flip figure img')).map((i) => Math.round(i.getBoundingClientRect().width))
 );
 flip.forEach((w, i) => {
-  if (w < 200) note(`explore: flipped photo ${i} crushed to ${w}px — check grid-column placement`);
+  if (w < 200) note(`things-to-do: flipped photo ${i} crushed to ${w}px — check grid-column placement`);
 });
-console.log('✓ explore flipped photo widths:', flip.join(', '));
+console.log('✓ things-to-do flipped photo widths:', flip.join(', '));
 
 // Anchor targets must clear the sticky header.
 const anchor = await page.evaluate(() => {
   document.querySelector('#outdoors').scrollIntoView();
   return { top: Math.round(document.querySelector('#outdoors').getBoundingClientRect().top), header: Math.round(document.querySelector('.n-head').getBoundingClientRect().height) };
 });
-if (anchor.top < anchor.header) note(`explore: anchor #outdoors lands under the sticky header (top=${anchor.top}, header=${anchor.header})`);
+if (anchor.top < anchor.header) note(`things-to-do: anchor #outdoors lands under the sticky header (top=${anchor.top}, header=${anchor.header})`);
 else console.log(`✓ anchor clearance: #outdoors top ${anchor.top} >= header ${anchor.header}`);
 
 /* The schematic map, at every width. Two things to hold: labels inside the
@@ -943,7 +1002,7 @@ const fallback = await np.evaluate(() => ({
   links: Array.from(document.querySelectorAll('.n-nav a')).filter((a) => a.getBoundingClientRect().height > 0).length,
   overflow: document.documentElement.scrollWidth > window.innerWidth + 1,
 }));
-if (fallback.nav === 'none' || fallback.burger !== 'none' || fallback.links !== 5 || fallback.overflow) note(`mobile: no-script navigation fallback wrong: ${JSON.stringify(fallback)}`);
+if (fallback.nav === 'none' || fallback.burger !== 'none' || fallback.links !== nav.length || fallback.overflow) note(`mobile: no-script navigation fallback wrong: ${JSON.stringify(fallback)}`);
 else console.log('✓ mobile: without JavaScript the navigation is shown in full');
 await nojs.close();
 

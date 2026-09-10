@@ -80,7 +80,14 @@ a:hover { color: var(--n-red-ink); }
 .n-burger span { display: block; height: 2px; background: var(--n-paper); margin: 0 0 5px; }
 .n-burger span:last-child { margin-bottom: 0; }
 
-@media (max-width: 1080px) {
+/* The menu collapses at 1240px, not at the 1080px the five-item menu used:
+   six items need 1240px to sit on one row beside the masthead, and below
+   that the header wrapped to two lines with "2026 Election" alone on the
+   second. The three menu breakpoints — this one, its `scripting: none`
+   companion and the light-masthead block further down — and the <noscript>
+   rule in the header partial all have to name the same width, or a browser
+   without JavaScript gets a hidden list and a button that cannot open it. */
+@media (max-width: 1240px) {
   .n-burger { display: block; }
   .n-nav { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 8px var(--n-gutter) 20px; background: var(--n-evergreen); border-bottom: 3px solid var(--n-red); }
   .n-head.n-open .n-nav { display: flex; }
@@ -91,7 +98,7 @@ a:hover { color: var(--n-red-ink); }
    list is shown in full under the masthead instead, and the button that
    could not open anything is not shown. The header partial carries the same
    rule in a <noscript> for browsers without the `scripting` media feature. */
-@media (max-width: 1080px) and (scripting: none) {
+@media (max-width: 1240px) and (scripting: none) {
   .n-burger { display: none; }
   .n-nav { display: flex; position: static; padding: 0 0 12px; border-bottom: 0; }
 }
@@ -163,12 +170,16 @@ a:hover { color: var(--n-red-ink); }
 .n-foot { background: var(--n-forest); color: var(--n-paper); }
 .n-foot a { color: var(--n-paper); text-decoration: none; font-size: 1rem; }
 .n-foot a:hover { color: var(--n-gold-lt); }
-.n-foot-cols { display: grid; grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 52px); }
+.n-foot-cols { display: grid; grid-template-columns: minmax(0, 1.2fr) repeat(4, minmax(0, 1fr)); gap: clamp(24px, 3vw, 52px); }
 .n-foot-col { display: grid; gap: 12px; align-content: start; }
 .n-foot h2 { font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--n-gold-lt); margin: 0; }
 .n-foot-mark { font-family: var(--n-serif); font-size: clamp(2.5rem, 2rem + 2vw, 3.75rem); line-height: .9; letter-spacing: -.01em; color: var(--n-white); }
 .n-disclaim { max-width: 78ch; font-size: .9375rem; line-height: 1.65; color: var(--n-sage); }
 .n-foot-meta { display: flex; flex-wrap: wrap; gap: 8px 32px; font-size: 13px; letter-spacing: 0; color: var(--n-sage); }
+/* Five columns need more room than four did: the mark keeps its own column
+   down to 1080px, then the link columns wrap to three and finally to two.
+   Below 900px a five-column footer is a column of single words. */
+@media (max-width: 1080px) { .n-foot-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 900px) { .n-foot-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 
 /* ---- tap targets: keep every control comfortable on touch ---- */
@@ -330,7 +341,12 @@ a { text-underline-offset: 4px; }
   vertical-align: .15em;
 }
 
-.n-nav { gap: 4px clamp(14px, 1.8vw, 28px); }
+/* A fixed gap, not a viewport-scaled one. `.n-wrap` caps the masthead row at
+   1240px, so past that width a gap of 1.8vw keeps growing while the space it
+   grows into does not: at 1440px it took the six items over the row and
+   wrapped "2026 Election" onto a second line. 18px leaves about 30px of
+   slack on the row at every width the horizontal menu is shown. */
+.n-nav { gap: 4px 18px; }
 
 .n-nav a {
   position: relative;
@@ -619,7 +635,7 @@ a { text-underline-offset: 4px; }
 .n-foot .n-disclaim,
 .n-foot .n-foot-meta { color: #AABCB5; }
 
-@media (max-width: 1080px) {
+@media (max-width: 1240px) {
   .n-head { min-height: 68px; }
   .n-head-in { min-height: 68px; }
   .n-nav {

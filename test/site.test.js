@@ -16,19 +16,44 @@ import organizations from '../src/_data/organizations.js';
 import election from '../src/_data/election.js';
 import corrections from '../src/_data/corrections.js';
 import nav from '../src/_data/nav.js';
+import annualEvents from '../src/_data/annualEvents.js';
+import trails from '../src/_data/trails.js';
 import { buildUpcoming, expandEvents, instancesOn, dateLabel, parseIso, monthDefault, MONTHS } from '../src/assets/js/calendar-core.js';
 import { HASHED_NAME } from '../lib/assets.js';
 
 const ROOT = path.resolve('_site');
-const PRIMARY = ['/', '/explore/', '/eat-shop/', '/events/', '/community/', '/our-story/', '/civic/incorporation-election/', '/plan-a-visit/'];
+const PRIMARY = [
+  '/',
+  '/things-to-do/',
+  '/old-town-niwot/',
+  '/one-day-in-niwot/',
+  '/restaurants/',
+  '/eat-shop/',
+  '/events/',
+  '/annual-events/',
+  '/events/rock-and-rails/',
+  '/parks-trails/',
+  '/living-in-niwot/',
+  '/community/',
+  '/history/',
+  '/civic/incorporation-election/',
+  '/plan-a-visit/',
+];
 const INDEXABLE = [...PRIMARY, '/privacy/'];
 const TITLES = {
   '/': 'Niwot, Colorado Community Guide | TownofNiwot.com',
-  '/explore/': 'Things to Do in Niwot, Colorado | TownofNiwot.com',
+  '/things-to-do/': 'Things to Do in Niwot, Colorado | TownofNiwot.com',
+  '/old-town-niwot/': 'Old Town Niwot — Downtown Niwot, Colorado',
+  '/one-day-in-niwot/': 'Visiting Niwot, Colorado: a One-Day Itinerary',
+  '/restaurants/': 'Restaurants in Niwot, Colorado — Where to Eat | TownofNiwot.com',
   '/eat-shop/': 'Niwot Restaurants, Shops & Local Services | TownofNiwot.com',
   '/events/': 'Niwot Events Calendar | TownofNiwot.com',
+  '/annual-events/': 'Niwot Events & Festivals — the Year in Niwot, Colorado',
+  '/events/rock-and-rails/': 'Rock & Rails Niwot: Dates, Times, Parking & What to Know',
+  '/parks-trails/': 'Niwot Parks & Trails — Whistle Stop Park and the LoBo Trail',
+  '/living-in-niwot/': 'Living in Niwot, Colorado — What It Is Actually Like',
   '/community/': 'Niwot Community Organizations & Resident Resources',
-  '/our-story/': 'History of Niwot, Colorado | TownofNiwot.com',
+  '/history/': 'History of Niwot, Colorado | TownofNiwot.com',
   '/plan-a-visit/': 'Visit Niwot, Colorado: Directions, Parking & Accessibility',
   '/civic/incorporation-election/': '2026 Niwot Incorporation Election | TownofNiwot.com',
   '/privacy/': 'Privacy | TownofNiwot.com',
@@ -47,7 +72,7 @@ before(() => {
 /* Utility pages: built and reachable, kept out of the index and the sitemap. */
 const UTILITY = ['/thanks/', '/contact/'];
 
-test('all eight primary pages, the privacy page, the utility pages, the 404 and the utility files are built', () => {
+test('all fifteen primary pages, the privacy page, the utility pages, the 404 and the utility files are built', () => {
   for (const url of [...INDEXABLE, ...UTILITY]) assert.ok(fs.existsSync(fileFor(url)), url);
   for (const file of ['404.html', 'sitemap.xml', 'robots.txt', 'favicon.svg', 'favicon.ico', 'apple-touch-icon.png']) assert.ok(fs.existsSync(path.join(ROOT, file)), file);
 });
@@ -103,19 +128,26 @@ test('the masthead identifier, footer disclaimer and privacy links are on every 
 
 /* ---- navigation and the homepage, after the September 2026 launch audit ---- */
 
-test('the primary navigation has five items; Our Story and Plan a Visit stay reachable from the footer and Explore', () => {
-  assert.deepEqual(nav.map((n) => n.label), ['Explore', 'Eat & Shop', 'Events', 'Community', '2026 Election']);
+/* The menu carries six of the sixteen pages; the footer carries every one of
+   them, which is the only reason the menu can stay this short. */
+const NOT_IN_MENU = ['/eat-shop/', '/annual-events/', '/events/rock-and-rails/', '/old-town-niwot/', '/one-day-in-niwot/', '/history/', '/community/', '/plan-a-visit/'];
+
+test('the primary navigation has six items, and every page it leaves out is in the footer of every page', () => {
+  assert.deepEqual(nav.map((n) => n.label), ['Things to Do', 'Restaurants', 'Events', 'Parks & Trails', 'Living Here', '2026 Election']);
   for (const url of [...INDEXABLE, ...UTILITY, '/404.html']) {
     const html = read(url);
     const menu = html.slice(html.indexOf('<nav class="n-nav"'), html.indexOf('</nav>'));
     assert.equal((menu.match(/<a[ >]/g) || []).length, nav.length, `${url} menu items`);
-    assert.ok(!menu.includes('/our-story/') && !menu.includes('/plan-a-visit/'), `${url} menu`);
+    for (const href of NOT_IN_MENU) assert.ok(!menu.includes(`href="${href}"`), `${url} menu should not carry ${href}`);
     const footer = html.slice(html.indexOf('<footer'));
-    assert.ok(footer.includes('href="/our-story/"') && footer.includes('href="/plan-a-visit/"') && footer.includes('href="/contact/"'), `${url} footer`);
+    for (const href of [...NOT_IN_MENU, '/contact/', '/privacy/']) {
+      assert.ok(footer.includes(`href="${href}"`), `${url} footer is missing ${href}`);
+    }
+    /* Every page in the menu is in the footer too, so the footer is a
+       complete index of the site and not a leftovers drawer. */
+    for (const item of nav) assert.ok(footer.includes(`href="${item.href}"`), `${url} footer is missing ${item.href}`);
   }
-  const explore = read('/explore/');
-  assert.ok(explore.includes('href="/our-story/"') && explore.includes('href="/plan-a-visit/"'), 'Explore links both');
-  assert.ok(!explore.includes('Inventory in progress'));
+  assert.ok(!read('/things-to-do/').includes('Inventory in progress'));
 });
 
 test('the homepage is six sections with four quick links, no newsletter form and no repeated interior lists', () => {
@@ -152,10 +184,17 @@ function html_has_form_script(html) {
 
 test('the visible titles say what each page is', () => {
   const h1 = (url) => decode(tag(read(url), /<h1[^>]*>([^<]*)<\/h1>/));
-  assert.equal(h1('/explore/'), 'Explore Niwot: Four Places in Walking Order');
+  assert.equal(h1('/things-to-do/'), 'Things to Do in Niwot, Colorado');
+  assert.equal(h1('/restaurants/'), 'Restaurants in Niwot, Colorado');
+  assert.equal(h1('/annual-events/'), 'Niwot Events & Festivals');
+  assert.equal(h1('/events/rock-and-rails/'), 'Rock & Rails, Niwot');
+  assert.equal(h1('/parks-trails/'), 'Niwot Parks & Trails');
+  assert.equal(h1('/old-town-niwot/'), 'Old Town Niwot');
+  assert.equal(h1('/one-day-in-niwot/'), 'Visiting Niwot: a One-Day Itinerary');
+  assert.equal(h1('/living-in-niwot/'), 'Living in Niwot, Colorado');
   assert.equal(h1('/eat-shop/'), 'Niwot Restaurants, Shops & Local Services');
   assert.equal(h1('/community/'), 'Community Groups & Resident Resources');
-  assert.equal(h1('/our-story/'), 'Niwot History: Railroad, Town Grid & Community');
+  assert.equal(h1('/history/'), 'Niwot History: Railroad, Town Grid & Community');
   assert.equal(h1('/plan-a-visit/'), 'Visit Niwot: Directions, Parking & Accessibility');
 });
 
@@ -205,13 +244,21 @@ test('breadcrumbs are visible and their structured data matches on every interna
     const html = read(url);
     const crumb = jsonLd(html).find((d) => d['@type'] === 'BreadcrumbList');
     assert.ok(crumb, `${url} BreadcrumbList`);
-    assert.equal(crumb.itemListElement[0].item, site.url + '/');
-    assert.equal(crumb.itemListElement[1].item, site.url + url);
+    const trail = crumb.itemListElement;
+    assert.equal(trail[0].item, site.url + '/');
+    assert.equal(trail[trail.length - 1].item, site.url + url);
+    assert.deepEqual(trail.map((i) => i.position), trail.map((_, i) => i + 1), `${url} crumb positions`);
     const visible = decode(tag(html, /<span aria-current="page">([^<]*)<\/span>/));
-    assert.equal(visible, crumb.itemListElement[1].name, `${url} visible crumb`);
+    assert.equal(visible, trail[trail.length - 1].name, `${url} visible crumb`);
     assert.match(html, /<nav class="n-crumbs" aria-label="Breadcrumb">/);
   }
   assert.ok(!read('/').includes('n-crumbs'), 'no breadcrumb on the homepage');
+
+  /* A page under another one carries the parent in between, and the parent
+     has to be a page that exists — the link check below walks it. */
+  const rr = jsonLd(read('/events/rock-and-rails/')).find((d) => d['@type'] === 'BreadcrumbList').itemListElement;
+  assert.deepEqual(rr.map((i) => i.name), ['Home', 'Events', 'Rock & Rails']);
+  assert.equal(rr[1].item, site.url + '/events/');
 });
 
 /* ---- directory ---- */
@@ -526,14 +573,14 @@ test('resident services link to the responsible page, not a homepage, and the or
   assert.ok(!html.includes('Ask a neighbor'));
 });
 
-/* Since the launch audit the full log lives folded on Our Story; the
+/* Since the launch audit the full log lives folded on the history page; the
    election page keeps its own entries folded (its trust depends on them)
    and the privacy page its own (a policy says when it changed). No other
    page carries a change log. */
 const KEEPS_OWN_LOG = ['/civic/incorporation-election/', '/privacy/'];
 
-test('the corrections log is published in full on Our Story, folded, and only the election and privacy pages keep their own', () => {
-  const story = read('/our-story/');
+test('the corrections log is published in full on the history page, folded, and only the election and privacy pages keep their own', () => {
+  const story = read('/history/');
   for (const c of corrections) assert.ok(story.includes(c.summary.replace(/&/g, '&amp;').replace(/'/g, '&#39;')) || story.includes(c.summary), c.page);
   assert.ok(corrections.every((c) => /^\d{4}-\d{2}-\d{2}$/.test(c.date) && c.page.startsWith('/') && c.summary.length > 20));
   assert.match(story, /<details class="n-log" id="corrections"[^>]*>\s*<summary>Editorial changes \(\d+\)<\/summary>/, 'the log is folded');
@@ -541,7 +588,7 @@ test('the corrections log is published in full on Our Story, folded, and only th
   assert.ok(!story.includes('county records'), 'no generic source labels');
   assert.ok(story.includes('alt="The red CB&amp;Q 14649 caboose') && story.includes('alt="The Niwot Tribune false-front building'), 'two documentary photographs');
   for (const url of INDEXABLE) {
-    if (url === '/our-story/') continue;
+    if (url === '/history/') continue;
     const html = read(url);
     const own = corrections.filter((c) => c.page === url);
     const expected = KEEPS_OWN_LOG.includes(url) && own.length ? 1 : 0;
@@ -559,4 +606,176 @@ test('the community page groups the resident services, shows a photograph and li
   const photo = html.indexOf('alt="The red CB&amp;Q 14649 caboose');
   assert.ok(photo > html.indexOf('id="orgs"') && photo < html.indexOf('id="resources"'), 'the photograph sits between the two lists');
   for (const o of organizations) assert.ok(o.body.split(/\.\s/).length <= 2, `${o.name} description is short`);
+});
+
+/* ---- the landing pages added after the launch audit ---- */
+
+test('the field guide keeps the anchors the old Explore URL used, and both renamed pages redirect', () => {
+  const html = read('/things-to-do/');
+  /* Links from before the rename point at /explore/#oldtown and the rest.
+     The redirect only moves the path; the fragment is the browser's, so
+     these ids have to survive the rename or those links land at the top. */
+  for (const id of ['oldtown', 'cottonwood', 'art', 'outdoors']) {
+    assert.match(html, new RegExp(`id="${id}"`), `#${id} must survive the rename`);
+  }
+  assert.equal((html.match(/class="n-entry/g) || []).length, 6, 'six entries');
+  assert.equal((html.match(/class="n-entry n-entry--flip"/g) || []).length, 3, 'three of them flipped');
+
+  const vercel = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
+  const redirects = new Map(vercel.redirects.map((r) => [r.source, r]));
+  for (const [from, to] of [['/explore/', '/things-to-do/'], ['/our-story/', '/history/']]) {
+    const rule = redirects.get(from);
+    assert.ok(rule, `${from} has no redirect`);
+    assert.equal(rule.destination, to);
+    assert.equal(rule.permanent, true, `${from} must be a 301`);
+  }
+});
+
+test('the restaurant guide renders every food listing, grouped, with only the facets its record carries', () => {
+  const html = read('/restaurants/');
+  const rows = [...html.matchAll(/<li class="n-meal" id="([^"]+)">/g)].map((m) => m[1]);
+  const inGroupOrder = listings.food.groups.flatMap((g) => g.entries.map((e) => e.slug));
+  assert.deepEqual(rows, inGroupOrder, 'every food row, in group order');
+  assert.deepEqual([...rows].sort(), listings.food.entries.map((e) => e.slug).sort(), 'and no food row left out');
+
+  const sections = [...html.matchAll(/data-food-group="([a-z-]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(sections, listings.food.groups.map((g) => g.slug), 'one section per group, in declared order');
+  for (const g of listings.food.groups) assert.ok(html.includes(`href="#${g.slug}"`), `${g.slug} is in the page's own index`);
+
+  for (const row of listings.food.entries) {
+    const block = html.slice(html.indexOf(`id="${row.slug}"`), html.indexOf('</li>', html.indexOf(`id="${row.slug}"`)));
+    assert.equal((block.match(/<dt>/g) || []).length, row.facets.length, `${row.slug} facet count`);
+    assert.ok(block.includes(`href="/eat-shop/#${row.slug}"`), `${row.slug} links to its directory row`);
+    if (row.patio) assert.ok(block.includes('Outdoor seating'), `${row.slug} patio facet`);
+    else assert.ok(!block.includes('Outdoor seating'), `${row.slug} must not claim outdoor seating`);
+  }
+  /* An absent facet must never render as an empty cell or a "no". */
+  assert.ok(!html.includes('<dd></dd>') && !html.includes('<dd>—</dd>'));
+});
+
+test('the restaurant guide says what it does not publish, and asserts no price or hours', () => {
+  const html = read('/restaurants/');
+  assert.match(html, /Opening hours<\/strong> are not reproduced anywhere on this site/);
+  assert.match(html, /Price ranges<\/strong> are not shown on any entry/);
+  assert.ok(!/\$\$/.test(html), 'no price range is shown while no source publishes one');
+  assert.ok(html.includes(`${listings.food.withPatio.length} places describe outdoor seating`), 'the patio count comes from the data');
+  for (const row of listings.food.withPatio) assert.ok(html.includes(`href="#${row.slug}"`), `${row.slug} in the patio list`);
+});
+
+test('the restaurant ItemList keeps one identifier per business and invents nothing', () => {
+  const html = read('/restaurants/');
+  const list = jsonLd(html).find((d) => d['@type'] === 'ItemList');
+  const active = listings.food.entries.filter((e) => e.status === 'active');
+  assert.equal(list.numberOfItems, active.length);
+  list.itemListElement.forEach((li, i) => {
+    assert.equal(li.position, i + 1);
+    assert.equal(li.url, `${site.url}/restaurants/#${active[i].slug}`);
+    /* The same @id as the directory's ItemList: one business, one identifier,
+       mentioned on two pages. */
+    assert.equal(li.item['@id'], `${site.url}/eat-shop/#${active[i].slug}`);
+    for (const forbidden of ['telephone', 'openingHours', 'geo', 'aggregateRating', 'priceRange', 'hasMenu']) {
+      assert.ok(!(forbidden in li.item), `${active[i].slug} must not assert ${forbidden}`);
+    }
+    if (active[i].cuisine) assert.equal(li.item.servesCuisine, active[i].cuisine);
+  });
+  const directory = jsonLd(read('/eat-shop/')).find((d) => d['@type'] === 'ItemList');
+  const ids = new Set(directory.itemListElement.map((li) => li.item['@id']));
+  for (const li of list.itemListElement) assert.ok(ids.has(li.item['@id']), `${li.item.name} has an id the directory does not know`);
+});
+
+test('the annual guide describes every series and marks nothing undated as scheduled', () => {
+  const html = read('/annual-events/');
+  const ids = [...html.matchAll(/<li class="n-series" id="([^"]+)">/g)].map((m) => m[1]);
+  assert.deepEqual(ids, annualEvents.map((s) => s.id));
+  for (const s of annualEvents) {
+    assert.ok(html.includes(`href="${s.organizer.url}"`), `${s.id} names its organizer`);
+    assert.ok(html.includes(`href="${s.sourceUrl}"`), `${s.id} links what it was read from`);
+  }
+  /* A series is not an occurrence. Marking one as an Event would publish a
+     date this guide does not have. */
+  assert.ok(!jsonLd(html).some((d) => d['@graph'] || d['@type'] === 'Event'), 'no Event structured data on the series page');
+  assert.ok(html.includes('Expected &#8212; date not confirmed') || html.includes('Expected — date not confirmed'), 'an undated season says so');
+});
+
+test('the annual guide says why the Fourth of July and the farmers market are absent', () => {
+  const html = read('/annual-events/');
+  const block = html.slice(html.indexOf('id="not-listed"'));
+  assert.match(block, /A Fourth of July event\./);
+  assert.match(block, /no organizer source for one was found/);
+  assert.match(block, /A farmers market\./);
+  assert.ok(block.includes('href="/contact/"'), 'and invites the ones that are missing');
+  for (const s of annualEvents) assert.ok(!/fourth of july|independence day/i.test(s.name), 'no invented Fourth of July series');
+});
+
+test('the Rock & Rails guide carries no unpublished season and separates what it can confirm', () => {
+  const html = read('/events/rock-and-rails/');
+  assert.ok(html.includes('href="https://niwotarts.org/rock-rails/"'), 'the organizer is linked');
+  assert.ok(html.includes('Confirmed here') && html.includes('Check with the organizer'), 'the two lists');
+  /* Everything a season would change — dates and a line-up — stays with the
+     organizer, so the page can be updated in place rather than replaced. */
+  assert.ok(!/\b2027-\d{2}-\d{2}\b/.test(html), 'no composed 2027 date');
+  assert.match(html, /This guide does not reproduce it/, 'and says the line-up stays with the organizer');
+  for (const band of events.filter((e) => e.tag === 'Concert')) {
+    assert.ok(!html.includes('Line-up:'), `no line-up is copied onto the page (${band.id})`);
+  }
+  const rockRails = events.find((e) => e.id === 'rock-rails-2026');
+  assert.ok(html.includes('June 4') && html.includes('August 27'), 'the season on file is shown');
+  assert.equal(rockRails.recurrence.until, '2026-08-27');
+  assert.ok(!fs.existsSync(path.join(ROOT, 'events/rock-and-rails/2026')), 'one URL per event, not one per year');
+});
+
+test('the parks page lists every trail record with the county page that governs it', () => {
+  const html = read('/parks-trails/');
+  const ids = [...html.matchAll(/<li class="n-place" id="([^"]+)">/g)].map((m) => m[1]);
+  assert.deepEqual(ids, trails.map((t) => t.id));
+  for (const t of trails) {
+    for (const l of t.links) assert.ok(html.includes(`href="${l.href}"`), `${t.id} link ${l.href}`);
+    assert.ok(html.includes(`href="${t.keeper.url}"`), `${t.id} names who looks after it`);
+  }
+  for (const href of [
+    'https://bouldercounty.gov/open-space/parks-and-trails/trail-closures/',
+    'https://bouldercounty.gov/open-space/parks-and-trails/regulations/',
+  ]) {
+    assert.ok(html.includes(`href="${href}"`), href);
+  }
+  /* The only length on the page is the county's own, for the LoBo, and it is
+     written out. A guide that has not walked a trail publishes no distances,
+     so a numeral before "miles" anywhere here means one crept in. */
+  const text = html.replace(/<[^>]+>/g, ' ');
+  const numeric = text.match(/\b\d+(\.\d+)?\s?(miles|mile|km|kilometers)\b/gi) || [];
+  assert.deepEqual(numeric, [], `unexpected measured distances: ${numeric}`);
+  assert.ok(text.includes('Twelve miles, Longmont to Boulder'), 'the LoBo length, as the county states it');
+  assert.ok(text.includes('this guide has not measured them'), 'and says why there are no others');
+});
+
+test('the Old Town page is built from the directory and the series data', () => {
+  const html = read('/old-town-niwot/');
+  const oldTown = listings.entries.filter((e) => e.area && e.area.includes('Old Town'));
+  assert.ok(html.includes(`All ${oldTown.length} businesses in the directory`), 'the count comes from the data');
+  for (const row of oldTown) assert.ok(html.includes(`href="/eat-shop/#${row.slug}"`), `${row.slug} is linked to its directory row`);
+  const listed = [...html.matchAll(/href="\/eat-shop\/#([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual([...new Set(listed)].sort(), oldTown.map((e) => e.slug).sort(), 'and nothing that is not in Old Town');
+  for (const s of annualEvents.filter((s) => /Old Town|Second Avenue/.test(s.where))) {
+    assert.ok(html.includes(`href="/annual-events/#${s.id}"`), `${s.id} on the avenue`);
+  }
+});
+
+test('the residents’ page sends every first-week task to the body that handles it', () => {
+  const html = read('/living-in-niwot/');
+  const destinations = new Set(services.map((s) => s.href));
+  const links = [...html.matchAll(/<a class="n-link" href="(https:\/\/[^"]+)" rel="noopener" style="justify-self:start">Go there/g)].map((m) => m[1]);
+  assert.equal(links.length, 6, 'six first-week tasks');
+  for (const href of links) assert.ok(destinations.has(href), `${href} is not one of the resident-resource destinations`);
+  /* The full table stays on the community page; this one is the checklist. */
+  assert.ok(html.includes('href="/community/#resources"'), 'and points at the full table');
+  assert.equal((html.match(/class="n-srow"/g) || []).length, 0, 'the services table is not duplicated here');
+  assert.ok(html.includes('4,306'), 'the census figure is the sourced one');
+});
+
+test('the one-day itinerary is an order of things, not opening hours', () => {
+  const html = read('/one-day-in-niwot/');
+  assert.equal((html.match(/<li class="n-stop">/g) || []).length, 6, 'six stops');
+  assert.match(html, /The times below are an order of things, not opening hours/);
+  /* A clock time on this page would read as an opening time. */
+  assert.ok(!/\b\d{1,2}(:\d{2})?\s?(am|pm)\b/i.test(html.slice(html.indexOf('id="day-h"'), html.indexOf('id="practical"'))), 'no clock times in the itinerary');
 });

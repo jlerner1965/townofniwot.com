@@ -10,6 +10,18 @@
 export default [
   {
     date: '2026-09-10',
+    page: '/things-to-do/',
+    summary:
+      'The Explore page moved to /things-to-do/, which is what its title already said it was, and grew from four entries to six: eating and shopping, and the events year, join Old Town, Cottonwood Square, the public art and the outdoors. /explore/ redirects here permanently and the old in-page anchors (#oldtown, #cottonwood, #art, #outdoors) are kept, so a saved link still lands where it did. Nothing about the places themselves changed.',
+  },
+  {
+    date: '2026-09-10',
+    page: '/history/',
+    summary:
+      'Our Story moved to /history/, which is what its title already said it was; /our-story/ redirects here permanently. The timeline, its sources and this change log are unaltered.',
+  },
+  {
+    date: '2026-09-10',
     page: '/events/',
     summary:
       'Eight dated events from the Niwot Business Association’s calendar were added after the launch audit found them missing: House Blend Band (September 12), the Tree Carving Fundraiser and Trivia Night (September 15), The Road of Remembrance (September 16), the Basin Design Open House (September 19), the Blessing of the Animals (October 4), the Niwot Wellness Lecture Series (October 7), the Holiday Parade (November 28, previously listed as awaiting a date) and the Holiday Magic Market Fayre (December 5). Venues and start times not read from the listings are left off rather than guessed, and each entry says so. The month grid, the “recently held” list and the change log left the page.',
