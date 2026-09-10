@@ -15,33 +15,45 @@ groups:
   - Water and sewer
   - Schools, parks and elections
 pageStyles: |
+  .n-community-open{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(28px,4vw,68px);align-items:center}
+  .n-community-open figure{min-width:0}
+  .n-community-kicker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:clamp(24px,3vw,40px);border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)}
+  .n-community-kicker a{display:block;padding:16px 14px 15px 0;color:var(--n-evergreen);font-size:.875rem;font-weight:600;text-decoration:none;border-right:1px solid var(--n-rule)}
+  .n-community-kicker a:not(:first-child){padding-left:14px}
+  .n-community-kicker a:last-child{border-right:0}
+  .n-community-kicker a:hover{color:var(--n-red-ink)}
   .n-srow{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(130px,auto);gap:12px 28px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--n-rule)}
-  .n-orow{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,auto);gap:16px 28px;align-items:start;padding:22px 0;border-bottom:1px solid rgba(36,72,58,.22)}
+  .n-org-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:clamp(24px,3vw,40px) 0 0 !important;background:rgba(36,72,58,.22);border:1px solid rgba(36,72,58,.22)}
+  .n-org-card{display:flex;min-height:310px;flex-direction:column;padding:clamp(24px,3vw,38px);background:var(--n-white)}
+  .n-org-card--public{min-height:270px;background:var(--n-sky-pale)}
+  .n-org-card .n-link{margin-top:auto;align-self:flex-start}
+  .n-org-num{font-family:var(--n-serif);font-size:2rem;line-height:1;color:var(--n-red-ink)}
   .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:16px 0 0;padding:0}
   .n-sgroup{margin-top:clamp(22px,2.6vw,36px)}
   .n-sgroup h3{margin:0;padding-bottom:8px;border-bottom:2px solid var(--n-evergreen)}
   /* Both lists stack at the same width. Left in two columns on a phone, the
      140px reserved for "Visit site" leaves about 150px for the body copy,
      which reads four words to a line. */
-  @media (max-width:900px){.n-srow,.n-orow{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:900px){.n-community-open,.n-org-grid,.n-srow{grid-template-columns:minmax(0,1fr)}.n-org-card{min-height:0}}
+  @media (max-width:620px){.n-community-kicker{grid-template-columns:minmax(0,1fr)}.n-community-kicker a,.n-community-kicker a:not(:first-child){padding:13px 0;border-right:0;border-bottom:1px solid var(--n-rule)}.n-community-kicker a:last-child{border-bottom:0}}
 ---
 <section class="n-bg-white" aria-labelledby="title-h">
-<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(24px,3vw,44px)">
-<div class="n-g2-wide" style="align-items:end">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(36px,5vw,76px)">
+<div class="n-community-open">
 <div>
-<div class="n-label">No town hall, so neighbors run it</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Community Groups &amp; Resident Resources</h1>
-</div>
-<div>
-<p class="n-lead" style="margin:0;max-width:50ch">Almost everything that happens in Niwot is organized by residents through local groups, and almost every public service comes from somewhere else. Both lists are below.</p>
-<nav aria-label="On this page">
-<ul class="n-toc">
-<li><a class="n-link" href="#orgs">Community groups</a></li>
-<li><a class="n-link" href="#public">Public bodies</a></li>
-<li><a class="n-link" href="#resources">Resident resources</a></li>
-</ul>
+<div class="n-label">The people who make Niwot work</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.75rem,2.05rem + 3vw,5.25rem);line-height:.93;max-width:11ch;color:var(--n-evergreen)">Community Groups &amp; Resident Resources</h1>
+<p class="n-lead" style="margin:clamp(20px,2.5vw,34px) 0 0;max-width:46ch">Without a town hall, local groups organize the gatherings, arts and business district. County offices and special districts handle most public services.</p>
+<nav class="n-community-kicker" aria-label="On this page">
+<a href="#orgs">Community groups &#8595;</a>
+<a href="#public">Public bodies &#8595;</a>
+<a href="#resources">Resident help &#8595;</a>
 </nav>
 </div>
+<figure class="n-photo-natural" style="margin:0">
+{% photo "niwot-tribune-storefront.jpg", "The complete Niwot Tribune false-front building on Second Avenue, including its painted sign, shingled porch roof and storefront", "(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 52vw, 700px", "display:block;width:100%;height:auto;object-fit:contain", true %}
+<figcaption class="n-cap">The Niwot Tribune storefront on Second Avenue</figcaption>
+</figure>
 </div>
 </div>
 </section>
@@ -56,43 +68,46 @@ pageStyles: |
 <a class="n-link" href="/contact/">Add your organization <span aria-hidden="true">&#8594;</span></a>
 </div>
 <p class="n-body" style="margin:clamp(18px,2vw,28px) 0 0;max-width:72ch">Volunteer and membership organizations. Each line says what the group actually runs, so you know which one to approach for what.</p>
-<ul data-orgs-community style="list-style:none;margin:clamp(14px,1.6vw,22px) 0 0;padding:0">
+<ul class="n-org-grid" data-orgs-community style="list-style:none;padding:0">
 {%- for o in organizations %}{% if o.kind == 'community' %}
-<li class="n-orow">
-<div>
+<li class="n-org-card">
+<div class="n-org-num" aria-hidden="true">0{{ loop.index }}</div>
 <h3 class="n-h3" style="font-size:1.5rem;color:var(--n-evergreen)">{{ o.name }}</h3>
 <p class="n-body" style="margin:10px 0 0;max-width:64ch;font-size:.9375rem">{{ o.body }}</p>
 <div class="n-label n-label--quiet" style="margin-top:10px;font-size:12px">Runs: {{ o.runs }}</div>
-</div>
-<a class="n-link" href="{{ o.href }}" rel="noopener" style="white-space:nowrap">Visit site <span aria-hidden="true">&#8599;</span></a>
+<a class="n-link" href="{{ o.href }}" rel="noopener" style="display:inline-block;white-space:nowrap">{{ o.linkLabel }} <span aria-hidden="true">&#8599;</span></a>
 </li>
 {%- endif %}{% endfor %}
 </ul>
 <h2 class="n-h2" id="public" style="margin-top:clamp(36px,4.5vw,64px);font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);color:var(--n-evergreen)">Public bodies with a Niwot remit</h2>
 <p class="n-body" style="margin:14px 0 0;max-width:72ch">Public administration, not clubs: each is part of, or appointed through, government, and is approached as such.</p>
-<ul data-orgs-public style="list-style:none;margin:clamp(14px,1.6vw,22px) 0 0;padding:0">
+<ul class="n-org-grid" data-orgs-public style="list-style:none;padding:0">
 {%- for o in organizations %}{% if o.kind == 'public' %}
-<li class="n-orow">
-<div>
+<li class="n-org-card n-org-card--public">
+<div class="n-label" style="color:var(--n-sky-ink)">Public body</div>
 <h3 class="n-h3" style="font-size:1.5rem;color:var(--n-evergreen)">{{ o.name }}</h3>
 <p class="n-body" style="margin:10px 0 0;max-width:64ch;font-size:.9375rem">{{ o.body }}</p>
 <div class="n-label n-label--quiet" style="margin-top:10px;font-size:12px">Runs: {{ o.runs }}</div>
-</div>
-<a class="n-link" href="{{ o.href }}" rel="noopener" style="white-space:nowrap">Visit site <span aria-hidden="true">&#8599;</span></a>
+<a class="n-link" href="{{ o.href }}" rel="noopener" style="display:inline-block;white-space:nowrap">{{ o.linkLabel }} <span aria-hidden="true">&#8599;</span></a>
 </li>
 {%- endif %}{% endfor %}
 </ul>
 </div>
 </section>
 
-{#- A photograph between the two lists: the lawn beside the caboose is where
-    most of what the groups above organize actually happens. -#}
-<section class="n-bg-white" aria-label="Whistle Stop Park" style="padding-top:clamp(28px,3.5vw,52px)">
+<section class="n-bg-green n-pad-sm" aria-labelledby="where-h">
 <div class="n-wrap">
-<figure class="n-ph-lg" style="margin:0">
-{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 1440px) calc(100vw - 40px), 1240px", "display:block;width:100%;object-fit:cover;object-position:center 52%" %}
-<figcaption class="n-cap">Whistle Stop Park &#8212; the lawn beside the caboose, where the summer concerts and most seasonal gatherings are held</figcaption>
+<div class="n-g2-wide" style="align-items:center">
+<figure class="n-photo-natural" style="margin:0">
+{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose at Whistle Stop Park, where Niwot's concerts and seasonal gatherings are held", "(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 38vw, 520px", "display:block;width:100%;object-fit:cover;object-position:center 52%" %}
+<figcaption class="n-cap">Whistle Stop Park &#8212; built and programmed by local volunteers</figcaption>
 </figure>
+<div>
+<div class="n-label">Where community happens</div>
+<h2 class="n-h2" id="where-h" style="margin-top:12px;max-width:14ch">Two blocks, one park, a lot of volunteers.</h2>
+</div>
+<p class="n-body" style="margin:0;max-width:60ch;color:var(--n-paper)">The summer concerts, art walks and seasonal gatherings are not municipal programs. They happen because residents and local organizations build the calendar, maintain the public art and keep showing up.</p>
+</div>
 </div>
 </section>
 

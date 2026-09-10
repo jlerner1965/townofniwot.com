@@ -35,14 +35,10 @@
    organizer's own page and says that they disagree.
 
    Third pass, 2026-09-10: the launch audit compared this file against the
-   Business Association's calendar and found eight dated events missing,
-   plus a date for the Holiday Parade (November 28). Those dates are added
-   below with the Association's calendar as the source. The audit reported
-   the dates and names only, so where a venue or a start time is not in a
-   record it is because it was not read, not because there is none; each
-   such record says so and points at the listing. The sandbox this was
-   done in could not open niwot.com, so the editor should open each listing
-   once before promotion and fill in the venue and time. */
+   Business Association's live calendar. It separated the tree-carving
+   fundraiser from Trivia Night, filled the published hours and venues,
+   confirmed the Holiday Parade for November 28, and added the Association's
+   already-published 2027 winter-wine and July Fourth dates. */
 import { assertValidEvents, buildNow } from '../../lib/events.js';
 import { zonedParts } from '../assets/js/calendar-core.js';
 
@@ -50,10 +46,6 @@ const TZ = 'America/Denver';
 const CHECKED = '2026-09-09';
 const SWEEP = '2026-09-10';
 const CALENDAR = 'https://niwot.com/upcoming-events/';
-
-/* For a record read from the Association's calendar listing alone: the
-   venue was not in what the audit reported, so the record does not guess. */
-const onListing = { name: 'Niwot — venue on the organizer’s listing' };
 
 const nba = { name: 'Niwot Business Association', url: 'https://niwot.com/' };
 const ncaa = { name: 'Niwot Cultural Arts Association', url: 'https://niwotarts.org/' };
@@ -135,17 +127,17 @@ const records = [
     name: 'Why Not Niwot? Awards Night',
     status: 'confirmed',
     startDate: '2026-09-11',
-    startTime: '18:00',
-    endTime: '21:00',
+    startTime: '17:30',
+    endTime: '20:30',
     timezone: TZ,
-    location: { name: 'Niwot Hall' },
+    location: { name: 'Niwot Hall', address: '195 Second Avenue' },
     organizer: ncaa,
-    sourceUrl: 'https://niwotarts.org/why-not-niwot/',
-    verifiedAt: CHECKED,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
     cost: 'Free',
     tag: 'Art',
     description:
-      'Awards ceremony and artists’ reception closing the fifteenth Why Not Niwot? juried show — forty works by twenty Colorado artists — with the Niwot Community Semi-Marching Free Grange Band. Held during the Art Walk. The organizer’s page gives 6pm; the Business Association’s calendar lists the evening from 5:30pm, so check the organizer’s page before setting out.',
+      'Awards ceremony and artists’ reception closing the fifteenth Why Not Niwot? juried show, held during the Art Walk at Niwot Hall. The current Business Association calendar lists the event from 5:30 to 8:30pm.',
   },
   {
     id: 'osmosis-opening-diane-pike-2026-09-11',
@@ -168,84 +160,110 @@ const records = [
     name: 'House Blend Band',
     status: 'confirmed',
     startDate: '2026-09-12',
+    startTime: '18:00',
+    endTime: '21:00',
     timezone: TZ,
-    location: onListing,
-    organizer: nba,
+    location: { name: 'Second Avenue, Old Town' },
+    organizer: { name: 'Old Oak Coffeehouse', url: 'https://www.theoldoakcoffeehouse.com/' },
     sourceUrl: CALENDAR,
     verifiedAt: SWEEP,
     tag: 'Music',
     description:
-      'Live music listed on the Niwot Business Association calendar for Saturday, September 12. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+      'Live music on Second Avenue in Old Town, listed on the Niwot Business Association calendar for Saturday, September 12 from 6 to 9pm.',
   },
   {
-    id: 'tree-carving-fundraiser-trivia-2026-09-15',
-    name: 'Tree Carving Fundraiser and Trivia Night',
+    id: 'tree-carving-fundraiser-2026-09-15',
+    name: 'Tree Carving Fundraiser',
     status: 'confirmed',
     startDate: '2026-09-15',
     timezone: TZ,
-    location: onListing,
+    location: { name: 'Niwot' },
     organizer: nba,
     sourceUrl: CALENDAR,
     verifiedAt: SWEEP,
     tag: 'Fundraiser',
     description:
-      'A trivia night raising funds for a tree carving, listed on the Niwot Business Association calendar for Tuesday, September 15. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+      'An all-day fundraiser for a community tree carving, listed separately on the Niwot Business Association calendar for Tuesday, September 15.',
+  },
+  {
+    id: 'trivia-night-2026-09-15',
+    name: 'Trivia Night',
+    status: 'confirmed',
+    startDate: '2026-09-15',
+    startTime: '18:30',
+    endTime: '20:30',
+    timezone: TZ,
+    location: { name: 'The Wheel House Niwot', address: '101 Second Avenue' },
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Trivia',
+    description:
+      'Trivia Night at The Wheel House Niwot, listed as a separate event on the Niwot Business Association calendar for Tuesday, September 15 from 6:30 to 8:30pm.',
   },
   {
     id: 'road-of-remembrance-2026-09-16',
     name: 'The Road of Remembrance',
     status: 'confirmed',
     startDate: '2026-09-16',
+    startTime: '19:00',
+    endTime: '20:30',
     timezone: TZ,
-    location: onListing,
-    organizer: nba,
+    location: { name: 'Niwot Hall', address: '195 Second Avenue' },
+    organizer: { name: 'Niwot Historical Society', url: 'https://niwothistoricalsociety.org/' },
     sourceUrl: CALENDAR,
     verifiedAt: SWEEP,
     tag: 'Community',
     description:
-      'Listed on the Niwot Business Association calendar for Wednesday, September 16. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+      'A Niwot Historical Society program at Niwot Hall, listed on the Niwot Business Association calendar for Wednesday, September 16 from 7 to 8:30pm.',
   },
   {
     id: 'basin-design-open-house-2026-09-19',
     name: 'Basin Design Open House',
     status: 'confirmed',
     startDate: '2026-09-19',
+    startTime: '17:00',
+    endTime: '20:00',
     timezone: TZ,
-    location: onListing,
+    location: { name: 'Basin Design' },
     organizer: nba,
     sourceUrl: CALENDAR,
     verifiedAt: SWEEP,
     tag: 'Open house',
     description:
-      'An open house listed on the Niwot Business Association calendar for Saturday, September 19. The venue and hours are on the listing; they were not read for this record, so check it before setting out.',
+      'An evening open house at Basin Design, listed on the Niwot Business Association calendar for Saturday, September 19 from 5 to 8pm.',
   },
   {
     id: 'blessing-of-the-animals-2026-10-04',
     name: 'Blessing of the Animals',
     status: 'confirmed',
     startDate: '2026-10-04',
+    startTime: '16:00',
+    endTime: '17:00',
     timezone: TZ,
-    location: onListing,
+    location: { name: 'Niwot United Methodist Church', address: '7405 Lookout Road' },
     organizer: nba,
     sourceUrl: CALENDAR,
     verifiedAt: SWEEP,
     tag: 'Community',
     description:
-      'Listed on the Niwot Business Association calendar for Sunday, October 4. The venue and start time are on the listing; they were not read for this record, so check it before setting out.',
+      'A community blessing at Niwot United Methodist Church, listed on the Niwot Business Association calendar for Sunday, October 4 from 4 to 5pm.',
   },
   {
     id: 'niwot-wellness-lecture-2026-10-07',
     name: 'Niwot Wellness Lecture Series',
     status: 'confirmed',
     startDate: '2026-10-07',
+    startTime: '18:00',
+    endTime: '20:00',
     timezone: TZ,
-    location: onListing,
+    location: { name: 'Niwot Hall', address: '195 Second Avenue' },
     organizer: nba,
     sourceUrl: CALENDAR,
     verifiedAt: SWEEP,
     tag: 'Talk',
     description:
-      'A talk in the wellness lecture series, listed on the Niwot Business Association calendar for Wednesday, October 7. The venue, speaker and start time are on the listing; they were not read for this record, so check it before setting out.',
+      'A talk in the wellness lecture series at Niwot Hall, listed on the Niwot Business Association calendar for Wednesday, October 7 from 6 to 8pm.',
   },
   {
     id: 'enchanted-evening-2026',
@@ -270,6 +288,8 @@ const records = [
     name: 'Niwot Holiday Parade',
     status: 'confirmed',
     startDate: '2026-11-28',
+    startTime: '11:00',
+    endTime: '13:00',
     timezone: TZ,
     location: { name: 'Second Avenue, Murray Street to Niwot Road' },
     organizer: nba,
@@ -278,21 +298,56 @@ const records = [
     cost: 'Free',
     tag: 'Holiday',
     description:
-      'A morning parade down Second Avenue from Murray Street to Niwot Road, with Santa, on the Saturday after Thanksgiving. The date is from the Business Association’s calendar as read on September 10, 2026; the start time is on the organizer’s page.',
+      'A parade through Downtown Niwot with Santa on the Saturday after Thanksgiving, from 11am to 1pm. The Business Association calendar heading assigns Saturday, November 28; an older sentence on its event page still says November 29, so the linked calendar remains the source of record.',
   },
   {
     id: 'holiday-magic-market-fayre-2026-12-05',
     name: 'Holiday Magic Market Fayre',
     status: 'confirmed',
     startDate: '2026-12-05',
+    startTime: '10:00',
+    endTime: '16:00',
     timezone: TZ,
-    location: onListing,
+    location: { name: 'Niwot Hall and Downtown Niwot', address: '195 Second Avenue' },
     organizer: nba,
     sourceUrl: CALENDAR,
     verifiedAt: SWEEP,
     tag: 'Market',
     description:
-      'A holiday market listed on the Niwot Business Association calendar for Saturday, December 5. The venue and hours are on the listing; they were not read for this record, so check it before setting out.',
+      'A holiday market at Niwot Hall with related activities around town, listed on the Niwot Business Association calendar for Saturday, December 5 from 10am to 4pm. Santa is listed at the hall from 1 to 3pm.',
+  },
+  {
+    id: 'lets-wine-about-winter-2027',
+    name: 'Let’s Wine About Winter',
+    status: 'confirmed',
+    startDate: '2027-02-20',
+    startTime: '13:00',
+    endTime: '17:00',
+    timezone: TZ,
+    location: { name: 'Downtown Niwot', address: 'Second Avenue and Cottonwood Square' },
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    tag: 'Wine walk',
+    description:
+      'A winter wine walk in Downtown Niwot, listed on the Niwot Business Association calendar for Saturday, February 20, 2027 from 1 to 5pm.',
+  },
+  {
+    id: 'niwot-fourth-of-july-2027',
+    name: 'Niwot Fourth of July',
+    status: 'confirmed',
+    startDate: '2027-07-04',
+    startTime: '07:30',
+    endTime: '12:00',
+    timezone: TZ,
+    location: { name: 'Downtown Niwot', address: 'Second Avenue and Cottonwood Square' },
+    organizer: nba,
+    sourceUrl: CALENDAR,
+    verifiedAt: SWEEP,
+    cost: 'Free',
+    tag: 'Holiday',
+    description:
+      'Niwot’s Independence Day celebration in Downtown Niwot, listed on the Niwot Business Association calendar for Sunday, July 4, 2027 from 7:30am to noon.',
   },
 
   /* ---- Expected: annual events the organizer has not yet dated ---- */

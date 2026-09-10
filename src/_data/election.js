@@ -39,6 +39,16 @@ const BALLOT = 'https://niwotelection.org/ballot';
 const FAQ = 'https://niwotelection.org/faq';
 const COUNTY = 'https://bouldercounty.gov/elections/';
 
+/* This message is intentionally dated. On September 10 the Commission's
+   ballot page still labelled the printer's-proof review pending, with the
+   final-review meeting scheduled for the following morning. */
+const proofStatus = {
+  label: 'Ballot proof status — September 10, 2026',
+  body: 'The Election Commission has published the ballot titles and text summarized below, but its official ballot page still marks the printer’s-proof review pending. The final-review meeting is scheduled for September 11 at 10am. Until the Commission posts the reviewed proof, its ballot page controls and this summary is provisional.',
+  href: BALLOT,
+  linkLabel: 'Check the Commission’s ballot page',
+};
+
 /* The three things a voter most often needs, kept above everything else. */
 const tasks = [
   {
@@ -161,4 +171,4 @@ const campaigns = [
   { label: 'Neighbors for Niwot — campaign material', href: 'https://neighborsforniwot.org/' },
 ];
 
-export default { tasks, status, meaning, questions, fiscal, after, official, campaigns };
+export default { proofStatus, tasks, status, meaning, questions, fiscal, after, official, campaigns };

@@ -815,13 +815,13 @@ const records = [
     address: '136 Second Avenue, Suite C',
     postalCode: '80503',
     description: 'Residential real estate — the Niwot office of the Front Range brokerage, formerly Colorado Landmark, Realtors.',
-    website: 'https://www.sliferfrontrange.com/',
-    sourceUrl: 'https://www.sliferfrontrange.com/contact-us/',
+    website: 'https://www.sliferdenver.com/',
+    sourceUrl: association,
     schemaType: 'RealEstateAgent',
     verifiedAt: AUDIT,
     status: 'active',
     editorialNote:
-      'Renamed in the September 2026 audit. The Association listing at niwot.com/listing/colorado-landmark-realtors/ now reads Slifer Smith & Frampton, and the brokerage’s own contact page lists the Niwot office at 136 2nd Ave, Suite C. One aggregator marks the office closed; the brokerage’s own site is treated as primary.',
+      'Renamed in the September 2026 audit. The Association listing at niwot.com/listing/colorado-landmark-realtors/ reads Slifer Smith & Frampton. On September 10, sliferfrontrange.com redirected to the brokerage’s current sliferdenver.com site, so this row now links directly to the current domain while retaining the Association listing as its Niwot-location source.',
   },
   {
     slug: 'osmosis-architecture',

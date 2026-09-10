@@ -35,6 +35,7 @@ pageStyles: |
   .n-civic .n-head{border-bottom-color:#3E6E8C}
   .n-tasks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,32px)}
   .n-tasks>div{padding:18px 20px;background:#FAF8F2;border-left:3px solid #24483A}
+  .n-proof{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 24px;align-items:center;margin-bottom:18px;padding:15px 18px;background:#FAF8F2;border:1px solid #7FA9C2;border-left:4px solid #35617D}
   .n-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px clamp(16px,2vw,32px);margin:clamp(18px,2.4vw,30px) 0 0;padding-top:14px;border-top:1px solid #7FA9C2}
   .n-strip>div{margin:0}
   .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:0;padding:0}
@@ -58,7 +59,7 @@ pageStyles: |
   .n-civic [data-official]:hover{color:#3E6E8C}
   .n-civic [data-official] small{display:block;grid-column:1/-1;font-size:.875rem;color:var(--n-muted)}
   @media (max-width:1000px){.n-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media (max-width:900px){.n-tasks{grid-template-columns:minmax(0,1fr)}.n-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:900px){.n-tasks{grid-template-columns:minmax(0,1fr)}.n-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.n-proof{grid-template-columns:minmax(0,1fr)}}
   @media (max-width:640px){.n-cols{grid-template-columns:minmax(0,1fr)}.n-strip{grid-template-columns:minmax(0,1fr)}}
 ---
 <section class="n-bg-white" aria-labelledby="title-h">
@@ -88,6 +89,13 @@ pageStyles: |
 {#- 1. The three voting tasks, then the compact status strip. -#}
 <section class="n-bg-sky n-pad-sm" id="tasks" aria-labelledby="tasks-h" style="border-top:1px solid #7FA9C2;border-bottom:1px solid #7FA9C2">
 <div class="n-wrap">
+<aside class="n-proof" aria-label="{{ election.proofStatus.label }}">
+<div>
+<div class="n-label n-label--quiet" style="color:#252B27">{{ election.proofStatus.label }}</div>
+<p class="n-small" style="margin:6px 0 0;color:#252B27;max-width:84ch">{{ election.proofStatus.body }}</p>
+</div>
+<a class="n-btn n-btn--outline" href="{{ election.proofStatus.href }}" rel="noopener">{{ election.proofStatus.linkLabel }} <span aria-hidden="true">&#8599;</span></a>
+</aside>
 <h2 class="n-label" id="tasks-h" style="margin:0 0 18px">Before you vote</h2>
 <div class="n-tasks">
 {%- for t in election.tasks %}

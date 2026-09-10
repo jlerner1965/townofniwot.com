@@ -394,14 +394,12 @@ government seals, marketing text over photographs, pure black body text.
   specified it bleeding off the screen edge; the client asked for it inside
   the gutter, sharing a right edge with the nav and body copy. `verify.mjs`
   asserts that alignment, so re-introducing a bleed will fail the checks.
-- **The schematic map is two SVGs, not one.** An SVG scales to its column, so
-  a 12-unit label in a 640-unit viewBox only renders at 12px when the map is
-  drawn 640px wide. The landscape map is used where the column can give it
-  that; below 720px a portrait version with a 300-unit viewBox takes over, and
-  `.n-maprow` stays one column until 1200px so the landscape one is never
-  squeezed into half a narrow page. Only one is displayed, so each carries its
-  own `aria-label` and a screen reader hears a single map. `verify.mjs`
-  measures the rendered label size at eleven widths from 320 to 2560.
+- **The Plan a Visit schematic map is deliberately not rendered.** Its
+  orientation was not reliable enough to publish and it made the page busier.
+  The page uses direct directions and county trail links instead. Do not
+  restore the map without a checked geographic source. The Second Avenue
+  restaurant streetscape also stays on the homepage only; the visitor page
+  uses the gateway and open-space photographs.
 - **Flipped Explore entries** are placed by explicit `grid-column`, never by
   `order: -1` — `order` moves the figure into the 64px numeral track and
   crushes the photo to 64px wide.
@@ -478,19 +476,14 @@ of the design, not a content-team preference:
   not a claim of completeness — the Association directory was searched rather
   than crawled, and a sole trader with no public listing will not be in it —
   and the page says so.
-- **Events** — fifteen confirmed 2026 records read from niwot.com,
-  niwotarts.org and the Courier, and two expected annual events without
-  dates. Eight of the records (and the Holiday Parade's date) were added on
-  September 10, 2026 from the launch audit's comparison against the Business
-  Association's calendar; the audit reported names and dates only, so those
-  records carry no venue or start time and say so — see item 15 below. The
+- **Events** — sixteen confirmed 2026 records and two confirmed 2027 records
+  read from niwot.com and organizer pages, plus two expected annual events
+  without dates. The September 10 launch pass filled the published times and
+  venues, separated the tree-carving fundraiser from Trivia Night, and added
+  the Business Association's already-published 2027 dates. The
   Niwot Farmers Market is not listed: no organizer source for a current
   season was found. The events page is a list with the month grid and the
-  expected list folded beneath it. The hours on the September 11 records and the Enchanted Evening date
-  were taken from the external audit's reading of the organizers' dated
-  listings on September 9, 2026 (the audit sandbox could not open those
-  sites); each record's description says where its time comes from and the
-  editor should confirm them on the cited pages before promotion.
+  expected list folded beneath it. Each record names its source and check date.
 
 Both accept real data through `src/_data/` with no template changes.
 
@@ -533,49 +526,26 @@ Both accept real data through `src/_data/` with no template changes.
    (`src/_data/site.js`). Until then the privacy page says the form is the
    only route, which the external audit flagged: if the form fails, the
    fallback contacts beside it are public bodies that do not run this site.
-10. **Confirm the four event readings on the organizers' pages** — the
-    Art Walk and Osmosis opening hours, the awards night start (the
-    organizer's page says 6pm, the Business Association's calendar 5:30pm)
-    and Enchanted Evening's date and hours — and prove the forms deliver:
-    one real submission and one signup into an inbox you control, one
-    unsubscribe processed. Neither could be done from the audit sandbox.
-11. **Add the Commission's own labels** ("Question 1", "Issue 1") to
-    `election.js` once they have been read from the certified ballot after
-    the September 11 proof review. The field exists (`official`) and the
-    template renders it; it is unset because this guide's order is not
-    evidence of the ballot's.
-12. **Ground the Plan a Visit schematic** in real geography before it is
-    used anywhere else: a local should confirm which side of the tracks
-    Whistle Stop Park and the Diagonal sit on, and add Niwot Road, 79th
-    Street, named parking and a north arrow. Public restrooms and designated
-    accessible parking are not claimed on the page until someone has
-    confirmed them on the ground.
-13. **Decide on the Chief Niwot material.** The external audit calls its
+10. **Prove the forms deliver:** one real submission into an inbox you
+    control, one failed delivery showing an honest error, and one unsubscribe
+    processed before any newsletter signup is restored to the homepage.
+11. **Decide on the Chief Niwot material.** The external audit calls its
     absence from Our Story a material gap; it was removed at the client's
     request in the previous PR. The section and its sources are in git
     history (commit `e499beb^`) if the decision is reversed.
-14. **Run a real-device pass** at 320, 390, 768 and 1366 CSS pixels,
+12. **Run a real-device pass** at 320, 390, 768 and 1366 CSS pixels,
     portrait and landscape, at 200% zoom, on an iPhone with Safari and an
     Android phone with Chrome. The browser checks cover those widths in
     Chromium only, and the launch audit's own responsive pass predates the
     consolidation.
-15. **Fill in the eight events added from the Association's calendar**
-    (`src/_data/events.js`, the records dated 2026-09-10): open each listing
-    once, add the venue and the start time, and set `verifiedAt`. Until then
-    each says its venue is on the listing.
-16. **Check the three links the sweep could not settle by machine** —
-    sliferfrontrange.com (timed out), niwotlaw.com and thegardengatecafe.com
-    (403 to the automated client) — and the two sites that answered 502
+13. **Check the links the sweep could not settle by machine** —
+    niwotlaw.com and thegardengatecafe.com (403 to the automated client) —
+    and the two sites that answered 502
     (butterfieldwellness.com, thehiddenyogastudio.com); restore each row's
     `website` when the site answers.
-17. **Request indexing.** After the sitemap is submitted (below), request
+14. **Request indexing.** After the sitemap is submitted (below), request
     indexing of the homepage in Search Console; the launch audit found no
     page of the site indexed yet.
-18. **Re-check the election page after the September 11 proof review**,
-    now including the Commission's labels, the three revenue figures and the
-    Question 3 wording, all of which rest on the launch audit's September 10
-    reading of the ballot page. Add the official boundary map to the page if
-    the Commission publishes one.
 
 ### Submitting the sitemap
 
@@ -625,8 +595,8 @@ control's ring measured against the ground behind it at 3:1 or better (the
 external audit found the red ring at 2.0:1 on the evergreen bands, so those
 grounds use the light gold); the full-bleed hero inside the viewport at 390
 through 2560 and short when stacked on a phone; the Explore flip not crushing its photo;
-anchor clearance under the sticky header; the schematic map's labels at
-eleven widths; the directory's radio semantics, URL-driven filtering, Back and
+anchor clearance under the sticky header; the visitor page's gateway and
+open-space photographs; the directory's radio semantics, URL-driven filtering, Back and
 Forward restoration, combined search-and-category state, zero-result
 announcement with hidden rows out of the accessibility tree, and native
 arrow-key behaviour; the calendar opening on the current Niwot month with

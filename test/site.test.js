@@ -142,7 +142,9 @@ test('the contact page holds the submission form; the visitor page has no form a
   assert.ok(!visit.includes('<form'), 'no form on the visitor page');
   assert.ok(!visit.includes('Go direct instead'), 'no contact matrix');
   assert.ok(visit.includes('href="/community/#resources"'), 'one link to resident resources');
-  assert.ok(visit.includes('alt="Brick and clapboard buildings on the 300 block of Second Avenue'), 'the streetscape photograph');
+  assert.ok(visit.includes('alt="The complete Vintage Colorado Niwot gateway sculpture'), 'the gateway photograph');
+  assert.ok(!visit.includes('second-avenue-patios'), 'the repeated Italian streetscape is not reused');
+  assert.ok(!visit.includes('class="n-map'), 'the schematic map is removed');
   assert.ok(!html_has_form_script(visit), 'forms.js is not loaded on the visitor page');
 });
 
@@ -393,7 +395,7 @@ test('expected events are labelled, listed separately and kept out of structured
   assert.ok(expectedIds.includes('rock-rails-2027'));
   assert.match(html, /Expected &#8212; date not confirmed/);
   const graph = jsonLd(html).find((d) => d['@graph'])['@graph'];
-  assert.ok(!graph.some((e) => /2027/.test(e.name) || String(e.startDate).startsWith('2027')));
+  assert.ok(!graph.some((e) => e.name === 'Rock & Rails concert series, 2027 season'));
   assert.ok(!html.includes('2027-06-03'));
 });
 
@@ -426,13 +428,16 @@ test('the launch audit’s missing events are dated records and the Holiday Para
   const byId = new Map(events.map((e) => [e.id, e]));
   const expected = {
     'house-blend-band-2026-09-12': '2026-09-12',
-    'tree-carving-fundraiser-trivia-2026-09-15': '2026-09-15',
+    'tree-carving-fundraiser-2026-09-15': '2026-09-15',
+    'trivia-night-2026-09-15': '2026-09-15',
     'road-of-remembrance-2026-09-16': '2026-09-16',
     'basin-design-open-house-2026-09-19': '2026-09-19',
     'blessing-of-the-animals-2026-10-04': '2026-10-04',
     'niwot-wellness-lecture-2026-10-07': '2026-10-07',
     'holiday-parade-2026': '2026-11-28',
     'holiday-magic-market-fayre-2026-12-05': '2026-12-05',
+    'lets-wine-about-winter-2027': '2027-02-20',
+    'niwot-fourth-of-july-2027': '2027-07-04',
   };
   for (const [id, date] of Object.entries(expected)) {
     const ev = byId.get(id);
@@ -442,8 +447,29 @@ test('the launch audit’s missing events are dated records and the Holiday Para
     assert.ok(ev.sourceUrl.startsWith('https://niwot.com/'), `${id} source`);
   }
   assert.ok(!events.some((e) => e.status === 'tentative' && /parade/i.test(e.name)), 'the parade is no longer awaiting a date');
+  assert.ok(!events.some((e) => /fundraiser and trivia/i.test(e.name)), 'two separate listings are not merged');
   const graph = jsonLd(read('/events/')).find((d) => d['@graph'])['@graph'];
   assert.ok(graph.some((e) => e.name === 'Niwot Holiday Parade' && String(e.startDate).startsWith('2026-11-28')));
+});
+
+test('current calendar records carry the organizer-published hours and venues', () => {
+  const byId = new Map(events.map((e) => [e.id, e]));
+  const expected = {
+    'why-not-niwot-awards-night-2026': ['17:30', '20:30', 'Niwot Hall'],
+    'house-blend-band-2026-09-12': ['18:00', '21:00', 'Second Avenue, Old Town'],
+    'trivia-night-2026-09-15': ['18:30', '20:30', 'The Wheel House Niwot'],
+    'road-of-remembrance-2026-09-16': ['19:00', '20:30', 'Niwot Hall'],
+    'basin-design-open-house-2026-09-19': ['17:00', '20:00', 'Basin Design'],
+    'blessing-of-the-animals-2026-10-04': ['16:00', '17:00', 'Niwot United Methodist Church'],
+    'niwot-wellness-lecture-2026-10-07': ['18:00', '20:00', 'Niwot Hall'],
+    'holiday-parade-2026': ['11:00', '13:00', 'Second Avenue, Murray Street to Niwot Road'],
+    'holiday-magic-market-fayre-2026-12-05': ['10:00', '16:00', 'Niwot Hall and Downtown Niwot'],
+  };
+  for (const [id, [start, end, place]] of Object.entries(expected)) {
+    assert.equal(byId.get(id).startTime, start, `${id} start`);
+    assert.equal(byId.get(id).endTime, end, `${id} end`);
+    assert.equal(byId.get(id).location.name, place, `${id} place`);
+  }
 });
 
 test('the September 11 records carry hours and Enchanted Evening is a confirmed date', () => {
@@ -469,6 +495,9 @@ test('the election page puts the three voting tasks first, links the boundary to
   const tasks = html.indexOf('id="tasks"');
   const ballot = html.indexOf('id="ballot"');
   assert.ok(tasks > 0 && tasks < ballot, 'tasks before the ballot');
+  assert.ok(html.includes('Ballot proof status — September 10, 2026'));
+  assert.ok(html.includes('printer’s-proof review pending') || html.includes('printer&#8217;s-proof review pending'));
+  assert.ok(html.includes('final-review meeting is scheduled for September 11 at 10am'));
   assert.match(html, /Check the proposed boundary/);
   assert.ok(html.includes('href="https://niwotelection.org/faq"'), 'boundary task goes to the FAQ');
   assert.ok(!html.includes('Proposed boundary information'), 'no boundary link to the Commission homepage');

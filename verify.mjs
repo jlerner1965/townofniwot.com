@@ -77,7 +77,7 @@ const COUNTS = {
   community: { '.n-srow': 10, '.n-sgroup': 4, '#orgs li': 6, '[data-orgs-public] li': 2 },
   'our-story': { '.n-era': 5, '[data-corrections] dt': 1 },
   civic: { '.n-tasks > div': 3, '.n-strip > div': 4, '#ballot li': 3, '#fiscal li': 5, '[data-fiscal-fold]': 5, '#after li': 5, '#official a[data-official]': 4, '.n-toc a': 6, '[data-corrections] dt': 1 },
-  'plan-a-visit': { '.n-g4 > div': 4, '#map img': 1 },
+  'plan-a-visit': { '.n-g4 > div': 4, '.n-itinerary img': 1 },
   contact: { 'form [name]': 6, 'form a[href="/privacy/"]': 1 },
   privacy: { 'main h2': 7 },
   404: { '.n-lost a': 6 },
@@ -453,48 +453,6 @@ const anchor = await page.evaluate(() => {
 });
 if (anchor.top < anchor.header) note(`explore: anchor #outdoors lands under the sticky header (top=${anchor.top}, header=${anchor.header})`);
 else console.log(`✓ anchor clearance: #outdoors top ${anchor.top} >= header ${anchor.header}`);
-
-/* The schematic map, at every width. Two things to hold: labels inside the
-   viewBox, and labels actually readable once rendered. See README. */
-const MAP_WIDTHS = [320, 390, 620, 720, 721, 900, 1024, 1199, 1200, 1440, 2560];
-let mapMin = Infinity;
-for (const width of MAP_WIDTHS) {
-  const mctx = await browser.newContext({ viewport: { width, height: 900 } });
-  await isolate(mctx, []);
-  const mpage = await mctx.newPage();
-  await mpage.goto(BASE + '/plan-a-visit/', { waitUntil: 'load' });
-  await mpage.waitForTimeout(150);
-  const r = await mpage.evaluate(() => {
-    const svg = Array.from(document.querySelectorAll('#map svg')).find(
-      (s) => getComputedStyle(s).display !== 'none'
-    );
-    if (!svg) return null;
-    const vb = svg.viewBox.baseVal;
-    const scale = svg.getBoundingClientRect().width / vb.width;
-    const texts = Array.from(svg.querySelectorAll('text'));
-    return {
-      outside: texts
-        .map((t) => ({ text: t.textContent, box: t.getBBox() }))
-        .filter(({ box }) => box.x < vb.x || box.y < vb.y || box.x + box.width > vb.x + vb.width || box.y + box.height > vb.y + vb.height)
-        .map(({ text, box }) => `${text} @ ${Math.round(box.x)},${Math.round(box.y)} ${Math.round(box.width)}x${Math.round(box.height)}`),
-      smallest: texts.reduce(
-        (min, t) => Math.min(min, parseFloat(getComputedStyle(t).fontSize) * scale),
-        Infinity
-      ),
-      smallestText: texts
-        .map((t) => ({ t: t.textContent, px: parseFloat(getComputedStyle(t).fontSize) * scale }))
-        .sort((a, b) => a.px - b.px)[0].t,
-    };
-  });
-  await mctx.close();
-  if (!r) { note(`plan-a-visit/${width}: no map is displayed`); continue; }
-  r.outside.forEach((o) => note(`plan-a-visit/${width}: map label outside viewBox: ${o}`));
-  if (r.smallest < 12) {
-    note(`plan-a-visit/${width}: map label "${r.smallestText}" renders at ${r.smallest.toFixed(1)}px`);
-  }
-  mapMin = Math.min(mapMin, r.smallest);
-}
-console.log(`✓ map: labels inside the viewBox and never under ${mapMin.toFixed(1)}px, 320 through 2560`);
 
 // --- Directory filtering ---
 /* A row counts as shown when neither it nor its category group is hidden,

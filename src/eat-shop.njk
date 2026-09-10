@@ -5,15 +5,18 @@ seoTitle: Niwot Restaurants, Shops & Local Services | TownofNiwot.com
 description: Niwot, Colorado restaurants, coffee, shops, wellness and local services in Old Town and Cottonwood Square, each listing checked against its own source.
 navKey: eat-shop
 permalink: /eat-shop/
-ogImage: second-avenue-patios.jpg
-ogImageAlt: Patios and hanging baskets on the 300 block of Second Avenue in Niwot
+ogImage: niwot-tavern-patios.jpg
+ogImageAlt: Patios outside the Niwot Tavern and Raza Fresa at Cottonwood Square
 footMetaRight: Hours and contact details via each business
 scripts:
   - /assets/js/directory.js
 pageStyles: |
+  .n-dir-open{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(28px,4vw,68px);align-items:center}
+  .n-quickcats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin-top:clamp(24px,3vw,38px);background:var(--n-rule);border:1px solid var(--n-rule)}
+  .n-quickcats a{display:flex;justify-content:space-between;gap:12px;padding:13px 15px;background:var(--n-white);color:var(--n-evergreen);font-size:.875rem;font-weight:600;text-decoration:none}
+  .n-quickcats a:hover{background:var(--n-paper);color:var(--n-red-ink)}
   .n-dir{display:grid;grid-template-columns:minmax(0,.3fr) minmax(0,1fr);gap:clamp(24px,3vw,60px);align-items:start}
   .n-filters{position:sticky;top:88px}
-  .n-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2vw,32px)}
   .n-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.34fr);gap:16px 28px;align-items:start;padding:22px 0;border-bottom:1px solid var(--n-rule)}
   .n-cats{margin:26px 0 0;padding:0;border:0;min-width:0;border-bottom:1px solid var(--n-rule)}
   .n-cats legend{padding:0;margin:0 0 8px}
@@ -52,6 +55,7 @@ pageStyles: |
   .n-group ul{list-style:none;margin:0;padding:0 0 8px}
   @media (max-width:1080px){.n-dir-clear,.n-how summary{padding-top:12px;padding-bottom:12px}}
   @media (max-width:900px){
+  .n-dir-open{grid-template-columns:minmax(0,1fr)}
   .n-dir{grid-template-columns:minmax(0,1fr)}
   .n-row{grid-template-columns:minmax(0,1fr)}
   /* A sticky rail in a one-column stack pins itself on top of the listings it
@@ -63,35 +67,37 @@ pageStyles: |
   .n-cats{display:none}
   }
   @media (max-width:900px) and (scripting: none){.n-dir-select{display:none}.n-cats{display:block}}
-  @media (max-width:620px){.n-pair{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:620px){.n-quickcats{grid-template-columns:minmax(0,1fr)}}
 ---
-{#- The title, the two photographs straight under it, then the search and the
-    categories, then the listings folded by category. -#}
+{#- The title and one strong sense-of-place photograph lead directly into
+    the search. Listings stay folded by category so the page remains short. -#}
 <section class="n-bg-white" aria-labelledby="title-h">
-<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(16px,2vw,28px)">
-<div class="n-g2-wide" style="align-items:end">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(38px,5vw,72px)">
+<div class="n-dir-open">
 <div>
-<div class="n-label">Two blocks, and most of it independent</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Niwot Restaurants, Shops &amp; Local Services</h1>
+<div class="n-label">Eat &amp; shop locally</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.75rem,2rem + 3vw,5.25rem);line-height:.93;max-width:11ch;color:var(--n-evergreen)">Niwot Restaurants, Shops &amp; Local Services</h1>
+<p class="n-lead" style="margin:clamp(20px,2.5vw,32px) 0 0;max-width:46ch">Find kitchens, coffee, groceries, shops and local services across Old Town and Cottonwood Square.</p>
+<nav class="n-quickcats" aria-label="Popular directory categories">
+<a href="/eat-shop/?category=restaurants-bars"><span>Restaurants &amp; bars</span><span aria-hidden="true">&#8594;</span></a>
+<a href="/eat-shop/?category=coffee-bakery"><span>Coffee &amp; sweets</span><span aria-hidden="true">&#8594;</span></a>
+<a href="/eat-shop/?category=shops-gifts"><span>Shops &amp; gifts</span><span aria-hidden="true">&#8594;</span></a>
+<a href="/eat-shop/?category=health-wellness"><span>Health &amp; wellness</span><span aria-hidden="true">&#8594;</span></a>
+</nav>
 </div>
-<p class="n-lead" style="margin:0;max-width:50ch">Kitchens, coffee, groceries and shops within a short walk of Second Avenue, plus the practices, trades and offices on the roads around the two blocks.</p>
+<div class="n-pair">
+<figure class="n-photo-natural" style="margin:0">
+{% photo "niwot-tavern-patios.jpg", "Umbrella-shaded patios outside the Niwot Tavern and Raza Fresa Mexican Kitchen with both bronze bear sculptures visible on the corner", "(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 52vw, 700px", "display:block;width:100%;height:auto;object-fit:contain", true %}
+<figcaption class="n-cap">Cottonwood Square &#8212; local kitchens and the bear sculptures on the corner</figcaption>
+</figure>
 </div>
-<div class="n-pair" style="margin-top:clamp(20px,2.5vw,36px)">
-<figure class="n-ph-sm" style="margin:0">
-{% photo "second-avenue-patios.jpg", "Brick and clapboard buildings on the 300 block of Second Avenue with hanging baskets and patio tables out front", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 56%", true %}
-<figcaption class="n-cap">Old Town &#8212; Second Avenue, the 300 block</figcaption>
-</figure>
-<figure class="n-ph-sm" style="margin:0">
-{% photo "niwot-tavern-patios.jpg", "Umbrella-shaded patios outside the Niwot Tavern and Raza Fresa Mexican Kitchen with two bronze bear sculptures on the corner", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 52%", true %}
-<figcaption class="n-cap">Cottonwood Square &#8212; bear sculptures on the corner</figcaption>
-</figure>
 </div>
 </div>
 </section>
 
 <section class="n-bg-white" aria-labelledby="dir-h" style="padding-bottom:clamp(36px,5vw,72px)">
 <div class="n-wrap">
-<div class="n-rail"></div>
+<div class="n-rail n-rail--red"></div>
 <div class="n-dir" style="margin-top:clamp(20px,2.5vw,36px)">
 <div class="n-filters">
 {#- Without JavaScript this is an ordinary GET form; with it, the filters

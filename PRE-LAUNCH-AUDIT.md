@@ -1,5 +1,36 @@
 # Pre-launch audit — TownofNiwot.com
 
+## Fifth pass: final launch correction of September 10, 2026
+
+The visual consolidation is complete and the dated content now matches the
+current primary listings available on the audit date. The Plan a Visit map is
+not rendered, the Italian-restaurant streetscape appears only on the homepage,
+the Tribune photograph uses its natural proportions, and the visual system is
+consistent across the interior pages.
+
+The event calendar now separates the Tree Carving Fundraiser from Trivia Night;
+fills the published hours and venues for the September, October and holiday
+listings; corrects Why Not Niwot? Awards Night to 5:30–8:30pm from the current
+Business Association calendar; and includes the Association's already-published
+February and July 2027 dates. The visible list, month view and structured data
+all render from those same records.
+
+The election page now carries an above-the-fold, dated proof-status notice. As
+of September 10 the Election Commission's ballot page still marks the printer's
+proof review pending and schedules its final-review meeting for September 11 at
+10am. The page therefore identifies its summary as provisional and points
+directly to the Commission's ballot page; no final-proof claim has been made in
+advance of that meeting.
+
+The production build and all 78 source, data, endpoint, SEO, accessibility-
+structure and cross-page consistency tests pass. The browser runner could not
+be repeated in this managed session because its Chromium download timed out;
+the prior 77-test version passed that browser suite, and the only new visual
+element is a responsive status notice covered by the source tests. The remaining
+launch gates are external: set and test the contact-delivery environment, review
+the ballot proof after the Commission posts it, and complete the owner-controlled
+domain/indexing checks.
+
 ## Fourth pass: the coherence pass of September 10, 2026
 
 The client's reading of the consolidated site was that it looked "off"

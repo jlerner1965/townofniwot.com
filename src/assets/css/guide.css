@@ -218,6 +218,9 @@ textarea.n-field { resize: vertical; }
 .n-ph-lg img { height: clamp(240px, 27vw, 380px) !important; }
 .n-ph-md img { height: clamp(220px, 24vw, 320px) !important; }
 .n-ph-sm img { height: clamp(170px, 19vw, 250px) !important; }
+.n-photo-natural img { height: auto !important; aspect-ratio: auto; }
+.n-photo-portrait { width: min(100%, 380px); margin-inline: auto !important; }
+.n-photo-portrait img { height: auto !important; aspect-ratio: auto; object-fit: contain; }
 
 /* ---- reading column ---- */
 .n-read { max-width: 68ch; }

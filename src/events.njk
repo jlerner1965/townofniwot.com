@@ -12,7 +12,11 @@ needsEvents: true
 scripts:
   - /assets/js/page-events.js
 pageStyles: |
+  .n-events-open{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(28px,4vw,68px);align-items:center}
+  .n-event-note{display:flex;gap:16px;align-items:flex-start;margin-top:clamp(22px,3vw,34px);padding-top:16px;border-top:1px solid var(--n-rule)}
+  .n-event-note strong{font-family:var(--n-serif);font-size:2rem;font-weight:400;line-height:1;color:var(--n-red-ink)}
   .n-evrow{display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:start}
+  .n-event-guide{padding:clamp(22px,2.8vw,34px);background:var(--n-white);border-top:4px solid var(--n-red)}
   /* The upcoming list: one row per occurrence — date and time, then the
      event, then its action. The cards the homepage uses are the same markup. */
   .n-uplist{display:grid;gap:0;margin-top:clamp(18px,2vw,28px)}
@@ -43,7 +47,7 @@ pageStyles: |
   .n-detail{position:sticky;top:88px}
   /* A sticky rail is only sticky against something scrolling beside it. Once
      the calendar stacks, it would just pin itself over the page. */
-  @media (max-width:900px){.n-evrow,.n-cal{grid-template-columns:minmax(0,1fr)}.n-detail{position:static}}
+  @media (max-width:900px){.n-events-open,.n-evrow,.n-cal{grid-template-columns:minmax(0,1fr)}.n-detail{position:static}}
   /* "View details" is a bare button, so it misses the touch padding guide.css
      gives .n-link. 22px is not a tap target. The padding lives here rather
      than in the inline style calendar-core.js writes, because an inline style
@@ -73,28 +77,31 @@ pageStyles: |
   @media (max-width:620px){.n-expected li{grid-template-columns:minmax(0,1fr) !important}}
 ---
 <section class="n-bg-white" aria-labelledby="title-h">
-<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
-<div class="n-g2-wide" style="align-items:end">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(36px,5vw,72px)">
+<div class="n-events-open">
 <div>
-<div class="n-label">Events</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">What&#8217;s happening in Niwot</h1>
+<div class="n-label">The Niwot calendar</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(2.75rem,2rem + 3vw,5.25rem);line-height:.93;max-width:10ch;color:var(--n-evergreen)">Come for what&#8217;s happening.</h1>
+<p class="n-lead" style="margin:clamp(20px,2.5vw,32px) 0 0;max-width:46ch">Concerts, art walks and seasonal gatherings, with every date checked against the organizer&#8217;s own page.</p>
+<div class="n-event-note"><strong>&#8226;</strong><span class="n-small" style="color:var(--n-ink)">Times are shown in Mountain Time. Past events leave the upcoming list automatically.</span></div>
 </div>
-<p class="n-lead" style="margin:0;max-width:50ch">Concerts, art walks and gatherings, with the organizer named on every entry. A date appears here only once it has been read on the organizer&#8217;s own page, and each entry links there. Times are Mountain Time.</p>
+<figure class="n-photo-natural" style="margin:0">
+{% photo "whistle-stop-caboose.jpg", "The complete red CB&Q 14649 caboose at Whistle Stop Park, where Niwot's concerts and seasonal gatherings are held", "(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 52vw, 700px", "display:block;width:100%;height:auto;object-fit:contain", true %}
+<figcaption class="n-cap">Whistle Stop Park &#8212; home of the summer concert series</figcaption>
+</figure>
 </div>
 </div>
 </section>
 
-{#- The upcoming list beside the one photograph. Rendered at build time,
+{#- The upcoming list beside a compact calendar note. Rendered at build time,
     recomputed from the real date on load. -#}
 <section class="n-bg-paper n-pad-sm" aria-labelledby="next-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
 <div class="n-wrap">
 <div class="n-evrow">
-<div>
-<figure class="n-ph-md" style="margin:0">
-{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 36vw, 500px", "display:block;width:100%;object-fit:cover;object-position:center 52%", true %}
-<figcaption class="n-cap">Whistle Stop Park &#8212; the lawn beside the caboose, where most of it happens</figcaption>
-</figure>
-<p class="n-small" style="margin:18px 0 0;max-width:46ch">This is a curated list, not the whole calendar: the Niwot Business Association&#8217;s calendar carries everything the organizers publish. An entry is added here only after its date has been read on the organizer&#8217;s page; past events leave the list on their own.</p>
+<div class="n-event-guide">
+<div class="n-label">About this calendar</div>
+<h2 class="n-h3" style="margin-top:12px;color:var(--n-evergreen)">Confirmed dates, without the clutter.</h2>
+<p class="n-small" style="margin:14px 0 0;max-width:46ch">This is a curated list, not the whole calendar: the Niwot Business Association&#8217;s calendar carries everything the organizers publish. An entry is added here only after its date has been read on the organizer&#8217;s page; past events leave the list on their own.</p>
 <div class="n-btns" style="margin-top:16px">
 <a class="n-btn" href="https://niwot.com/upcoming-events/" rel="noopener">Full community calendar <span aria-hidden="true">&#8599;</span></a>
 <a class="n-btn n-btn--ghost" href="/contact/">Submit an event</a>

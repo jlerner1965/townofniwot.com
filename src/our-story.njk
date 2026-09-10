@@ -10,49 +10,55 @@ permalink: /our-story/
 ogImage: valley-haystack-foothills.jpg
 ogImageAlt: The valley floor below Niwot with a conical butte in the middle distance and the foothills of the Front Range behind it
 pageStyles: |
-  .n-open{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.6fr);gap:clamp(24px,3vw,56px);align-items:end}
+  .n-story-hero{position:relative;min-height:clamp(500px,54vw,650px);display:grid;align-items:end;overflow:hidden;background:var(--n-forest)}
+  .n-story-hero picture,.n-story-hero img{position:absolute;inset:0;width:100%;height:100% !important;object-fit:cover;object-position:center 48%}
+  .n-story-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,48,45,.94) 0%,rgba(15,48,45,.78) 38%,rgba(15,48,45,.2) 72%,rgba(15,48,45,.08) 100%)}
+  .n-story-hero-in{position:relative;z-index:1;padding-block:clamp(58px,8vw,104px)}
+  .n-story-hero .n-display{max-width:9ch;color:var(--n-white)}
+  .n-story-deck{max-width:47ch;margin:24px 0 0;color:var(--n-paper);font-size:clamp(1.0625rem,1rem + .35vw,1.25rem);line-height:1.55}
+  .n-story-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:clamp(30px,4vw,54px);border-top:1px solid rgba(255,255,255,.38)}
+  .n-story-fact{padding:18px 20px 0 0;border-right:1px solid rgba(255,255,255,.25)}
+  .n-story-fact:not(:first-child){padding-left:20px}
+  .n-story-fact:last-child{border-right:0}
+  .n-story-fact strong{display:block;font-family:var(--n-serif);font-size:clamp(1.8rem,1.4rem + 1.6vw,3rem);font-weight:400;line-height:1;color:var(--n-gold-lt)}
+  .n-story-fact span{display:block;margin-top:7px;color:var(--n-sage-lt);font-size:.8125rem;line-height:1.35}
   .n-era{display:grid;grid-template-columns:minmax(0,.26fr) minmax(0,1fr);gap:clamp(14px,2.5vw,44px);align-items:start}
-  .n-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2vw,32px)}
+  .n-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2vw,32px);align-items:start}
+  .n-story-break{margin:clamp(34px,5vw,70px) 0;padding:clamp(22px,3vw,40px) 0;border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)}
+  .n-story-break .n-pair{margin-top:20px}
   .n-log summary{cursor:pointer;color:var(--n-sky-ink);font-size:.9375rem;font-weight:500}
   /* Each entry's source is a citation, not a section label: three lines of
      tracked capitals beside every era was the heaviest text on the page. */
   .n-era .n-label{font-size:.8125rem;letter-spacing:0;text-transform:none}
   .n-log summary:hover{color:var(--n-red-ink)}
   @media (max-width:1080px){.n-log summary{padding-top:12px;padding-bottom:12px}}
-  @media (max-width:900px){.n-open,.n-era{grid-template-columns:minmax(0,1fr)}}
-  @media (max-width:620px){.n-pair{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:900px){.n-era{grid-template-columns:minmax(0,1fr)}.n-story-hero{min-height:620px}.n-story-hero::after{background:linear-gradient(0deg,rgba(15,48,45,.97) 0%,rgba(15,48,45,.76) 52%,rgba(15,48,45,.16) 100%)}.n-story-hero-in{padding-top:230px}}
+  @media (max-width:620px){.n-pair,.n-story-facts{grid-template-columns:minmax(0,1fr)}.n-story-fact,.n-story-fact:not(:first-child){padding:14px 0;border-right:0;border-bottom:1px solid rgba(255,255,255,.25)}.n-story-fact:last-child{border-bottom:0}.n-story-hero{min-height:680px}}
 ---
-<section class="n-bg-white" aria-labelledby="title-h">
-<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px)">
-<div class="n-open">
-<div>
-<div class="n-label">The railroad shaped the Niwot we know</div>
-<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Niwot History: Railroad, Town Grid &amp; Community</h1>
-</div>
-{#- The source aerial is oversaturated and only 547px wide; it is desaturated
-    to match the documentary treatment and never displayed wider than ~500px. -#}
-<figure class="n-ph-sm" style="margin:0">
-{% photo "old-town-aerial.jpg", "Aerial view of Niwot in autumn showing the commercial buildings, the street grid and the farmland and rail corridor beyond", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 34vw, 480px", "display:block;width:100%;object-fit:cover;object-position:center 50%;filter:saturate(.68) contrast(.96) brightness(1.02)", true %}
-<figcaption class="n-cap">The grid, the corridor and the fields it was built to serve</figcaption>
-</figure>
+<section class="n-story-hero" aria-labelledby="title-h">
+{% photo "valley-haystack-foothills.jpg", "The Left Hand valley and foothills west of Niwot, Colorado", "100vw", "", true %}
+<div class="n-wrap n-story-hero-in">
+<div class="n-label" style="color:var(--n-gold-lt)">Niwot history</div>
+<h1 class="n-display" id="title-h" style="margin-top:16px;font-size:clamp(3.25rem,2.25rem + 4.4vw,6.5rem)">Niwot History: Railroad, Town Grid &amp; Community</h1>
+<p class="n-story-deck">A railroad, an angled street grid and a preserved main street shaped the community that still sits between open fields and the Front Range.</p>
+<div class="n-story-facts" aria-label="Key historical facts">
+<div class="n-story-fact"><strong>1875</strong><span>Town plat recorded</span></div>
+<div class="n-story-fact"><strong>1907</strong><span>CB&amp;Q caboose built</span></div>
+<div class="n-story-fact"><strong>4,306</strong><span>Residents in the 2020 census</span></div>
 </div>
 </div>
 </section>
 
 <section class="n-bg-white" aria-label="Introduction">
 <div class="n-wrap" style="padding-top:clamp(28px,3.5vw,56px);padding-bottom:clamp(32px,4vw,64px)">
+<div class="n-g2-wide" style="align-items:start">
 <div class="n-read">
 <p class="n-lead" style="margin:0">Niwot exists because a rail line was built through the Left Hand valley in the 1870s. The town plat was recorded in 1875, and the street grid still follows the tracks rather than the county roads that came later. The brick block on Second Avenue is what remains of that decision.</p>
 <p class="n-body" style="margin:22px 0 0">It has never been an incorporated municipality. There is no mayor and no town hall, which is part of why the place feels the way it does: what happens here is organized by the people who live here, through the business association, the arts groups and the neighbors who show up.</p>
 </div>
-<div class="n-pair" style="margin-top:clamp(28px,3.5vw,52px)">
-<figure class="n-ph-sm" style="margin:0">
-{% photo "niwot-tribune-storefront.jpg", "The Niwot Tribune false-front building on Second Avenue with a shingled porch roof, painted columns and a grand piano on the sidewalk", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 52%" %}
-<figcaption class="n-cap">The Niwot Tribune building &#8212; a false front from the railroad period, still on Second Avenue</figcaption>
-</figure>
-<figure class="n-ph-sm" style="margin:0">
-{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 52%" %}
-<figcaption class="n-cap">CB&amp;Q 14649, built 1907 &#8212; Whistle Stop Park</figcaption>
+<figure class="n-photo-natural" style="margin:0">
+{% photo "old-town-aerial.jpg", "Aerial view of Niwot in autumn showing the commercial buildings, the street grid and the farmland and rail corridor beyond", "(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 38vw, 500px", "display:block;width:100%;height:auto;object-fit:contain;filter:saturate(.68) contrast(.96) brightness(1.02)" %}
+<figcaption class="n-cap">The diagonal street grid beside the rail corridor</figcaption>
 </figure>
 </div>
 </div>
@@ -81,6 +87,21 @@ pageStyles: |
 <p class="n-body" style="margin:12px 0 0;max-width:66ch">{{ e.body }}</p>
 </div>
 </li>
+{%- if loop.index == 2 %}
+<li class="n-story-break">
+<div class="n-label">Still visible today</div>
+<div class="n-pair">
+<figure class="n-photo-natural" style="margin:0">
+{% photo "niwot-tribune-storefront.jpg", "The Niwot Tribune false-front building on Second Avenue, shown complete with its painted sign, shingled porch roof, storefront and sidewalk", "(max-width: 620px) calc(100vw - 48px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;height:auto;object-fit:contain" %}
+<figcaption class="n-cap">The Niwot Tribune building &#8212; a surviving railroad-period false front</figcaption>
+</figure>
+<figure class="n-photo-natural" style="margin:0">
+{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose, shown complete on a short length of track at Whistle Stop Park", "(max-width: 620px) calc(100vw - 48px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;height:auto;object-fit:contain" %}
+<figcaption class="n-cap">CB&amp;Q 14649, built in 1907 and now at Whistle Stop Park</figcaption>
+</figure>
+</div>
+</li>
+{%- endif %}
 {%- endfor %}
 </ol>
 </div>

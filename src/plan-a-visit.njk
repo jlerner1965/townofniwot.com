@@ -8,21 +8,18 @@ permalink: /plan-a-visit/
 ogImage: niwot-gateway-sculpture.jpg
 ogImageAlt: The Vintage Colorado Niwot gateway sculpture with the Flatirons behind it
 pageStyles: |
-  .n-maprow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(24px,3vw,52px);align-items:start}
-  /* The schematic scales to whatever column it is given, so the column decides
-     whether its labels are readable: a 640-unit viewBox needs 640px of
-     rendered width before 12-unit type lands at 12px. Hence two columns only
-     once the page is wide enough to still leave the map that much, and a
-     max-width so a full-bleed column does not blow the type up instead. */
-  @media (max-width:1199px){.n-maprow{grid-template-columns:minmax(0,1fr)}}
-  .n-map{display:block;width:100%;height:auto;margin-inline:auto;background:#FAF8F2;border:1px solid #24483A}
-  .n-map--wide{max-width:820px}
-  .n-map--tall{display:none;max-width:430px}
-  /* Below this the landscape schematic cannot hold 12px type, so the portrait
-     one takes over: same places, same compass relationships, drawn for a
-     canvas 300 units across instead of 640. Only one is ever displayed, so
-     each carries its own description and a screen reader hears one map. */
-  @media (max-width:720px){.n-map--wide{display:none}.n-map--tall{display:block}}
+  .n-orientation{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(28px,4vw,68px);align-items:start}
+  .n-orientation figure{min-width:0}
+  .n-itinerary{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(28px,4vw,68px);align-items:center}
+  .n-visit-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin-top:clamp(22px,3vw,36px);background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.25)}
+  .n-visit-step{padding:clamp(18px,2vw,26px);background:var(--n-forest)}
+  .n-visit-step strong{display:block;font-family:var(--n-serif);font-size:2rem;font-weight:400;line-height:1;color:var(--n-gold-lt)}
+  .n-visit-step span{display:block;margin-top:9px;color:var(--n-paper);font-size:.9375rem;line-height:1.5}
+  .n-arrival-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:clamp(22px,2.6vw,36px);background:var(--n-rule);border:1px solid var(--n-rule)}
+  .n-arrival-card{padding:clamp(20px,2.4vw,30px);background:var(--n-white)}
+  @media (max-width:1000px){.n-arrival-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:900px){.n-orientation,.n-itinerary{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:620px){.n-visit-steps,.n-arrival-grid{grid-template-columns:minmax(0,1fr)}}
 places:
   - name: Old Town, Second Avenue
     note: The historic commercial block
@@ -89,9 +86,40 @@ nextLinks:
 </div>
 </section>
 
-{#- Orientation: the streetscape beside the schematic. The map is
-    decorative-plus — it carries a full aria-label, and everything shown in
-    it is also available as text on this page. -#}
+{#- A real arrival view and direct destination links replace the schematic. -#}
+<section class="n-bg-paper n-pad-sm" id="orientation" aria-labelledby="orientation-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-orientation">
+<figure class="n-photo-natural" style="margin:0">
+{% photo "niwot-gateway-sculpture.jpg", "The complete Vintage Colorado Niwot gateway sculpture with its oval sign, steel rails, native grasses and the Flatirons behind it", "(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 52vw, 700px", "display:block;width:100%;height:auto;object-fit:contain", true %}
+<figcaption class="n-cap">The Niwot gateway at the Diagonal Highway edge</figcaption>
+</figure>
+<div>
+<div class="n-label">Start here</div>
+<h2 class="n-h2" id="orientation-h" style="margin-top:12px;max-width:14ch;color:var(--n-evergreen)">Four places within one compact visit.</h2>
+<p class="n-body" style="margin:16px 0 0;max-width:54ch">Use the links below for exact routing. Old Town and Whistle Stop Park make the simplest starting pair; Cottonwood Square and the LoBo trail are easy additions.</p>
+<div class="n-label n-label--quiet" style="margin-top:24px;color:var(--n-ink)">Choose a destination</div>
+<div style="display:grid;gap:0;margin-top:10px">
+{%- for p in places %}
+<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:14px 0;border-top:1px solid rgba(36,72,58,.25)">
+<span>
+<span style="display:block;font-size:1rem;color:var(--n-evergreen)">{{ p.name }}</span>
+<span class="n-small" style="display:block;font-size:.875rem">{{ p.note }}</span>
+</span>
+{%- if p.href %}
+<a class="n-link" href="{{ p.href }}" rel="noopener" style="white-space:nowrap;font-size:12px">{{ p.linkLabel }} <span aria-hidden="true">&#8599;</span></a>
+{%- else %}
+<a class="n-link" href="{{ p.query | directions }}" rel="noopener" style="white-space:nowrap;font-size:12px">Directions <span aria-hidden="true">&#8599;</span></a>
+{%- endif %}
+</div>
+{%- endfor %}
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{% if false %}
 <section class="n-bg-paper n-pad-sm" id="map" aria-labelledby="map-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
 <div class="n-wrap">
 <h2 class="n-label" id="map-h" style="margin:0 0 18px">Orientation</h2>
@@ -218,6 +246,29 @@ nextLinks:
 </div>
 </div>
 </section>
+{% endif %}
+
+<section class="n-bg-green n-pad-sm" aria-labelledby="first-visit-h">
+<div class="n-wrap">
+<div class="n-itinerary">
+<figure class="n-photo-portrait" style="margin:0">
+{% photo "front-range-sunset-trail.jpg", "Portrait view of sunset over the Front Range from a dirt trail on the grassland edge of Niwot", "(max-width: 900px) min(calc(100vw - 48px), 380px), (max-width: 1440px) 32vw, 380px", "display:block;width:100%;height:auto;object-fit:contain" %}
+<figcaption class="n-cap">The open-space edge of Niwot, a short walk beyond the commercial blocks</figcaption>
+</figure>
+<div>
+<div class="n-label">A simple first visit</div>
+<h2 class="n-h2" id="first-visit-h" style="margin-top:12px;max-width:13ch">See the town without moving the car.</h2>
+<p class="n-body" style="margin:18px 0 0;max-width:54ch;color:var(--n-paper)">Start on Second Avenue, walk through the park and choose either Cottonwood Square or the trail for the last leg. The sequence keeps the day compact without turning it into a rigid itinerary.</p>
+<div class="n-visit-steps">
+<div class="n-visit-step"><strong>01</strong><span>Park on or near Second Avenue.</span></div>
+<div class="n-visit-step"><strong>02</strong><span>Browse Old Town and stop for coffee or lunch.</span></div>
+<div class="n-visit-step"><strong>03</strong><span>Walk to the caboose at Whistle Stop Park.</span></div>
+<div class="n-visit-step"><strong>04</strong><span>Continue toward Cottonwood Square or the LoBo trail.</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
 
 <section class="n-bg-white n-pad" aria-labelledby="arrive-h">
 <div class="n-wrap">
@@ -226,9 +277,9 @@ nextLinks:
 <h2 class="n-h2" id="arrive-h" style="color:var(--n-evergreen)">Getting here</h2>
 <p class="n-body" style="margin:0;max-width:72ch">Drive times are estimates for normal conditions and vary with traffic, weather and construction. Check a live routing service before you set out.</p>
 </div>
-<div class="n-g4" style="margin-top:clamp(22px,2.6vw,36px)">
+<div class="n-arrival-grid">
 {%- for a in arrivals %}
-<div style="padding-top:14px;border-top:2px solid var(--n-evergreen)">
+<div class="n-arrival-card">
 <h3 class="n-h3" style="font-size:1.25rem;color:var(--n-evergreen)">{{ a.from }}</h3>
 <div class="n-label" style="margin-top:10px">{{ a.time }}</div>
 <p class="n-body" style="margin:8px 0 0;font-size:.9375rem">{{ a.how }}</p>
