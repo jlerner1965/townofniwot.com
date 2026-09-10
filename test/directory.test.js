@@ -2,6 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   CATEGORIES,
+  FOOD_CATEGORIES,
+  FOOD_GROUPS,
   FRESHNESS_DAYS,
   validateListings,
   publishListings,
@@ -17,6 +19,9 @@ const good = {
   category: 'restaurants-bars',
   address: '1 Second Avenue',
   website: 'https://example.com/',
+  /* A published food record must say which group the restaurant guide files
+     it under; see the FOOD_GROUPS rules in lib/directory.js. */
+  guide: 'sit-down',
   sourceUrl: 'https://example.com/',
   verifiedAt: '2026-09-01',
   status: 'active',
@@ -89,7 +94,7 @@ test('publication drops closed and unverified rows, derives counts and never exp
     good,
     { ...good, slug: 'closed-place', name: 'Closed Place', status: 'closed', editorialNote: 'Secret note', address: '2 Second Avenue' },
     { ...good, slug: 'maybe-place', name: 'Maybe Place', status: 'unverified', editorialNote: 'Secret note', address: '3 Second Avenue' },
-    { ...good, slug: 'cafe', name: 'Cafe', category: 'coffee-bakery', address: '4 Second Avenue', verifiedAt: '2026-08-01', editorialNote: 'Internal' },
+    { ...good, slug: 'cafe', name: 'Cafe', category: 'coffee-bakery', guide: 'coffee-sweets', address: '4 Second Avenue', verifiedAt: '2026-08-01', editorialNote: 'Internal' },
   ];
   const out = publishListings(rows);
   assert.deepEqual(out.entries.map((e) => e.slug), ['good-place', 'cafe']);
@@ -151,4 +156,90 @@ test('The Wheel House has one verified address and its direct website', () => {
   assert.ok(!JSON.stringify(wheel).includes('300 Second'));
   const raw = listings.records.find((r) => r.slug === 'the-wheel-house');
   assert.match(raw.editorialNote, /124 2nd Ave/);
+});
+
+/* ---- the restaurant guide's facets ---- */
+
+test('a published food record must name a guide group, and only a food record may', () => {
+  const { guide, ...noGuide } = good;
+  assert.ok(errorsOf([noGuide]).some((e) => e.includes('needs a guide group')));
+  /* A closed record is not published, so it needs none. */
+  assert.deepEqual(errorsOf([{ ...noGuide, status: 'closed', editorialNote: 'Closed.' }]), []);
+  assert.ok(errorsOf([{ ...good, guide: 'brunch' }]).some((e) => e.includes('guide "brunch" is not one of')));
+  assert.ok(
+    errorsOf([{ ...good, category: 'shops-gifts' }]).some((e) => e.includes('guide is for food and drink records only')),
+    'a shop may not carry a guide group'
+  );
+});
+
+test('the facets are validated, and a price range may only be one of the four', () => {
+  for (const field of ['cuisine', 'kind', 'patio', 'serves']) {
+    assert.ok(errorsOf([{ ...good, [field]: '' }]).some((e) => e.includes(`${field} must be a non-empty string`)), field);
+  }
+  assert.ok(errorsOf([{ ...good, menuUrl: 'http://example.com/menu' }]).some((e) => e.includes('http://')));
+  assert.ok(errorsOf([{ ...good, priceRange: 'cheap' }]).some((e) => e.includes('priceRange "cheap"')));
+  assert.deepEqual(errorsOf([{ ...good, priceRange: '$$', menuUrl: 'https://example.com/menu' }]), []);
+});
+
+test('the guide groups the food rows, carries only the facets a record has, and links each row to its directory entry', () => {
+  const rows = [
+    { ...good, cuisine: 'Italian', kind: 'Sit-down', patio: 'Front patio' },
+    { ...good, slug: 'counter', name: 'Counter', guide: 'quick', address: '5 Second Avenue', cuisine: 'Sandwiches' },
+    { ...good, slug: 'shop', name: 'Shop', category: 'shops-gifts', guide: undefined, address: '6 Second Avenue' },
+  ];
+  const { food } = publishListings(rows);
+  assert.deepEqual(food.entries.map((e) => e.slug), ['good-place', 'counter'], 'the shop is not in the food guide');
+  assert.deepEqual(food.groups.map((g) => [g.slug, g.entries.length]), [['sit-down', 1], ['quick', 1]], 'empty groups are dropped');
+  assert.deepEqual(food.groups.map((g) => g.slug), FOOD_GROUPS.filter((g) => ['sit-down', 'quick'].includes(g.slug)).map((g) => g.slug), 'groups keep their declared order');
+
+  const [first, second] = food.entries;
+  assert.deepEqual(first.facets.map((f) => f.label), ['Cuisine', 'Kind of place', 'Outdoor seating']);
+  assert.deepEqual(second.facets.map((f) => f.label), ['Cuisine'], 'a record with one facet shows one');
+  assert.equal(first.anchor, '/eat-shop/#good-place');
+  assert.equal(first.directionsQuery, '1 Second Avenue, Niwot, CO 80503');
+  assert.equal(second.directionsQuery, '5 Second Avenue, Niwot, CO 80503');
+  assert.deepEqual(food.withPatio.map((e) => e.slug), ['good-place']);
+  assert.deepEqual(food.withPrice, [], 'no record carries a price range');
+});
+
+test('a menu link is used where a record has one, and the business’s own site otherwise', () => {
+  const { food } = publishListings([
+    { ...good, menuUrl: 'https://example.com/menu' },
+    { ...good, slug: 'no-site', name: 'No Site', address: '7 Second Avenue', website: undefined, sourceUrl: 'https://niwot.com/' },
+  ]);
+  const [withMenu, withoutSite] = food.entries;
+  assert.equal(withMenu.menuHref, 'https://example.com/menu');
+  assert.equal(withMenu.menuLabel, 'Menu');
+  assert.equal(withoutSite.menuHref, null, 'a row with no site of its own offers no menu link');
+  assert.equal(withoutSite.menuLabel, null);
+  assert.deepEqual(food.withMenu.map((e) => e.slug), ['good-place']);
+});
+
+/* ---- the live food data ---- */
+
+test('every published food listing is in the restaurant guide, with a cuisine or a kind', () => {
+  const food = listings.entries.filter((e) => FOOD_CATEGORIES.includes(e.category));
+  assert.equal(listings.food.entries.length, food.length, 'no food row is missing from the guide');
+  assert.equal(listings.food.groups.reduce((n, g) => n + g.entries.length, 0), food.length);
+  for (const row of listings.food.entries) {
+    assert.ok(row.cuisine || row.kind, `${row.slug} says nothing about what it is`);
+    assert.ok(row.facets.length >= 1, `${row.slug} has no facets`);
+    /* A kitchen has to say both what it cooks and what sort of room it is;
+       a grocery or a liquor store is described by its kind alone. */
+    if (row.category === 'restaurants-bars' || row.category === 'coffee-bakery') {
+      assert.ok(row.cuisine && row.kind, `${row.slug} needs both a cuisine and a kind`);
+    }
+  }
+});
+
+test('no live food record asserts a price range or a menu page, because no source publishes one', () => {
+  assert.deepEqual(listings.food.withPrice, []);
+  assert.deepEqual(listings.food.withMenu, []);
+});
+
+test('the patio facet is only on rows whose own description mentions the seating', () => {
+  assert.ok(listings.food.withPatio.length > 0);
+  for (const row of listings.food.withPatio) {
+    assert.match(row.description, /patio/i, `${row.slug} claims a patio its description does not`);
+  }
 });

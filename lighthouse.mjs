@@ -20,7 +20,11 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '_site');
 const PORT = 8098;
-const ALL_PAGES = ['/', '/eat-shop/', '/events/', '/privacy/', '/civic/incorporation-election/', '/plan-a-visit/'];
+/* Six pages, chosen to cover the shapes rather than the count: the
+   image-heavy homepage, the two longest listing pages, the text-only privacy
+   page (the machine's own ceiling), the election page and the visitor page
+   with its inline schematic. */
+const ALL_PAGES = ['/', '/restaurants/', '/eat-shop/', '/events/', '/privacy/', '/civic/incorporation-election/'];
 /* LH_PAGES="/,/eat-shop/" limits a run to some pages. */
 const PAGES = process.env.LH_PAGES ? process.env.LH_PAGES.split(',') : ALL_PAGES;
 const TARGETS = { performance: 90, accessibility: 100, 'best-practices': 95, seo: 95 };

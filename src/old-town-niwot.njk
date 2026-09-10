@@ -1,0 +1,160 @@
+---
+layout: layouts/base.njk
+title: Old Town
+crumbLabel: Old Town Niwot
+seoTitle: Old Town Niwot — Downtown Niwot, Colorado
+description: Old Town Niwot, Colorado — the historic commercial block on Second Avenue. What is on it, why the street runs at an angle to everything else, where to park, and what happens there through the year.
+navKey: things-to-do
+permalink: /old-town-niwot/
+ogImage: niwot-tribune-storefront.jpg
+ogImageAlt: The Niwot Tribune false-front building on Second Avenue with a grand piano on the sidewalk
+pageStyles: |
+  .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:16px 0 0;padding:0}
+  .n-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,2vw,32px)}
+  .n-block{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,3vw,52px)}
+  .n-block h3{margin:0 0 4px;padding-bottom:8px;border-bottom:2px solid var(--n-evergreen);color:var(--n-evergreen)}
+  .n-block ul{list-style:none;margin:0 0 clamp(22px,2.6vw,34px);padding:0}
+  .n-block li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.7fr);gap:6px 20px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--n-rule)}
+  .n-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:start}
+  @media (max-width:900px){.n-block,.n-two{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:620px){.n-pair{grid-template-columns:minmax(0,1fr)}.n-block li{grid-template-columns:minmax(0,1fr);gap:2px}}
+---
+{#- Every published row whose area names Old Town, in the directory's own
+    category order. Filtering here rather than keeping a second list means a
+    business added to the directory appears on this page the same day. -#}
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">Downtown Niwot, such as it is</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Old Town Niwot</h1>
+</div>
+<div>
+<p class="n-lead" style="margin:0;max-width:50ch">The brick and false-front buildings along Second Avenue, on a street grid laid out in 1875 to face a railroad. It is the oldest part of Niwot, and for a visitor with an afternoon it is most of what there is.</p>
+<nav aria-label="On this page">
+<ul class="n-toc">
+<li><a class="n-link" href="#why">Why it looks like this</a></li>
+<li><a class="n-link" href="#block">What is on the block</a></li>
+<li><a class="n-link" href="#happens">What happens here</a></li>
+<li><a class="n-link" href="#parking">Parking and walking</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class="n-pair" style="margin-top:clamp(20px,2.5vw,36px)">
+<figure class="n-ph-sm" style="margin:0">
+{% photo "niwot-tribune-storefront.jpg", "The Niwot Tribune false-front building on Second Avenue with a shingled porch roof, painted columns and a grand piano on the sidewalk", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 52%", true %}
+<figcaption class="n-cap">The Niwot Tribune building &#8212; a false front from the railroad period</figcaption>
+</figure>
+<figure class="n-ph-sm" style="margin:0">
+{% photo "second-avenue-patios.jpg", "Brick and clapboard buildings on the 300 block of Second Avenue with hanging baskets and patio tables out front", "(max-width: 620px) calc(100vw - 40px), (max-width: 1440px) 46vw, 600px", "display:block;width:100%;object-fit:cover;object-position:center 56%", true %}
+<figcaption class="n-cap">The 300 block, with the tables out</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+<section class="n-bg-paper n-pad-sm" id="why" aria-labelledby="why-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-two">
+<div>
+<div class="n-label">1875, and a diagonal</div>
+<h2 class="n-h2" id="why-h" style="margin-top:12px;max-width:20ch;color:var(--n-evergreen)">Why the street runs at an angle</h2>
+</div>
+<div class="n-read">
+<p class="n-body" style="margin:0">A rail line built through the Left Hand valley in the 1870s set where the town site would be. The plat was recorded in 1875 by Porter T. Hinman and Ambrose S. Murray, laid out on a diagonal grid straddling the tracks &#8212; which is why Second Avenue and the streets around it sit at an angle to the county road pattern that arrived later.</p>
+<p class="n-body" style="margin:18px 0 0">Brick and false-front commercial buildings went up along the avenue to serve the surrounding farms and the trains that carried their crops. Through the twentieth century the houses spread outward and Cottonwood Square added a second cluster of shops, but the historic block was kept rather than replaced. That decision is the whole reason this page exists.</p>
+<p class="n-small" style="margin:18px 0 0">Dates and names from the Niwot Historical Society&#8217;s history timeline, which the full history page cites entry by entry.</p>
+<div class="n-btns" style="margin-top:22px">
+<a class="n-btn n-btn--ghost" href="/history/">The history of Niwot</a>
+<a class="n-btn n-btn--ghost" href="https://niwothistoricalsociety.org/" rel="noopener">Historical Society <span aria-hidden="true">&#8599;</span></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white" id="block" aria-labelledby="block-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">Address by address</div>
+<h2 class="n-h2" id="block-h" style="margin-top:12px;color:var(--n-evergreen)">What is on the block</h2>
+</div>
+<a class="n-link" href="/eat-shop/">The full directory <span aria-hidden="true">&#8594;</span></a>
+</div>
+<p class="n-body" style="margin:clamp(18px,2vw,26px) 0 0;max-width:72ch">All {{ oldTownCount }} businesses in the directory whose address is in Old Town, in the directory&#8217;s own order. Kitchens and coffee first, then the shops, the practices and the offices. Hours are not reproduced here or anywhere on this site &#8212; the directory row for each one links to the business&#8217;s own page, and says when it was last checked.</p>
+<div class="n-block" style="margin-top:clamp(20px,2.4vw,32px)">
+{%- for c in oldTownGroups %}
+<div>
+<h3 class="n-h3" style="font-size:1.125rem">{{ c.label }}</h3>
+<ul>
+{%- for r in c.entries %}
+<li>
+<a class="n-link" href="/eat-shop/#{{ r.slug }}" style="font-size:1rem">{{ r.name }}</a>
+<span class="n-small" style="font-size:.875rem">{% if r.address %}{{ r.address }}{% else %}Old Town{% endif %}</span>
+</li>
+{%- endfor %}
+</ul>
+</div>
+{%- endfor %}
+</div>
+<p class="n-small" style="margin:8px 0 0;max-width:72ch">A business whose record carries no street address is listed under Old Town without one rather than given a guess. Cottonwood Square, the second cluster, is a fifteen-minute walk north-east and is in the same directory.</p>
+</div>
+</section>
+
+<section class="n-bg-paper" id="happens" aria-labelledby="happens-h" style="padding-block:clamp(30px,4vw,64px);border-top:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">Through the year</div>
+<h2 class="n-h2" id="happens-h" style="margin-top:12px;color:var(--n-evergreen)">What happens on Second Avenue</h2>
+</div>
+<a class="n-link" href="/annual-events/">Every annual event <span aria-hidden="true">&#8594;</span></a>
+</div>
+<ul style="list-style:none;margin:clamp(18px,2vw,28px) 0 0;padding:0">
+{%- for s in oldTownSeries %}
+<li style="display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,.36fr);gap:8px 28px;align-items:baseline;padding:16px 0;border-top:1px solid var(--n-rule)">
+<div>
+<a class="n-link" href="/annual-events/#{{ s.id }}" style="font-size:1.0625rem">{{ s.name }}</a>
+<span class="n-small" style="display:block;margin-top:4px;max-width:60ch;font-size:.875rem">{{ s.where }}</span>
+</div>
+<span class="n-small" style="font-size:.875rem">{{ s.season }}</span>
+</li>
+{%- endfor %}
+</ul>
+<p class="n-small" style="margin:16px 0 0;max-width:72ch">Whistle Stop Park, at the western end of the block, holds the summer concert series. Individual dates &#8212; gallery openings, trivia nights, the lecture series &#8212; are on the calendar as organizers publish them.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn n-btn--ghost" href="/events/">The dated calendar</a>
+<a class="n-btn n-btn--ghost" href="/events/rock-and-rails/">Rock &amp; Rails</a>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white" id="parking" aria-labelledby="parking-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-two">
+<div>
+<div class="n-label">Park once</div>
+<h2 class="n-h2" id="parking-h" style="margin-top:12px;max-width:20ch;color:var(--n-evergreen)">Parking and walking</h2>
+<p class="n-body" style="margin:14px 0 0;max-width:52ch">Street parking runs along Second Avenue, with lots serving the block. Free at the time of writing; posted restrictions apply. The avenue is walkable end to end in about ten minutes, with continuous sidewalks and short crossings.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn" href="{{ '2nd Avenue, Niwot, CO 80503' | directions }}" rel="noopener">Directions <span aria-hidden="true">&#8599;</span></a>
+<a class="n-btn n-btn--ghost" href="/plan-a-visit/">Plan a visit</a>
+</div>
+</div>
+<div>
+<div class="n-callout n-callout--paper">
+<div class="n-label">Where to eat on the block</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Italian on the 100 and 300 blocks, a coffeehouse at 136, ice cream at 240 and a bar with its own kitchen at 101 &#8212; with more of it on Cottonwood Square.</p>
+<a class="n-link" href="/restaurants/" style="display:inline-block;margin-top:14px">Restaurants in Niwot <span aria-hidden="true">&#8594;</span></a>
+</div>
+<div class="n-callout n-callout--sky" style="margin-top:18px">
+<div class="n-label" style="color:var(--n-sky-ink)">A whole day</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Old Town, the square, the park and the trail make an easy day on foot. The itinerary lays it out in order.</p>
+<a class="n-link" href="/one-day-in-niwot/" style="display:inline-block;margin-top:14px">One day in Niwot <span aria-hidden="true">&#8594;</span></a>
+</div>
+</div>
+</div>
+</div>
+</section>

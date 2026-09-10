@@ -1,0 +1,157 @@
+---
+layout: layouts/base.njk
+title: Parks & Trails
+crumbLabel: Parks & Trails
+seoTitle: Niwot Parks & Trails — Whistle Stop Park and the LoBo Trail
+description: The parks and trails around Niwot, Colorado — Whistle Stop Park and its caboose, the twelve-mile LoBo Regional Trail, the local trail map and the open country east of town — with the Boulder County pages that hold the rules and closures.
+navKey: parks-trails
+permalink: /parks-trails/
+ogImage: front-range-sunset-trail.jpg
+ogImageAlt: Sunset over the Front Range from a dirt trail on the grassland edge of Niwot
+footMetaRight: Trail information via Boulder County Parks & Open Space
+pageStyles: |
+  .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:16px 0 0;padding:0}
+  .n-place{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.5fr);gap:18px clamp(20px,3vw,52px);align-items:start;padding:28px 0;border-top:2px solid var(--n-evergreen)}
+  .n-place dl{margin:0}
+  .n-place dl > div{display:grid;grid-template-columns:minmax(120px,.36fr) minmax(0,1fr);gap:8px 18px;padding:10px 0;border-top:1px solid var(--n-rule)}
+  .n-place dt{color:var(--n-muted);font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .n-place dd{margin:0;font-size:.9375rem;line-height:1.6;color:var(--n-ink)}
+  .n-official{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(20px,3vw,44px)}
+  .n-official a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--n-rule);text-decoration:none}
+  @media (max-width:900px){.n-place{grid-template-columns:minmax(0,1fr)}.n-official{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:620px){.n-place dl > div{grid-template-columns:minmax(0,1fr);gap:4px}}
+---
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">Where the sidewalks stop</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Niwot Parks &amp; Trails</h1>
+</div>
+<div>
+<p class="n-lead" style="margin:0;max-width:50ch">One park, one regional trail through the middle of town, and open country in every direction east. Niwot is unincorporated, so the trails belong to Boulder County &#8212; this page says what is where, and sends you to the county for the rules.</p>
+<nav aria-label="On this page">
+<ul class="n-toc">
+{%- for t in trails %}
+<li><a class="n-link" href="#{{ t.id }}">{{ t.name }}</a></li>
+{%- endfor %}
+<li><a class="n-link" href="#official">Rules &amp; closures</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<figure class="n-ph-lg" style="margin:clamp(20px,2.5vw,36px) 0 0">
+{% photo "front-range-sunset-trail.jpg", "Sunset over the Front Range from a dirt trail on the grassland edge of Niwot", "(max-width: 900px) calc(100vw - 40px), 1180px", "display:block;width:100%;object-fit:cover;object-position:center 58%", true %}
+<figcaption class="n-cap">The trail at the edge of the grassland, looking west</figcaption>
+</figure>
+</div>
+</section>
+
+{#- Said before the listings rather than after them: this page is a map of
+    which page holds which answer, and a reader should know that before
+    looking for a distance that is not here. -#}
+<section class="n-bg-paper n-pad-sm" aria-labelledby="who-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<h2 class="n-label" id="who-h" style="margin:0">Who looks after this</h2>
+<p class="n-body" style="margin:14px 0 0;max-width:44ch">There is no Niwot parks department. Whistle Stop Park was built and is run by the Cultural Arts Association; everything beyond the blocks is Boulder County Parks &amp; Open Space.</p>
+</div>
+<div class="n-read">
+<p class="n-body" style="margin:0">The county sets surfaces, closures, dog rules and access, and publishes them on the pages linked from every entry below and at the foot of this page. This guide does not restate them: a trail closure copied here would go stale within the season, and a surface or a gradient this guide has not walked is not a fact it can offer. The one distance stated on this page &#8212; the LoBo&#8217;s twelve miles &#8212; is the county&#8217;s own.</p>
+<p class="n-body" style="margin:16px 0 0">Check the closures page before setting out: it is the one that says what is shut today, and this guide is not the place to find that out.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white" aria-labelledby="places-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">On the ground</div>
+<h2 class="n-h2" id="places-h" style="margin-top:12px;color:var(--n-evergreen)">The park, the trail and the country beyond</h2>
+</div>
+<span class="n-label n-label--quiet">{{ trails.length }} places</span>
+</div>
+<ul style="list-style:none;margin:clamp(14px,1.8vw,24px) 0 0;padding:0">
+{%- for t in trails %}
+<li class="n-place" id="{{ t.id }}">
+<div>
+<div class="n-label n-label--quiet">{{ t.kind }}</div>
+<h3 class="n-h3" style="margin-top:10px;font-size:1.5rem;color:var(--n-evergreen)">{{ t.name }}</h3>
+<p class="n-body" style="margin:14px 0 0;max-width:62ch;font-size:.9375rem">{{ t.summary }}</p>
+<p class="n-small" style="margin:14px 0 0;max-width:62ch;font-size:.875rem">Looked after by <a class="n-link" href="{{ t.keeper.url }}" rel="noopener">{{ t.keeper.name }} <span aria-hidden="true">&#8599;</span></a>. Checked {{ t.verifiedAt | humanDate }}.</p>
+</div>
+<div>
+<dl>
+{%- for f in t.facts %}
+<div>
+<dt>{{ f.label }}</dt>
+<dd>{{ f.value }}</dd>
+</div>
+{%- endfor %}
+</dl>
+<div style="display:grid;gap:8px;margin-top:16px">
+{%- for l in t.links %}
+<a class="n-link" href="{{ l.href }}" rel="noopener" style="justify-self:start">{{ l.label }} <span aria-hidden="true">&#8599;</span></a>
+{%- endfor %}
+</div>
+</div>
+</li>
+{%- endfor %}
+</ul>
+</div>
+</section>
+
+<section class="n-bg-paper" id="official" aria-labelledby="official-h" style="padding-block:clamp(30px,4vw,64px);border-top:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-shead">
+<div class="n-label">Boulder County</div>
+<h2 class="n-h2" id="official-h" style="color:var(--n-evergreen)">Rules, closures and maps</h2>
+<p class="n-body" style="margin:0;max-width:72ch">The official sources. Each link goes to the page that handles that one thing, not to a homepage.</p>
+</div>
+<div class="n-official" style="margin-top:clamp(18px,2vw,28px)">
+<a class="n-shift n-shift--sm" href="https://bouldercounty.gov/open-space/parks-and-trails/trail-closures/" rel="noopener">
+<span>
+<span style="display:block;font-size:1.0625rem;color:var(--n-evergreen)">Trail closures and alerts</span>
+<span class="n-small" style="display:block;margin-top:3px;font-size:.875rem">What is shut today, and why</span>
+</span>
+<span aria-hidden="true" style="color:var(--n-red)">&#8599;</span>
+</a>
+<a class="n-shift n-shift--sm" href="https://bouldercounty.gov/open-space/parks-and-trails/regulations/" rel="noopener">
+<span>
+<span style="display:block;font-size:1.0625rem;color:var(--n-evergreen)">Open space regulations</span>
+<span class="n-small" style="display:block;margin-top:3px;font-size:.875rem">Dogs, bikes, horses, hours and what is not allowed</span>
+</span>
+<span aria-hidden="true" style="color:var(--n-red)">&#8599;</span>
+</a>
+<a class="n-shift n-shift--sm" href="https://bouldercounty.gov/open-space/parks-and-trails/lobo-trail/" rel="noopener">
+<span>
+<span style="display:block;font-size:1.0625rem;color:var(--n-evergreen)">LoBo Regional Trail</span>
+<span class="n-small" style="display:block;margin-top:3px;font-size:.875rem">The trail through Niwot, end to end</span>
+</span>
+<span aria-hidden="true" style="color:var(--n-red)">&#8599;</span>
+</a>
+<a class="n-shift n-shift--sm" href="https://assets.bouldercounty.gov/wp-content/uploads/2017/03/niwot-trails-map.pdf" rel="noopener">
+<span>
+<span style="display:block;font-size:1.0625rem;color:var(--n-evergreen)">Niwot trails map (PDF)</span>
+<span class="n-small" style="display:block;margin-top:3px;font-size:.875rem">The local connections, as the county draws them</span>
+</span>
+<span aria-hidden="true" style="color:var(--n-red)">&#8599;</span>
+</a>
+</div>
+<div class="n-g2" style="margin-top:clamp(32px,4vw,56px)">
+<div class="n-callout n-callout--paper" style="background:var(--n-white)">
+<div class="n-label">Concerts on the lawn</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Whistle Stop Park is where Rock &amp; Rails is held on Thursday evenings through the summer, and it is free.</p>
+<a class="n-link" href="/events/rock-and-rails/" style="display:inline-block;margin-top:14px">The Rock &amp; Rails guide <span aria-hidden="true">&#8594;</span></a>
+</div>
+<div class="n-callout n-callout--sky">
+<div class="n-label" style="color:var(--n-sky-ink)">Arriving on two wheels</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">The LoBo makes a bike a reasonable way to get here from either Boulder or Longmont. Parking, transit and the walk between the blocks are on the visitor page.</p>
+<a class="n-link" href="/plan-a-visit/" style="display:inline-block;margin-top:14px">Plan a visit <span aria-hidden="true">&#8594;</span></a>
+</div>
+</div>
+</div>
+</section>

@@ -3,18 +3,50 @@
 An independent community guide to Niwot, Colorado — an unincorporated community
 in Boulder County, between Boulder and Longmont.
 
-Nine indexable pages serving two audiences at once: residents who need to
+Sixteen indexable pages serving two audiences at once: residents who need to
 know which agency handles which service, and visitors deciding whether to
 make the drive. It also carries neutral voter information for the
 November 3, 2026 incorporation election, which is why parts of it are held to
 a stricter editorial standard than a typical destination site.
 
-The primary navigation shows five of them (Explore, Eat & Shop, Events,
-Community, 2026 Election). Our Story and Plan a Visit keep their URLs and
-are reached from the footer, the homepage and the Explore page; Privacy is
-footer-only. A tenth, noindex page (`/contact/`) holds the submission form.
-That is the shape the September 10, 2026 launch audit asked for, recorded in
-`PRE-LAUNCH-AUDIT.md`.
+| Page | URL | What it answers |
+|---|---|---|
+| Home | `/` | What is this place, and where do I go next |
+| Things to Do | `/things-to-do/` | The whole village in walking order, six entries |
+| Old Town | `/old-town-niwot/` | The historic block: what is on it, why it looks like that |
+| One Day in Niwot | `/one-day-in-niwot/` | A visitor's day, in order |
+| Restaurants | `/restaurants/` | Where to eat, by cuisine, kind of room and patio |
+| Eat & Shop | `/eat-shop/` | The full business directory, filterable |
+| Events | `/events/` | Dated occurrences, with a month grid |
+| Annual Events | `/annual-events/` | The recurring programme, dated or not |
+| Rock & Rails | `/events/rock-and-rails/` | The one event with its own search demand |
+| Parks & Trails | `/parks-trails/` | The park, the LoBo, and which county page holds what |
+| Living in Niwot | `/living-in-niwot/` | What an unincorporated address actually means |
+| Community | `/community/` | Who organizes what, and who handles which service |
+| History | `/history/` | The railroad, the 1875 plat, the sourced timeline |
+| 2026 Election | `/civic/incorporation-election/` | The neutral ballot guide |
+| Plan a Visit | `/plan-a-visit/` | Directions, parking, transit, accessibility |
+| Privacy | `/privacy/` | What the site collects, and who processes it |
+
+The primary navigation shows six of them (Things to Do, Restaurants, Events,
+Parks & Trails, Living Here, 2026 Election). The other ten are reached from
+the footer, which carries every page on every page — see `src/_data/nav.js`
+for what is deliberately left out of the menu and why. A seventeenth,
+noindex page (`/contact/`) holds the submission form.
+
+The September 10, 2026 launch audit (`PRE-LAUNCH-AUDIT.md`) cut a
+seven-item menu to five on the grounds that the site was smaller than its
+menu. The landing pages built after it are the opposite problem: the menu
+now carries one entry per thing a visitor arrives looking for, and the
+footer carries the rest.
+
+`/explore/` and `/our-story/` were renamed to `/things-to-do/` and
+`/history/` — both were already titled that in their `seoTitle` — and
+`vercel.json` redirects the old URLs permanently. The Explore page's
+in-page anchors (`#oldtown`, `#cottonwood`, `#art`, `#outdoors`) are kept on
+the new page: a redirect moves the path but the fragment is the browser's,
+so dropping them would land an old link at the top of the page. A built-site
+test asserts they survive.
 
 ## Running it
 
@@ -92,11 +124,14 @@ template except the prose that belongs to a specific page.
 |---|---|
 | `site.js` | Name, canonical URL, review dates, the legal disclaimer |
 | `nav.js` | Primary navigation, in render order |
-| `listings.js` | Business directory records (see "The directory") |
+| `listings.js` | Business directory records, including the restaurant guide's facets (see "The directory") |
 | `events.js` | Event records (see "The calendar") |
+| `annualEvents.js` | The recurring programme — one record per annual series, with the season in the organizer's words |
+| `annualBuild.js` | Build-time join of each series to the dated occurrences on file, shared by `/annual-events/` and the Rock & Rails guide |
+| `trails.js` | Parks and trails, each with the body that governs it and the page that holds its rules |
 | `organizations.js` | Community organizations |
 | `services.js` | Resident resources — which body handles what |
-| `eras.js` | The Our Story timeline, each entry with its source |
+| `eras.js` | The history-page timeline, each entry with its source |
 | `election.js` | 2026 election: voting tasks, status strip, plain-language summary, ballot questions, fiscal issues, official resources |
 | `corrections.js` | The dated corrections log: every change to a published fact, with the page it belongs to |
 | `eleventyComputed.js` | Per-page breadcrumbs, per-page corrections, sitemap dates, preview-build flag |
@@ -128,6 +163,21 @@ validation rules and the freshness threshold are documented at the top of
   `sharesAddress: true` on each; a closed or unverified record without a
   note. Category counts are derived from the published records, and the
   built-site tests assert the rendered counts match.
+
+Food and drink records carry six more fields, which `/restaurants/` renders
+and the directory ignores: `guide` (which of the five `FOOD_GROUPS` the
+restaurant guide files it under), `cuisine`, `kind`, `patio`, `serves`,
+`menuUrl` and `priceRange`. Every one of them is optional except `guide`,
+which is required on a published record in a food category so a new kitchen
+cannot be added and then quietly go missing from the guide. None of them may
+be inferred: each is condensed from that row's own `description`, which came
+from the source in `sourceUrl`. Where a source says nothing about outdoor
+seating or about which meals are served, the facet is absent and the guide
+renders nothing rather than "no" — the page says so above the listings, so
+an empty facet is not read as an answer. `menuUrl` and `priceRange` are
+unset on every row today: no source read so far publishes a menu page
+separate from the business's own site, or a price range, and neither is
+estimated from a menu.
 
 Phone numbers are deliberately not reproduced. They change more often than
 anything else on a listing, so every row links out — to the business's own
@@ -402,9 +452,22 @@ government seals, marketing text over photographs, pure black body text.
   squeezed into half a narrow page. Only one is displayed, so each carries its
   own `aria-label` and a screen reader hears a single map. `verify.mjs`
   measures the rendered label size at eleven widths from 320 to 2560.
-- **Flipped Explore entries** are placed by explicit `grid-column`, never by
-  `order: -1` — `order` moves the figure into the 64px numeral track and
-  crushes the photo to 64px wide.
+- **Flipped field-guide entries** on `/things-to-do/` are placed by explicit
+  `grid-column`, never by `order: -1` — `order` moves the figure into the
+  64px numeral track and crushes the photo to 64px wide.
+- **The menu collapses at 1240px, not 1080px.** Six navigation items need
+  1240px to sit on one row beside the masthead identifier; below that the
+  header wrapped to two lines with "2026 Election" alone on the second. Four
+  rules name that width — the collapse block in `guide.css`, its
+  `scripting: none` companion, the light-masthead block, and the `<noscript>`
+  rule in `partials/header.njk` — and they must all agree, or a browser
+  without JavaScript gets a hidden list and a button that cannot open it.
+- **The navigation gap is fixed at 18px, not `clamp(…, 1.8vw, …)`.**
+  `.n-wrap` caps the masthead row at 1240px, so past that width a
+  viewport-scaled gap keeps growing while the space it grows into does not:
+  at 1440px it pushed the six items over the row. `verify.mjs` measures the
+  header at seven widths from 1241 to 2560 and fails a second row, which is
+  the check that will catch a seventh menu item.
 - **Focus rings on the dark grounds are gold, not red.** `guide.css` sets
   the ring to `--n-gold-lt` inside `.n-head`, `.n-foot`, `.n-bg-green` and
   on the skip link, and the directory's checked chip does the same; the
@@ -456,7 +519,7 @@ of the design, not a content-team preference:
 4. **Dated verification.** "Last verified" stamps on civic content and on
    every directory row; "Checked" dates on every event; corrections published
    with their date and what changed, in `src/_data/corrections.js`, which
-   Our Story renders in full (folded under "Editorial changes") and the
+   the history page renders in full (folded under "Editorial changes") and the
    election and privacy pages render for themselves; since the launch audit
    no other page carries a change log.
 5. **The disclaimer appears on every page.** It is rendered from `site.js` by
@@ -492,7 +555,30 @@ of the design, not a content-team preference:
   sites); each record's description says where its time comes from and the
   editor should confirm them on the cited pages before promotion.
 
-Both accept real data through `src/_data/` with no template changes.
+- **The annual programme** — seven recurring series in
+  `src/_data/annualEvents.js`, each with the season in the organizer's own
+  words, the organizer named, the page it was read from and the ids of the
+  event records it covers. `annualBuild.js` joins them to those records at
+  build time, so `/annual-events/` and the Rock & Rails guide show a
+  confirmed date, the season just held, or "expected" — never a date this
+  site worked out. A series is not Event structured data and none is
+  emitted: marking a series as a scheduled occurrence would publish a date
+  the guide does not have. The page also says what is *not* on it — no
+  Fourth of July event and no farmers market, because no organizer source
+  for either was found — rather than leaving a reader to conclude the guide
+  did not notice.
+- **Parks and trails** — four records in `src/_data/trails.js`. Segment
+  distances, surfaces, gradients and accessibility gradings are deliberately
+  absent: Boulder County publishes them and this guide has not walked them.
+  The only length on the page is the LoBo's twelve miles, which is the
+  county's own figure, and a built-site test fails any numeral before
+  "miles" anywhere on the page.
+- **The restaurant guide** — nineteen food and drink rows from the same
+  directory records, grouped into five by what somebody is choosing between.
+  Four rows carry a patio note because four sources describe outdoor seating;
+  the rest carry none. No row carries a price range or a menu URL.
+
+All of them accept real data through `src/_data/` with no template changes.
 
 ## What still needs a human
 
@@ -551,7 +637,7 @@ Both accept real data through `src/_data/` with no template changes.
     accessible parking are not claimed on the page until someone has
     confirmed them on the ground.
 13. **Decide on the Chief Niwot material.** The external audit calls its
-    absence from Our Story a material gap; it was removed at the client's
+    absence from the history page a material gap; it was removed at the client's
     request in the previous PR. The section and its sources are in git
     history (commit `e499beb^`) if the decision is reversed.
 14. **Run a real-device pass** at 320, 390, 768 and 1366 CSS pixels,
@@ -576,6 +662,33 @@ Both accept real data through `src/_data/` with no template changes.
     Question 3 wording, all of which rest on the launch audit's September 10
     reading of the ballot page. Add the official boundary map to the page if
     the Commission publishes one.
+19. **Confirm the seven annual series on their organizers' pages**
+    (`src/_data/annualEvents.js`). They were compiled from the same reading
+    of niwot.com and niwotarts.org the September 2026 audits recorded, and
+    the sandbox they were compiled in could not open those sites. Each
+    record names the page to check.
+20. **Fill in the restaurant guide's two empty facets.** `priceRange` and
+    `menuUrl` are in the schema, validated and rendered, and unset on every
+    row: no source read so far publishes either. Add them per row as the
+    business's own site is opened, and the guide shows them the same day.
+    Do not estimate a price range from a menu — the validator will accept
+    `$$`, but the editorial rule will not.
+21. **Find a source for a Niwot Fourth of July event, or confirm there is
+    none.** `/annual-events/` says the guide could not find one and invites
+    the organizer to send it. That is honest but it is not an answer, and it
+    is the one gap in the annual programme a visitor is most likely to
+    notice.
+22. **Walk the trails.** `/parks-trails/` sends every question about
+    surfaces, distances, closures and accessibility to Boulder County
+    because this guide has not been on them. Segment distances and an
+    accessibility note, confirmed on the ground or from the county's own
+    published figures, would make it the page it should be. The county's
+    Niwot trails map is a 2017 PDF and alignments may have changed.
+23. **Re-check `/events/rock-and-rails/` each spring**, when the Cultural
+    Arts Association publishes the season. The page is written to be updated
+    in place — it deliberately carries no line-up and no year in its URL —
+    so the update is `src/_data/events.js` (the season's dates) and the two
+    paragraphs under "Dates and times".
 
 ### Submitting the sitemap
 
@@ -600,18 +713,28 @@ indexing, and a page can be indexed without it.
 against fixtures and against the live data (including that 1914 House is not
 active, that Taverna Laudisio, Love Ice Cream, Emory Jane's and 2nd Nature
 are present, that The Wheel House carries one address and its direct site,
-that no Rock & Rails date in 2027 is scheduled, and that tentative records
-never reach structured data); the endpoint's validation, origin check,
+that no Rock & Rails date in 2027 is scheduled, that tentative records
+never reach structured data, that every published food row is in the
+restaurant guide, and that no row claims a patio its own description does
+not); the endpoint's validation, origin check,
 honeypot, rate limit and no-JavaScript path; and the built site — every
 primary page present, titles and descriptions unique, canonicals and Open
 Graph correct, one H1 and no skipped heading levels, internal links and
 anchors resolving, hashed assets present, sitemap and robots well-formed,
 breadcrumbs matching their markup, directory counts and radio semantics,
 editorial notes absent from the HTML, and the event list, month grid, detail
-rail and structured data all agreeing.
+rail and structured data all agreeing. The landing pages get their own:
+the renamed pages' old anchors and their permanent redirects; the restaurant
+guide rendering exactly the facets each record carries and no empty cell;
+its ItemList sharing one `@id` per business with the directory's; the annual
+guide emitting no Event markup and saying why the Fourth of July is absent;
+the Rock & Rails guide carrying no composed season and no per-year URL; the
+parks page publishing no distance but the county's; the Old Town lists being
+derived from the directory rather than kept a second time; and the itinerary
+carrying no clock time that could be read as an opening hour.
 
 `verify.mjs` serves `_site/` with the vercel.json headers and drives it in
-Chromium. Across all ten pages and the 404 at desktop and mobile widths it
+Chromium. Across all seventeen pages and the 404 at desktop and mobile widths it
 checks: no console errors (a CSP violation counts), no horizontal overflow at
 320, 390, 768, 1280 or 1440, every image loaded with alt text, no text under
 12px, no text ink painted outside the viewport, no rounded corners, the
@@ -623,8 +746,10 @@ route; the skip link first in tab order, visible when focused and working;
 a visible focus ring on every tabbed control, and on seven pages every
 control's ring measured against the ground behind it at 3:1 or better (the
 external audit found the red ring at 2.0:1 on the evergreen bands, so those
-grounds use the light gold); the full-bleed hero inside the viewport at 390
-through 2560 and short when stacked on a phone; the Explore flip not crushing its photo;
+grounds use the light gold); the masthead a single row at 1241 through 2560,
+which is what will catch a seventh navigation item; the full-bleed hero
+inside the viewport at 390 through 2560 and short when stacked on a phone;
+the field guide's flipped entries not crushing their photos;
 anchor clearance under the sticky header; the schematic map's labels at
 eleven widths; the directory's radio semantics, URL-driven filtering, Back and
 Forward restoration, combined search-and-category state, zero-result

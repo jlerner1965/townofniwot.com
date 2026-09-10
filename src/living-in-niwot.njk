@@ -1,0 +1,197 @@
+---
+layout: layouts/base.njk
+title: Living Here
+crumbLabel: Living in Niwot
+seoTitle: Living in Niwot, Colorado — What It Is Actually Like
+description: What living in Niwot, Colorado involves — an unincorporated community with no town hall, where water, sewer, schools, fire and roads each come from a different body, and where residents vote in November 2026 on whether that should change.
+navKey: living
+permalink: /living-in-niwot/
+ogImage: valley-haystack-foothills.jpg
+ogImageAlt: The valley floor below Niwot with a conical butte in the middle distance and the foothills of the Front Range behind it
+pageStyles: |
+  .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:16px 0 0;padding:0}
+  .n-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);align-items:start}
+  .n-task{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(170px,.3fr);gap:12px clamp(16px,2.5vw,36px);align-items:start;padding:20px 0;border-top:1px solid var(--n-rule)}
+  .n-task:first-child{border-top:2px solid var(--n-evergreen)}
+  .n-task .n-num{font-size:1.25rem}
+  .n-orgrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.26fr);gap:10px 28px;align-items:baseline;padding:18px 0;border-top:1px solid var(--n-rule)}
+  @media (max-width:900px){.n-two{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:700px){.n-task{grid-template-columns:44px minmax(0,1fr)}.n-task > :last-child{grid-column:2}}
+  @media (max-width:620px){.n-orgrow{grid-template-columns:minmax(0,1fr)}}
+# Which body to set up an account with, or call, in the first week at a new
+# address. Each `who` matches a row in src/_data/services.js, and the link is
+# that row's own destination — the page that does the task, not a homepage.
+firstWeek:
+  - task: Get water turned on
+    who: Left Hand Water District
+    body: Drinking water in Niwot comes from the district, not from a city utility. Service, rates and meters are theirs.
+    href: https://lefthandwater.gov/
+  - task: Find out about sewer
+    who: Niwot Sanitation District
+    body: The district serves the addresses its lines reach. Whether yours is one of them depends on the address, so ask before assuming either way.
+    href: https://niwotsd.colorado.gov/
+  - task: Enrol at school
+    who: St. Vrain Valley Schools
+    body: Enrolment, catchment boundaries and transportation are the district's. There is no Niwot school district — the county's boundaries decide which school an address is in.
+    href: https://www.svvsd.org/
+  - task: Know who answers a 911 call
+    who: Mountain View Fire Rescue
+    body: Fire suppression, rescue and emergency medical response come from the fire district. Law enforcement in unincorporated Boulder County is the Sheriff's Office.
+    href: https://www.mvfpd.org/
+  - task: Register to vote
+    who: Boulder County Elections
+    body: Registration, ballots and drop-off locations are handled by the county clerk. Colorado runs mail-ballot elections, so an accurate address matters.
+    href: https://bouldercounty.gov/elections/
+  - task: Check before you build
+    who: Boulder County Building Division
+    body: Permits and inspections are the county's, and so is zoning and development review. There is no town planning office to ask instead.
+    href: https://bouldercounty.gov/property-and-land/land-use/building/building-permits/
+---
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(20px,2.5vw,36px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">Boulder County, and no town hall</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Living in Niwot, Colorado</h1>
+</div>
+<div>
+<p class="n-lead" style="margin:0;max-width:50ch">About four thousand people, twenty minutes from Boulder and fifteen from Longmont, in a place that has never been a municipality. That single fact shapes most of what is different about living here.</p>
+<nav aria-label="On this page">
+<ul class="n-toc">
+<li><a class="n-link" href="#unincorporated">What unincorporated means</a></li>
+<li><a class="n-link" href="#first-week">Your first week</a></li>
+<li><a class="n-link" href="#who-runs-it">Who runs things</a></li>
+<li><a class="n-link" href="#vote">The 2026 vote</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<figure class="n-ph-lg" style="margin:clamp(20px,2.5vw,36px) 0 0">
+{% photo "valley-haystack-foothills.jpg", "The valley floor below Niwot with a conical butte in the middle distance and the foothills of the Front Range behind it", "(max-width: 900px) calc(100vw - 40px), 1180px", "display:block;width:100%;object-fit:cover;object-position:center 54%", true %}
+<figcaption class="n-cap">The valley Niwot sits in, looking toward the foothills</figcaption>
+</figure>
+</div>
+</section>
+
+<section class="n-bg-paper n-pad-sm" id="unincorporated" aria-labelledby="unin-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-two">
+<div>
+<div class="n-label">The short version</div>
+<h2 class="n-h2" id="unin-h" style="margin-top:12px;max-width:20ch;color:var(--n-evergreen)">There is no mayor, and no town hall</h2>
+</div>
+<div class="n-read">
+<p class="n-body" style="margin:0">Niwot is a census designated place in unincorporated Boulder County. It has never been an incorporated municipality, so it has no mayor, no council, no town clerk and no municipal offices. The 2020 census recorded 4,306 people living in it.</p>
+<p class="n-body" style="margin:18px 0 0">In practice that means two things. Public services come from the county and from a set of special districts, each responsible for one thing &#8212; water from one district, sewer from another, fire from a third, schools from a fourth, roads and permits from the county. And everything that is not a public service &#8212; the events, the sculpture park, the flower baskets, the sense that anything is happening at all &#8212; is organized by residents through volunteer groups.</p>
+<p class="n-body" style="margin:18px 0 0">Neither of those is a complaint. It does mean that the answer to &#8220;who do I call about this?&#8221; is never &#8220;the town&#8221;, and that finding the right body is the first thing a new resident has to learn. That is what this page and the community page are for.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white" id="first-week" aria-labelledby="week-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">New at this address</div>
+<h2 class="n-h2" id="week-h" style="margin-top:12px;color:var(--n-evergreen)">Your first week</h2>
+</div>
+<a class="n-link" href="/community/#resources">The full resident resources table <span aria-hidden="true">&#8594;</span></a>
+</div>
+<p class="n-body" style="margin:clamp(18px,2vw,26px) 0 0;max-width:72ch">Six things to sort out, each with the body that actually does it. Every link goes to the page that handles that task rather than to a front door.</p>
+<ol style="list-style:none;margin:clamp(20px,2.4vw,32px) 0 0;padding:0">
+{%- for t in firstWeek %}
+<li class="n-task">
+<span class="n-num" aria-hidden="true">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+<div>
+<h3 class="n-h3" style="font-size:1.1875rem;color:var(--n-evergreen)">{{ t.task }}</h3>
+<p class="n-body" style="margin:8px 0 0;max-width:60ch;font-size:.9375rem">{{ t.body }}</p>
+</div>
+<div style="display:grid;gap:6px;align-content:start">
+<span class="n-small" style="font-size:.875rem;color:var(--n-ink)">{{ t.who }}</span>
+<a class="n-link" href="{{ t.href }}" rel="noopener" style="justify-self:start">Go there <span aria-hidden="true">&#8599;</span></a>
+</div>
+</li>
+{%- endfor %}
+</ol>
+<p class="n-small" style="margin:18px 0 0;max-width:72ch">There is no town refuse service, because there is no town: trash, recycling and the utilities other than water are the household&#8217;s own arrangement.</p>
+<p class="n-small" style="margin:10px 0 0;max-width:72ch">If your street is one this guide has something specific and sourced about, <a class="n-link" href="/contact/">tell us</a> and it goes in.</p>
+</div>
+</section>
+
+<section class="n-bg-paper" id="who-runs-it" aria-labelledby="runs-h" style="padding-block:clamp(30px,4vw,64px);border-top:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">Volunteers, mostly</div>
+<h2 class="n-h2" id="runs-h" style="margin-top:12px;color:var(--n-evergreen)">Who actually runs Niwot</h2>
+</div>
+<a class="n-link" href="/community/">Community groups and public bodies <span aria-hidden="true">&#8594;</span></a>
+</div>
+<p class="n-body" style="margin:clamp(18px,2vw,26px) 0 0;max-width:72ch">These are the groups that do the work a town government would otherwise do, and the ones to join or approach. Each line says what that group actually runs.</p>
+<ul style="list-style:none;margin:clamp(18px,2vw,28px) 0 0;padding:0">
+{%- for o in organizations %}{% if o.kind == 'community' %}
+<li class="n-orgrow">
+<div>
+<a class="n-link" href="{{ o.href }}" rel="noopener" style="font-size:1.0625rem">{{ o.name }} <span aria-hidden="true">&#8599;</span></a>
+<span class="n-small" style="display:block;margin-top:5px;max-width:64ch;font-size:.9375rem">{{ o.runs }}</span>
+</div>
+<span class="n-small" style="font-size:.875rem">{{ o.linkLabel }}</span>
+</li>
+{%- endif %}{% endfor %}
+</ul>
+<div class="n-g2" style="margin-top:clamp(28px,3.5vw,48px)">
+<div class="n-callout n-callout--paper" style="background:var(--n-white)">
+<div class="n-label">The year, if you live here</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Concerts on the park lawn on summer Thursdays, dancing on the square on Fridays, an art walk on second Fridays, a Halloween party on Second Avenue, a tree lighting and a parade over Thanksgiving weekend. Most of it is free and all of it is run by neighbors.</p>
+<a class="n-link" href="/annual-events/" style="display:inline-block;margin-top:14px">The annual programme <span aria-hidden="true">&#8594;</span></a>
+</div>
+<div class="n-callout n-callout--paper" style="background:var(--n-white)">
+<div class="n-label">The everyday</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">An independent grocery with a deli and a sushi counter, two commercial blocks of kitchens and shops, the trades and the practices &#8212; and the LoBo trail if the commute can be done on a bike.</p>
+<a class="n-link" href="/eat-shop/" style="display:inline-block;margin-top:14px">The business directory <span aria-hidden="true">&#8594;</span></a>
+</div>
+</div>
+</div>
+</section>
+
+{#- Pale sky is the civic ground on this site and belongs to civic content
+    alone. The wording here states the question and points at the neutral
+    guide; it takes no position, as nothing on this site does. -#}
+<section class="n-bg-sky" id="vote" aria-labelledby="vote-h" style="padding-block:clamp(30px,4vw,64px);border-top:1px solid var(--n-sky)">
+<div class="n-wrap">
+<div class="n-two">
+<div>
+<div class="n-label" style="color:var(--n-sky-ink)">November 3, 2026</div>
+<h2 class="n-h2" id="vote-h" style="margin-top:12px;max-width:20ch;color:var(--n-evergreen)">The vote on whether Niwot becomes a town</h2>
+</div>
+<div class="n-read">
+<p class="n-body" style="margin:0">Registered electors living inside a proposed boundary decide, in a coordinated mail-ballot election, whether Niwot should incorporate as a municipality &#8212; and, on the same ballot, on the taxes and the first council that would follow if it does. It is the biggest thing on this page: it is a vote about whether the arrangement described above continues.</p>
+<p class="n-body" style="margin:18px 0 0">This site takes no position on it. Its election page summarises the ballot from the Election Commission&#8217;s own published text, says which body is responsible for what, dates every claim and publishes its corrections. The official text controls, and the Commission&#8217;s own site is linked from every measure.</p>
+<div class="n-btns" style="margin-top:22px">
+<a class="n-btn" href="/civic/incorporation-election/">The neutral ballot guide</a>
+<a class="n-btn n-btn--ghost" href="https://niwotelection.org/" rel="noopener">Election Commission <span aria-hidden="true">&#8599;</span></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white n-pad-sm" aria-labelledby="more-h">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<div class="n-label">Thinking about it</div>
+<h2 class="n-h2" id="more-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);max-width:18ch;color:var(--n-evergreen)">Not from here yet</h2>
+</div>
+<div>
+<p class="n-body" style="margin:0;max-width:60ch">This guide is independent and carries no property listings, no agent referrals and no market figures: the real-estate offices on Second Avenue are in the directory like every other business, and nothing on this site is a recommendation of one. What it can do is show you the place. Spend a day here first.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn" href="/one-day-in-niwot/">One day in Niwot</a>
+<a class="n-btn n-btn--ghost" href="/history/">How it came to be</a>
+<a class="n-btn n-btn--ghost" href="/community/#resources">Resident resources</a>
+</div>
+</div>
+</div>
+</div>
+</section>

@@ -9,7 +9,11 @@
       "has": [{ "type": "host", "value": "www.townofniwot.com" }],
       "destination": "https://townofniwot.com/:path*",
       "permanent": true
-    }
+    },
+    { "source": "/explore", "destination": "/things-to-do/", "permanent": true },
+    { "source": "/explore/", "destination": "/things-to-do/", "permanent": true },
+    { "source": "/our-story", "destination": "/history/", "permanent": true },
+    { "source": "/our-story/", "destination": "/history/", "permanent": true }
   ],
   "headers": [
     {

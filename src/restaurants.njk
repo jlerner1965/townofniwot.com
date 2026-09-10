@@ -1,0 +1,160 @@
+---
+layout: layouts/base.njk
+title: Restaurants
+crumbLabel: Restaurants in Niwot
+seoTitle: Restaurants in Niwot, Colorado — Where to Eat | TownofNiwot.com
+description: Where to eat in Niwot, Colorado — every kitchen, coffeehouse, brewery and food shop in Old Town and Cottonwood Square, with what each one cooks, where it sits, which have patios, and a link to its own menu.
+navKey: restaurants
+permalink: /restaurants/
+ogImage: niwot-tavern-patios.jpg
+ogImageAlt: Umbrella-shaded patios outside the Niwot Tavern and Raza Fresa Mexican Kitchen in Cottonwood Square
+footMetaRight: Hours and menus via each business
+pageStyles: |
+  .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:16px 0 0;padding:0}
+  /* One place per row: the name and what it cooks on the left, where to go
+     next on the right. The facets are a definition list, not a table: a row
+     shows the facets its source supports and no empty cells. */
+  .n-meal{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,.4fr);gap:16px clamp(20px,3vw,44px);align-items:start;padding:24px 0;border-bottom:1px solid var(--n-rule)}
+  .n-facts{margin:16px 0 0}
+  .n-facts > div{display:grid;grid-template-columns:minmax(120px,.34fr) minmax(0,1fr);gap:8px 18px;padding:10px 0;border-top:1px solid var(--n-rule)}
+  .n-facts dt{color:var(--n-muted);font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .n-facts dd{margin:0;font-size:.9375rem;line-height:1.6;color:var(--n-ink)}
+  .n-side{display:grid;gap:10px;align-content:start}
+  .n-pill{display:inline-block;padding:5px 10px;background:var(--n-paper);border-left:3px solid var(--n-red);font-size:.875rem;color:var(--n-ink)}
+  @media (max-width:900px){.n-meal{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:620px){.n-facts > div{grid-template-columns:minmax(0,1fr);gap:4px}}
+---
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(24px,3vw,44px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">Two blocks, {{ listings.food.entries.length }} places to eat</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Restaurants in Niwot, Colorado</h1>
+</div>
+<div>
+<p class="n-lead" style="margin:0;max-width:50ch">Everywhere in Niwot you can be fed, in one guide: what each kitchen cooks, what sort of room it is, which block it is on, and which ones have a patio. Almost all of it is independent, and the two commercial blocks it is spread across are a fifteen-minute walk apart.</p>
+<nav aria-label="On this page">
+<ul class="n-toc">
+{%- for g in listings.food.groups %}
+<li><a class="n-link" href="#{{ g.slug }}">{{ g.label }} ({{ g.entries.length }})</a></li>
+{%- endfor %}
+</ul>
+</nav>
+</div>
+</div>
+<figure class="n-ph-lg" style="margin:clamp(20px,2.5vw,36px) 0 0">
+{% photo "niwot-tavern-patios.jpg", "Umbrella-shaded patios outside the Niwot Tavern and Raza Fresa Mexican Kitchen with two bronze bear sculptures on the corner", "(max-width: 900px) calc(100vw - 40px), 1180px", "display:block;width:100%;object-fit:cover;object-position:center 52%", true %}
+<figcaption class="n-cap">Cottonwood Square &#8212; patios outside the Tavern and Raza Fresa</figcaption>
+</figure>
+</div>
+</section>
+
+{#- What this guide can and cannot say, before the listings rather than after
+    them: the facets are uneven because the sources are, and a reader should
+    know that before drawing a conclusion from an empty one. -#}
+<section class="n-bg-paper n-pad-sm" aria-labelledby="using-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<h2 class="n-label" id="using-h" style="margin:0">Using this guide</h2>
+<p class="n-body" style="margin:14px 0 0;max-width:44ch">Each entry shows only what its own source states. An absent line means the source is silent, not that the answer is no.</p>
+<a class="n-link" href="/eat-shop/" style="display:inline-block;margin-top:14px">The full business directory <span aria-hidden="true">&#8594;</span></a>
+</div>
+<div>
+<div class="n-callout n-callout--paper" style="background:var(--n-white)">
+<div class="n-label">Eating outside</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">{{ listings.food.withPatio.length }} places describe outdoor seating on their own pages:</p>
+<ul style="list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px">
+{%- for r in listings.food.withPatio %}
+<li class="n-body" style="font-size:.9375rem"><a class="n-link" href="#{{ r.slug }}">{{ r.name }}</a> &#8212; {{ r.patio | lower }}</li>
+{%- endfor %}
+</ul>
+<p class="n-small" style="margin:12px 0 0;font-size:.875rem">Others may have tables outside without saying so in the sources this guide reads.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+{#- The guide itself: five groups, in the order somebody chooses between
+    them, each row built from the same record the directory renders. -#}
+{%- for g in listings.food.groups %}
+<section class="{% if loop.index % 2 == 1 %}n-bg-white{% else %}n-bg-paper{% endif %}" data-food-group="{{ g.slug }}" id="{{ g.slug }}" aria-labelledby="{{ g.slug }}-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">{{ g.note }}</div>
+<h2 class="n-h2" id="{{ g.slug }}-h" style="margin-top:12px;color:var(--n-evergreen)">{{ g.label }}</h2>
+</div>
+<span class="n-label n-label--quiet">{{ g.entries.length }} {% if g.entries.length == 1 %}place{% else %}places{% endif %}</span>
+</div>
+<ul style="list-style:none;margin:clamp(12px,1.6vw,20px) 0 0;padding:0">
+{%- for r in g.entries %}
+<li class="n-meal" id="{{ r.slug }}">
+<div>
+<h3 class="n-h3" style="font-size:1.375rem;color:var(--n-evergreen)">{{ r.name }}</h3>
+{%- if r.status == 'temporarily_closed' %}
+<div class="n-label" style="margin-top:8px">Temporarily closed</div>
+{%- endif %}
+{%- if r.description %}
+<p class="n-body" style="margin:10px 0 0;max-width:60ch;font-size:.9375rem">{{ r.description }}</p>
+{%- endif %}
+<dl class="n-facts">
+{%- for f in r.facets %}
+<div>
+<dt>{{ f.label }}</dt>
+<dd>{{ f.value }}</dd>
+</div>
+{%- endfor %}
+</dl>
+</div>
+<div class="n-side">
+{%- if r.address %}
+<div class="n-small" style="font-size:.875rem;color:var(--n-ink)">{{ r.address }}</div>
+{%- endif %}
+{%- if r.menuHref %}
+<a class="n-link" href="{{ r.menuHref }}" rel="noopener" style="justify-self:start">{{ r.menuLabel }} <span aria-hidden="true">&#8599;</span></a>
+{%- endif %}
+<a class="n-link" href="{{ r.anchor }}" style="justify-self:start">Directory row</a>
+<a class="n-link" href="{{ r.directionsQuery | directions }}" rel="noopener" style="justify-self:start">Directions <span aria-hidden="true">&#8599;</span></a>
+<div class="n-small" style="font-size:.8125rem">Checked {{ r.verifiedLabel }}</div>
+</div>
+</li>
+{%- endfor %}
+</ul>
+</div>
+</section>
+{%- endfor %}
+
+<section class="n-bg-white" id="how" aria-labelledby="how-h" style="padding-block:clamp(36px,5vw,80px)">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<div class="n-label">Editorial</div>
+<h2 class="n-h2" id="how-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);max-width:20ch;color:var(--n-evergreen)">How this guide is compiled</h2>
+</div>
+<div class="n-read">
+<p class="n-body" style="margin:0">Every entry is a row from the same directory the rest of this site uses, checked against the business&#8217;s own site, the Niwot Business Association directory or the Left Hand Valley Courier. Each one shows the date it was last checked. {{ listings.verified.summary }}</p>
+<p class="n-body" style="margin:18px 0 0">The cuisine, the kind of place and the patio note are condensed from what that source says about the business &#8212; they are not this guide&#8217;s impression of it. Where a source says nothing about outdoor seating, the entry has no patio line; where it says nothing about which meals are served, it has no &#8220;Serves&#8221; line. Reading an absent line as a no would be reading something this guide has not been told.</p>
+<p class="n-body" style="margin:18px 0 0">Two things are deliberately missing. <strong style="font-weight:600">Opening hours</strong> are not reproduced anywhere on this site: they change faster than anything else, and a wrong one sends somebody to a locked door. <strong style="font-weight:600">Price ranges</strong> are not shown{% if listings.food.withPrice.length == 0 %} on any entry{% endif %}, because no source read so far publishes one, and a price range worked out from a menu would be this guide&#8217;s guess presented as a fact. Both fields exist in the data and appear the day a source supports them.</p>
+<p class="n-body" style="margin:18px 0 0">Coverage is not a claim of completeness: a kitchen that keeps no public listing will not be here. <a class="n-link" href="/contact/">Send one</a> &#8212; or a correction to any entry &#8212; and it goes in with the date it was checked.</p>
+<div class="n-btns" style="margin-top:24px">
+<a class="n-btn" href="/eat-shop/">The full directory</a>
+<a class="n-btn n-btn--ghost" href="https://niwot.com/" rel="noopener">Association directory</a>
+</div>
+</div>
+</div>
+<div class="n-g2" style="margin-top:clamp(32px,4vw,56px)">
+<div class="n-callout n-callout--paper">
+<div class="n-label">Make a day of it</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Coffee on Second Avenue, the walk, lunch on a patio and dinner before the drive home &#8212; laid out hour by hour.</p>
+<a class="n-link" href="/one-day-in-niwot/" style="display:inline-block;margin-top:14px">One day in Niwot <span aria-hidden="true">&#8594;</span></a>
+</div>
+<div class="n-callout n-callout--sky">
+<div class="n-label" style="color:var(--n-sky-ink)">Getting here</div>
+<p class="n-body" style="margin:10px 0 0;font-size:.9375rem">Parking, walking routes between the two blocks and accessibility notes are on the visitor page.</p>
+<a class="n-link" href="/plan-a-visit/" style="display:inline-block;margin-top:14px">Plan a visit <span aria-hidden="true">&#8594;</span></a>
+</div>
+</div>
+</div>
+</section>

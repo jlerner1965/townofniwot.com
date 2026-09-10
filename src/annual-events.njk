@@ -1,0 +1,138 @@
+---
+layout: layouts/base.njk
+title: Annual Events
+crumbLabel: Events & Festivals
+seoTitle: Niwot Events & Festivals — the Year in Niwot, Colorado
+description: The events Niwot, Colorado holds every year — Rock & Rails, the Second Friday Art Walk, Dancing Under the Stars, the Great Pumpkin Party, Enchanted Evening and the Holiday Parade — with who runs each one and the dates confirmed so far.
+navKey: events
+permalink: /annual-events/
+ogImage: whistle-stop-caboose.jpg
+ogImageAlt: The red CB&Q 14649 caboose at Whistle Stop Park, strung with festoon lighting
+footMetaRight: Seasons read from each organizer’s page
+pageStyles: |
+  .n-toc{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:16px 0 0;padding:0}
+  /* One series per row: what it is on the left, when it lands on the right.
+     The dates column is the part a reader scans, so it keeps its own rule. */
+  .n-series{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.46fr);gap:18px clamp(20px,3vw,52px);align-items:start;padding:26px 0;border-top:1px solid var(--n-rule)}
+  .n-series:first-child{border-top:3px solid var(--n-red)}
+  .n-when{display:grid;gap:14px;align-content:start;padding-left:18px;border-left:1px solid var(--n-rule)}
+  .n-when > div > .n-label{display:block;margin-bottom:4px}
+  .n-meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:.875rem;color:var(--n-muted)}
+  @media (max-width:900px){.n-series{grid-template-columns:minmax(0,1fr)}.n-when{padding-left:0;padding-top:14px;border-left:0;border-top:1px solid var(--n-rule)}}
+---
+<section class="n-bg-white" aria-labelledby="title-h">
+<div class="n-wrap" style="padding-top:clamp(28px,4vw,60px);padding-bottom:clamp(24px,3vw,44px)">
+<div class="n-g2-wide" style="align-items:end">
+<div>
+<div class="n-label">The year in Niwot</div>
+<h1 class="n-display" id="title-h" style="margin-top:14px;font-size:clamp(1.875rem,1.4rem + 1.9vw,2.875rem);line-height:1.05;max-width:24ch;color:var(--n-evergreen)">Niwot Events &amp; Festivals</h1>
+</div>
+<div>
+<p class="n-lead" style="margin:0;max-width:50ch">{{ annualBuild.series.length }} things Niwot does every year, most of them free and nearly all of them run by volunteers. This page describes the series; the calendar carries the individual dates as organizers publish them.</p>
+<nav aria-label="On this page">
+<ul class="n-toc">
+{%- for s in annualBuild.series %}
+<li><a class="n-link" href="#{{ s.id }}">{{ s.name }}</a></li>
+{%- endfor %}
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-paper n-pad-sm" aria-labelledby="how-h" style="border-top:1px solid var(--n-rule);border-bottom:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<figure class="n-ph-md" style="margin:0">
+{% photo "whistle-stop-caboose.jpg", "The red CB&Q 14649 caboose on a short length of track at Whistle Stop Park, strung with festoon lighting", "(max-width: 900px) calc(100vw - 40px), (max-width: 1440px) 36vw, 500px", "display:block;width:100%;object-fit:cover;object-position:center 52%", true %}
+<figcaption class="n-cap">Whistle Stop Park &#8212; the lawn the summer runs on</figcaption>
+</figure>
+</div>
+<div>
+<h2 class="n-label" id="how-h" style="margin:0">How to read the dates</h2>
+<p class="n-body" style="margin:14px 0 0;max-width:60ch">Each series shows its season in the organizer&#8217;s own words, and then whatever this guide has actually read on the organizer&#8217;s page: a confirmed date, the season just held, or &#8220;expected&#8221; where the next one has not been published yet. Nothing here is a date this site worked out for itself, which is why a series can be famous, annual and still show no date in February.</p>
+<div class="n-btns" style="margin-top:20px">
+<a class="n-btn" href="/events/">The dated calendar</a>
+<a class="n-btn n-btn--ghost" href="https://niwot.com/upcoming-events/" rel="noopener">Full community calendar <span aria-hidden="true">&#8599;</span></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="n-bg-white" aria-labelledby="series-h" style="padding-block:clamp(30px,4vw,64px)">
+<div class="n-wrap">
+<div class="n-shead n-shead-row" style="border-bottom-color:var(--n-evergreen)">
+<div>
+<div class="n-label">Every year</div>
+<h2 class="n-h2" id="series-h" style="margin-top:12px;color:var(--n-evergreen)">The recurring programme</h2>
+</div>
+<span class="n-label n-label--quiet">{{ annualBuild.series.length }} series</span>
+</div>
+<ul style="list-style:none;margin:clamp(14px,1.8vw,24px) 0 0;padding:0">
+{%- for s in annualBuild.series %}
+<li class="n-series" id="{{ s.id }}">
+<div>
+<h3 class="n-h3" style="font-size:1.5rem;color:var(--n-evergreen)">{{ s.name }}</h3>
+<div class="n-meta">
+<span>{{ s.tag }}</span>
+<span>{{ s.where }}</span>
+{%- if s.cost %}<span>{{ s.cost }}</span>{% endif %}
+</div>
+<p class="n-body" style="margin:14px 0 0;max-width:62ch;font-size:.9375rem">{{ s.body }}</p>
+<p class="n-small" style="margin:12px 0 0;max-width:62ch;font-size:.875rem">Run by <a class="n-link" href="{{ s.organizer.url }}" rel="noopener">{{ s.organizer.name }} <span aria-hidden="true">&#8599;</span></a>{% if s.withOrganizer %} with <a class="n-link" href="{{ s.withOrganizer.url }}" rel="noopener">{{ s.withOrganizer.name }} <span aria-hidden="true">&#8599;</span></a>{% endif %}.</p>
+{%- if s.guideUrl %}
+<div class="n-btns" style="margin-top:16px">
+<a class="n-btn n-btn--ghost" href="{{ s.guideUrl }}">The {{ s.name }} guide</a>
+</div>
+{%- endif %}
+</div>
+<div class="n-when">
+<div>
+<span class="n-label n-label--quiet">Season</span>
+<span class="n-body" style="font-size:.9375rem">{{ s.season }}</span>
+</div>
+{%- for o in s.occurrences %}
+<div>
+<span class="n-label{% if o.when == 'expected' %} n-label--quiet{% endif %}">{% if o.when == 'upcoming' %}Confirmed{% elif o.when == 'past' %}Last held{% else %}Not yet dated{% endif %}</span>
+<span class="n-body" style="font-size:.9375rem">{{ o.label }}</span>
+{%- if o.detail %}
+<span class="n-small" style="display:block;margin-top:2px;font-size:.875rem">{{ o.detail }}</span>
+{%- endif %}
+</div>
+{%- endfor %}
+<div>
+<span class="n-label n-label--quiet">Checked</span>
+<span class="n-small" style="font-size:.875rem"><a class="n-link" href="{{ s.sourceUrl }}" rel="noopener">{{ s.verifiedAt | humanDate }} <span aria-hidden="true">&#8599;</span></a></span>
+</div>
+</div>
+</li>
+{%- endfor %}
+</ul>
+</div>
+</section>
+
+{#- What is deliberately absent. Two things people search for are missing,
+    and saying why is more use than leaving a reader to conclude the guide
+    simply did not notice. -#}
+<section class="n-bg-paper n-pad-sm" id="not-listed" aria-labelledby="not-h" style="border-top:1px solid var(--n-rule)">
+<div class="n-wrap">
+<div class="n-g2-wide" style="align-items:start">
+<div>
+<div class="n-label">For the record</div>
+<h2 class="n-h2" id="not-h" style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);max-width:20ch;color:var(--n-evergreen)">What is not on this page</h2>
+</div>
+<div class="n-read">
+<p class="n-body" style="margin:0"><strong style="font-weight:600">A Fourth of July event.</strong> Niwot has no Independence Day event on this page because no organizer source for one was found when this guide was compiled. That is a gap in what has been read, not a statement that nothing happens: an event may well be organized without a listing this guide can cite. If you run one, <a class="n-link" href="/contact/">send it</a> and it goes in with its source.</p>
+<p class="n-body" style="margin:18px 0 0"><strong style="font-weight:600">A farmers market.</strong> Earlier passes could find no organizer source for a current Niwot farmers market season, so none is listed. The same invitation applies.</p>
+<p class="n-body" style="margin:18px 0 0">One-off events &#8212; a trivia night, a gallery opening, a lecture &#8212; are not series and live on the <a class="n-link" href="/events/">dated calendar</a> instead. The Business Association&#8217;s own calendar is the fullest list of everything happening in any given week.</p>
+<div class="n-btns" style="margin-top:24px">
+<a class="n-btn" href="/contact/">Submit an event</a>
+<a class="n-btn n-btn--ghost" href="/things-to-do/">Things to do in Niwot</a>
+</div>
+</div>
+</div>
+</div>
+</section>
