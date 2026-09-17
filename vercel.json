@@ -5,9 +5,63 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/eat-shop{/}?",
+      "destination": "https://insideniwot.com/eat-drink/",
+      "permanent": true
+    },
+    {
+      "source": "/explore{/}?",
+      "destination": "https://insideniwot.com/things-to-do/",
+      "permanent": true
+    },
+    {
+      "source": "/plan-a-visit{/}?",
+      "destination": "https://insideniwot.com/articles/explore-niwot-in-walking-order/",
+      "permanent": true
+    },
+    {
+      "source": "/our-story{/}?",
+      "destination": "https://insideniwot.com/articles/how-niwot-got-here/",
+      "permanent": true
+    },
+    {
+      "source": "/community{/}?",
+      "destination": "https://insideniwot.com/articles/who-runs-what-in-niwot/",
+      "permanent": true
+    },
+    {
+      "source": "/civic/incorporation-election{/}?",
+      "destination": "https://insideniwot.com/articles/2026-incorporation-election/",
+      "permanent": true
+    },
+    {
+      "source": "/civic{/}?",
+      "destination": "https://insideniwot.com/articles/2026-incorporation-election/",
+      "permanent": true
+    },
+    {
+      "source": "/events{/}?",
+      "destination": "https://insideniwot.com/events/",
+      "permanent": true
+    },
+    {
+      "source": "/contact{/}?",
+      "destination": "https://insideniwot.com/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/thanks{/}?",
+      "destination": "https://insideniwot.com/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy{/}?",
+      "destination": "https://insideniwot.com/about/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.townofniwot.com" }],
-      "destination": "https://townofniwot.com/:path*",
+      "destination": "https://insideniwot.com/:path*",
       "permanent": true
     }
   ],
@@ -15,31 +69,58 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        },
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; manifest-src 'self'"
         },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
         {
           "key": "Permissions-Policy",
           "value": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), browsing-topics=()"
         },
-        { "key": "X-Frame-Options", "value": "DENY" }
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
       ]
     },
     {
       "source": "/assets/(css|js)/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/img/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/api/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ]
 }
