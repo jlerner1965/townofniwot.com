@@ -5,6 +5,11 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/",
+      "destination": "https://insideniwot.com/",
+      "permanent": true
+    },
+    {
       "source": "/eat-shop{/}?",
       "destination": "https://insideniwot.com/eat-drink/",
       "permanent": true
@@ -60,8 +65,8 @@
       "permanent": true
     },
     {
-      "source": "/:path*",
-      "destination": "https://insideniwot.com/:path*",
+      "source": "/:path*{/}?",
+      "destination": "https://insideniwot.com/",
       "permanent": true
     }
   ],
